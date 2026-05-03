@@ -56,6 +56,7 @@ export default function App() {
             <DialogManager />
             <CommandPaletteManager />
             <Toaster
+                className="SonnerToastContainer"
                 position="bottom-center"
                 swipeDirections={["left", "right"]}
                 mobileOffset={{

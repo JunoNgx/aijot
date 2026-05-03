@@ -502,6 +502,12 @@ a {
 // Sonner Toast
 // ============================================================
 
+.SonnerToastContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .SonnerToast {
     display: flex;
     justify-content: space-between;

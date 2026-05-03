@@ -135,15 +135,19 @@ export default function ItemDialog({ item, onClose }: Props) {
     const shouldCopyOnClickRef = useRef(shouldCopyOnClickVal)
     const isPinnedRef = useRef(isPinnedVal)
     const hasUnsavedChangesRef = useRef(false)
+    const isFirstRender = useRef(true)
     const mutateRef = useRef(updateItemMutation.mutate)
     useLayoutEffect(() => {
         mutateRef.current = updateItemMutation.mutate
     })
 
     useLayoutEffect(() => {
-        setTimeout(() => {
-            contentTextareaRef.current?.focus()
-        }, 0)
+        if (isFirstRender.current) {
+            isFirstRender.current = false
+            setTimeout(() => {
+                contentTextareaRef.current?.focus()
+            }, 0)
+        }
     })
 
     useEffect(() => {

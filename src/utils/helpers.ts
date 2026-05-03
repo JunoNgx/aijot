@@ -153,3 +153,12 @@ export function hexToHsl(hex: string): { h: number; s: number; l: number } {
 export function getLightness(hex: string): number {
     return hexToHsl(hex).l
 }
+
+export function pluralise(
+    count: number,
+    singular: string,
+    plural?: string,
+): string {
+    if (plural) return count === 1 ? singular : plural
+    return count === 1 ? singular : `${singular}s`
+}

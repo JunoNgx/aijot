@@ -4,6 +4,7 @@ import { ICON_PROPS_ACTION } from "@/config/constants"
 import { getHotkeyHandler } from "@/utils/hotkeyHandler"
 import { SHORTCUT_SAVE_AND_CLOSE } from "@/config/constants"
 import { useDialogStore } from "@/store/dialogStore"
+import { pluralise } from "@/utils/helpers"
 import type { Item, MassTagEditMode } from "@/types"
 import styles from "./MassTagEditDialog.module.scss"
 
@@ -96,8 +97,8 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
             </button>
             <div className={styles.MassTagEditDialog__Field}>
                 <span className={styles.MassTagEditDialog__Count}>
-                    {items.length} {items.length === 1 ? "item" : "items"} will
-                    be updated
+                    {items.length} {pluralise(items.length, "item")} will be
+                    updated
                 </span>
             </div>
             {totalUniqueTags > 0 && (

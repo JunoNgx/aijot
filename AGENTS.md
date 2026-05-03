@@ -29,7 +29,7 @@ ai\*jot is a remake of JustJot. Most of JustJot specifications are applicable to
 - Avoid regex for implementation and usage when possible. Only use when absolutely necessary or the benefit is significant.
 - Do not add redundant comments that explain what the code does. Variable names should be self-explanatory. Comments should only be used for non-obvious intent, gotchas, or design decisions.
 - Implement reusable utility CSS classes in `global.scss` as needed rather than repeating inline styles
-- CSS custom properties (variables) use `camelCase` (e.g. `--colBg`, `--colTextMuted`)
+- CSS custom properties (variables) use `camelCase` (e.g. `--colBg`)
 - Use CSS variables when possible, especially for common patterns (e.g. `var(--lineThickness)` instead of `1px`). Variables are defined in `src/styles/_vars.scss`
 - Run `yarn format` after every set of changes before handing back
 - Use plain HTML + SCSS for all UI. Use Radix UI primitives where accessibility behaviour is non-trivial (e.g. dialogs, accordions, context menus, dropdowns)

@@ -11,7 +11,7 @@ class AijotDb extends Dexie {
         super("aijot")
         this.version(DB_VERSION).stores({
             items: "id, type, jottedAt, trashedAt, deletedAt, *tags",
-            collections: "id, sortOrder, slug, deletedAt",
+            collections: "id, slug, deletedAt",
         })
     }
 }
@@ -44,7 +44,7 @@ export const dexieAdapter: StorageAdapter = {
     },
 
     async getCollections() {
-        return db.collections.orderBy("sortOrder").toArray()
+        return db.collections.toArray()
     },
 
     async getCollectionBySlug(slug) {

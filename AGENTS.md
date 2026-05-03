@@ -34,6 +34,8 @@ ai\*jot is a remake of JustJot. Most of JustJot specifications are applicable to
 - Run `yarn format` after every set of changes before handing back
 - Use plain HTML + SCSS for all UI. Use Radix UI primitives where accessibility behaviour is non-trivial (e.g. dialogs, accordions, context menus, dropdowns)
 - Use quartered rem values (e.g. 0.25rem; 0.5rem; 0.75rem) unless absolutely necessary
+- Create new css variables only with explicit instructions to do so
+- Do not set color or `font-size` without using a css variable
 
 ## Patterns from JustJot
 

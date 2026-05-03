@@ -5,6 +5,7 @@ import { useItemsQuery } from "@/hooks/useItemsQuery"
 import { useCollectionsQuery } from "@/hooks/useCollectionsQuery"
 import { useCoreCollectionSettings } from "@/store/coreCollectionSettings"
 import { useLocalAppData } from "@/store/localAppData"
+import { useTransientUiState } from "@/store/transientUiState"
 import { useNavigateRoutes } from "@/hooks/useNavigateRoutes"
 import { useDocumentTitle } from "@/hooks/useDocumentTitle"
 import {
@@ -112,6 +113,10 @@ export default function Jot() {
         () => filterItems(collectionItems, searchData),
         [collectionItems, searchData],
     )
+
+    useEffect(() => {
+        useTransientUiState.getState().setMainListVisibleItems(visibleItems)
+    }, [visibleItems])
     const selectedItem =
         selectedIndex >= 0 ? visibleItems[selectedIndex] : undefined
 
@@ -222,8 +227,6 @@ export default function Jot() {
                 currCollectionTags={currCollection?.tags ?? []}
                 listboxId={listboxId}
                 activeDescendantId={activeDescendantId}
-                visibleItems={visibleItems}
-                onMassTagSave={handleMassTagSave}
             />
             <div
                 id={listboxId}

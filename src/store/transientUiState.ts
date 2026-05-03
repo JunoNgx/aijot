@@ -1,4 +1,5 @@
 import { create } from "zustand"
+import type { Item } from "@/types"
 
 export const useTransientUiState = create<{
     copiedItemIds: string[]
@@ -7,6 +8,8 @@ export const useTransientUiState = create<{
     fetchingLinkMetaItemIds: string[]
     addFetchingLinkMetaItemId: (id: string) => void
     removeFetchingLinkMetaItemId: (id: string) => void
+    mainListVisibleItems: Item[]
+    setMainListVisibleItems: (items: Item[]) => void
 }>((set) => ({
     copiedItemIds: [],
     addCopiedItemId: (id) =>
@@ -40,4 +43,6 @@ export const useTransientUiState = create<{
                 (existingId) => existingId !== id,
             ),
         })),
+    mainListVisibleItems: [],
+    setMainListVisibleItems: (items) => set({ mainListVisibleItems: items }),
 }))

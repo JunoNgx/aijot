@@ -10,6 +10,8 @@ import {
     IconTags,
 } from "@tabler/icons-react"
 import { useCommandPaletteStore } from "@/store/commandPaletteStore"
+import { useTransientUiState } from "@/store/transientUiState"
+import { useItemsMutations } from "@/hooks/useItemsMutations"
 import { openMassTagEditDialog } from "@/utils/openMassTagEditDialog"
 import {
     SYNTAX_PREFIX_TODO,
@@ -17,15 +19,12 @@ import {
     ICON_PROPS_ITEM_DROPDOWN,
 } from "@/config/constants"
 import styles from "./MainInputExtendedMenu.module.scss"
-import type { Item } from "@/types"
 
 interface Props {
     inputValue: string
     setInputValue: (val: string) => void
     inputRef: React.RefObject<HTMLInputElement | null>
     onSubmit: () => void
-    visibleItems?: Item[]
-    onMassTagSave?: (tagStr: string) => void
 }
 
 export default function MainInputExtendedMenu({
@@ -33,9 +32,9 @@ export default function MainInputExtendedMenu({
     setInputValue,
     inputRef,
     onSubmit,
-    visibleItems,
-    onMassTagSave,
 }: Props) {
+    const visibleItems = useTransientUiState((s) => s.mainListVisibleItems)
+    const { massTagEditMutation } = useItemsMutations()
     const prependSyntax = (syntax: string, shouldAddSpace = false) => {
         const newValue = shouldAddSpace
             ? `${syntax} ${inputValue}`
@@ -130,13 +129,17 @@ export default function MainInputExtendedMenu({
                         clear input
                     </DropdownMenu.Item>
 
-                    {visibleItems && onMassTagSave && (
+                    {visibleItems.length > 0 && (
                         <DropdownMenu.Item
                             className={styles.MainInputExtendedMenu__Item}
                             onSelect={() =>
                                 openMassTagEditDialog({
                                     itemCount: visibleItems.length,
-                                    onSave: onMassTagSave,
+                                    onSave: (tagStr) =>
+                                        massTagEditMutation.mutate({
+                                            items: visibleItems,
+                                            tagStr,
+                                        }),
                                 })
                             }
                         >

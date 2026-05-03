@@ -122,7 +122,7 @@ select {
 kbd {
     color: var(--colSub);
     border-style: solid;
-    border-width: var(--lineWidth);
+    border-width: 1px;
     border-bottom-width: 4px;
     border-color: var(--colSub);
     padding: 0 0.2rem;

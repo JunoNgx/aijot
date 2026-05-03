@@ -58,7 +58,9 @@ export default function UserDropdown() {
                                     className={styles.UserDropdown__Item}
                                     onSelect={navigateToJot}
                                 >
-                                    <IconWritingSign {...ICON_PROPS_ITEM_DROPDOWN} />
+                                    <IconWritingSign
+                                        {...ICON_PROPS_ITEM_DROPDOWN}
+                                    />
                                     Jot
                                 </DropdownMenu.Item>
                                 <DropdownMenu.Separator

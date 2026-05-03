@@ -126,7 +126,7 @@ export default function CollectionDropdown() {
                             </DropdownMenu.Item>
                         )}
                         <DropdownMenu.Item
-                                className={`${styles.CollectionItem} ${styles["CollectionItem--Action"]}`}
+                            className={`${styles.CollectionItem} ${styles["CollectionItem--Action"]}`}
                             onSelect={() => openCollectionDialog()}
                         >
                             <IconPlus {...ICON_PROPS_ITEM_DROPDOWN} />

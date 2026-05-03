@@ -104,8 +104,12 @@ interface Props {
 }
 
 export default function ItemDialog({ item, onClose }: Props) {
-    const { updateItemMutation, refetchLinkMetaMutation } = useItemsMutations()
+    const { updateItemMutation, refetchLinkMetaMutation, trashItemMutation } =
+        useItemsMutations()
     const { trashItem } = useItemActions()
+    const isSaving = updateItemMutation.isPending
+    const isDeleting = trashItemMutation.isPending
+    const isRefetching = refetchLinkMetaMutation.isPending
     const closeAllDialogs = useDialogStore((s) => s.closeAllDialogs)
     const is24HourClock = useLocalUserSettings((s) => s.is24HourClock)
 
@@ -373,27 +377,30 @@ export default function ItemDialog({ item, onClose }: Props) {
     const deleteButton = (
         <button
             className={styles.ItemDialog__BtnDelete}
+            disabled={isDeleting}
             onClick={handleDeleteClick}
         >
-            Delete
+            {isDeleting ? "Deleting..." : "Delete"}
         </button>
     )
 
     const refetchButton = isLinkItem && (
         <button
             className={styles.ItemDialog__BtnAction}
+            disabled={isRefetching}
             onClick={handleRefetchMeta}
         >
-            Refetch meta
+            {isRefetching ? "Refetching..." : "Refetch meta"}
         </button>
     )
 
     const saveButton = (
         <button
             className={styles.ItemDialog__BtnSave}
+            disabled={isSaving}
             onClick={handleSaveAndClose}
         >
-            Save
+            {isSaving ? "Saving..." : "Save"}
         </button>
     )
 

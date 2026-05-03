@@ -15,6 +15,7 @@ interface Props {
 
 export default function PreviousVersionDialog({ item }: Props) {
     const { updateItemMutation } = useItemsMutations()
+    const isRestoring = updateItemMutation.isPending
     const closeAllDialogs = useDialogStore((s) => s.closeAllDialogs)
     const is24HourClock = useLocalUserSettings((s) => s.is24HourClock)
 
@@ -78,9 +79,10 @@ export default function PreviousVersionDialog({ item }: Props) {
                 </button>
                 <button
                     className={styles.PreviousVersionDialog__BtnRestore}
+                    disabled={isRestoring}
                     onClick={handleRestore}
                 >
-                    Restore
+                    {isRestoring ? "Restoring..." : "Restore"}
                 </button>
             </div>
         </div>

@@ -74,13 +74,13 @@ const monkeyTypeThemes = [
         colText: "#ffffff",
         colDanger: "#bd4141",
     },
-    {
+    { // Fixed danger colour
         name: "Blue Dolphin",
         colBg: "#003950",
         colMain: "#ffcefb",
         colSub: "#00e4ff",
         colText: "#82eaff",
-        colDanger: "#ffbde6",
+        colDanger: "#ba478f",
     },
     {
         name: "Breeze",
@@ -398,13 +398,13 @@ const monkeyTypeThemes = [
         colText: "#ffffff",
         colDanger: "#ff3333",
     },
-    {
+    { // Fixed danger colour
         name: "Vesper",
         colBg: "#1d1d2b",
         colMain: "#c4b5fc",
         colSub: "#6e6a9e",
         colText: "#e0e0e6",
-        colDanger: "#c4b5fc",
+        colDanger: "#d23a9d",
     },
     {
         name: "VSCode",
@@ -414,13 +414,13 @@ const monkeyTypeThemes = [
         colText: "#d4d4d4",
         colDanger: "#f14c4c",
     },
-    {
+    { // Fixed danger colour
         name: "Witch Girl",
         colBg: "#2d1f2d",
         colMain: "#ffc8dd",
         colSub: "#dfb4e4",
         colText: "#f5e6f0",
-        colDanger: "#ff9ebd",
+        colDanger: "#d23668",
     },
     {
         name: "Aurora",

@@ -7,20 +7,25 @@ import {
     IconClipboardPlus,
     IconX,
     IconFocus,
+    IconTags,
 } from "@tabler/icons-react"
 import { useCommandPaletteStore } from "@/store/commandPaletteStore"
+import { openMassTagEditDialog } from "@/utils/openMassTagEditDialog"
 import {
     SYNTAX_PREFIX_TODO,
     SYNTAX_PREFIX_LONG_TEXT,
     ICON_PROPS_ITEM_DROPDOWN,
 } from "@/config/constants"
 import styles from "./MainInputExtendedMenu.module.scss"
+import type { Item } from "@/types"
 
 interface Props {
     inputValue: string
     setInputValue: (val: string) => void
     inputRef: React.RefObject<HTMLInputElement | null>
     onSubmit: () => void
+    visibleItems?: Item[]
+    onMassTagSave?: (tagStr: string) => void
 }
 
 export default function MainInputExtendedMenu({
@@ -28,6 +33,8 @@ export default function MainInputExtendedMenu({
     setInputValue,
     inputRef,
     onSubmit,
+    visibleItems,
+    onMassTagSave,
 }: Props) {
     const prependSyntax = (syntax: string, shouldAddSpace = false) => {
         const newValue = shouldAddSpace
@@ -122,6 +129,21 @@ export default function MainInputExtendedMenu({
                         <IconX {...ICON_PROPS_ITEM_DROPDOWN} />
                         clear input
                     </DropdownMenu.Item>
+
+                    {visibleItems && onMassTagSave && (
+                        <DropdownMenu.Item
+                            className={styles.MainInputExtendedMenu__Item}
+                            onSelect={() =>
+                                openMassTagEditDialog({
+                                    itemCount: visibleItems.length,
+                                    onSave: onMassTagSave,
+                                })
+                            }
+                        >
+                            <IconTags {...ICON_PROPS_ITEM_DROPDOWN} />
+                            mass edit tags
+                        </DropdownMenu.Item>
+                    )}
 
                     <DropdownMenu.Item
                         className={styles.MainInputExtendedMenu__Item}

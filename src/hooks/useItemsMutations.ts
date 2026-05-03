@@ -229,6 +229,92 @@ export function useItemsMutations() {
         },
     })
 
+    const parseTagStr = (tagStr: string): string[] => {
+        return tagStr
+            .replace(/  +/g, " ")
+            .trim()
+            .split(" ")
+            .filter((t) => t.length > 0)
+    }
+
+    const massTagEditMutation = useMutation({
+        mutationFn: async ({
+            items,
+            tagStr,
+        }: {
+            items: Item[]
+            tagStr: string
+        }) => {
+            const tags = parseTagStr(tagStr)
+            const now = DateTime.now().toISO()
+            const updatedItems: Item[] = items.map((item) => ({
+                ...item,
+                tags,
+                updatedAt: now,
+            }))
+            await storage.bulkPutItems(updatedItems)
+        },
+        onMutate: async ({ items, tagStr }) => {
+            await queryClient.cancelQueries({ queryKey: queryKeys.items })
+            const previousItems = queryClient.getQueryData<Item[]>(
+                queryKeys.items,
+            )
+
+            const tags = parseTagStr(tagStr)
+            queryClient.setQueryData<Item[]>(queryKeys.items, (prev) =>
+                (prev ?? []).map((item) => {
+                    const isAffected = items.some((i) => i.id === item.id)
+                    if (!isAffected) return item
+                    return { ...item, tags }
+                }),
+            )
+
+            return { previousItems, itemsSnapshot: items }
+        },
+        onError: (_err, _variables, context) => {
+            if (context?.previousItems) {
+                queryClient.setQueryData(queryKeys.items, context.previousItems)
+            }
+        },
+        onSuccess: (_data, { items }) => {
+            toast(`Tags updated for ${items.length} items`, {
+                duration: Infinity,
+                action: {
+                    label: "Undo",
+                    onClick: () => {
+                        undoMassTagEditMutation.mutate({
+                            itemsSnapshot: items,
+                        })
+                    },
+                },
+            })
+        },
+        onSettled: () => {
+            invalidateItemQueries()
+        },
+    })
+
+    const undoMassTagEditMutation = useMutation({
+        mutationFn: async ({ itemsSnapshot }: { itemsSnapshot: Item[] }) => {
+            await storage.bulkPutItems(itemsSnapshot)
+        },
+        onMutate: async () => {
+            await queryClient.cancelQueries({ queryKey: queryKeys.items })
+            const previousItems = queryClient.getQueryData<Item[]>(
+                queryKeys.items,
+            )
+            return { previousItems }
+        },
+        onError: (_err, _variables, context) => {
+            if (context?.previousItems) {
+                queryClient.setQueryData(queryKeys.items, context.previousItems)
+            }
+        },
+        onSettled: () => {
+            invalidateItemQueries()
+        },
+    })
+
     return {
         createItemMutation,
         updateItemMutation,
@@ -237,5 +323,6 @@ export function useItemsMutations() {
         softDeleteItemMutation,
         undeleteItemMutation,
         refetchLinkMetaMutation,
+        massTagEditMutation,
     }
 }

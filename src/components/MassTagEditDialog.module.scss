@@ -1,0 +1,49 @@
+@use "styles/mixins" as *;
+
+.MassTagEditDialog {
+    composes: Dialog from global;
+
+    &__CloseBtn {
+        composes: Btn Btn--Icon from global;
+        composes: Dialog__CloseBtn from global;
+    }
+
+    &__Field {
+        composes: Dialog__Field from global;
+    }
+
+    &__Label {
+        composes: Dialog__Label from global;
+    }
+
+    &__Description {
+        composes: Dialog__Description from global;
+    }
+
+    &__Warning {
+        color: var(--colDanger);
+        font-size: var(--fontSizeSm);
+    }
+
+    &__Count {
+        color: var(--colTextAlt);
+        font-size: var(--fontSizeSm);
+    }
+
+    &__Footer {
+        composes: Dialog__Footer from global;
+    }
+
+    &__FooterRight {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    &__BtnCancel {
+        composes: Btn Btn--Sec from global;
+    }
+
+    &__BtnSave {
+        composes: Btn Btn--Pri from global;
+    }
+}

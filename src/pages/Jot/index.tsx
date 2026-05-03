@@ -12,9 +12,12 @@ import {
     SHORTCUT_TOGGLE_ITEM_EXPANDED_MODE,
     SHORTCUT_NAV_PREV_COLLECTION,
     SHORTCUT_NAV_NEXT_COLLECTION,
+    SHORTCUT_MASS_TAG_EDIT,
     ROUTE_JOT,
 } from "@/config/constants"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
+import { useItemsMutations } from "@/hooks/useItemsMutations"
+import { openMassTagEditDialog } from "@/utils/openMassTagEditDialog"
 import MainInput from "@/pages/Jot/MainInput"
 import CollectionNotice from "@/pages/Jot/CollectionNotice"
 import JotItem from "@/pages/Jot/JotItem"
@@ -77,6 +80,7 @@ export default function Jot() {
         useState<MainInputSearchData>(DEFAULT_SEARCH_DATA)
     const [selectedIndex, setSelectedIndex] = useState(-1)
     const { itemsQuery, trashedItemsQuery } = useItemsQuery()
+    const { massTagEditMutation } = useItemsMutations()
     const { shouldShowDemoDataBanner } = useLocalAppData()
     const mainInputRef = useRef<HTMLInputElement>(null)
 
@@ -111,6 +115,20 @@ export default function Jot() {
     const selectedItem =
         selectedIndex >= 0 ? visibleItems[selectedIndex] : undefined
 
+    const handleMassTagSave = useCallback(
+        (tagStr: string) => {
+            massTagEditMutation.mutate({ items: visibleItems, tagStr })
+        },
+        [visibleItems, massTagEditMutation],
+    )
+
+    const handleOpenMassTagEditDialog = useCallback(() => {
+        openMassTagEditDialog({
+            itemCount: visibleItems.length,
+            onSave: handleMassTagSave,
+        })
+    }, [visibleItems.length, handleMassTagSave])
+
     useEffect(() => {
         if (selectedIndex <= 0) {
             window.scrollTo({ top: 0, behavior: "smooth" })
@@ -133,6 +151,10 @@ export default function Jot() {
         },
         { enableOnFormTags: true },
     )
+
+    useHotkeys(SHORTCUT_MASS_TAG_EDIT, handleOpenMassTagEditDialog, {
+        enableOnFormTags: true,
+    })
 
     const { navigateToCollection } = useNavigateRoutes()
     const collectionIndex = collections.findIndex((c) => c.slug === slug)
@@ -200,6 +222,8 @@ export default function Jot() {
                 currCollectionTags={currCollection?.tags ?? []}
                 listboxId={listboxId}
                 activeDescendantId={activeDescendantId}
+                visibleItems={visibleItems}
+                onMassTagSave={handleMassTagSave}
             />
             <div
                 id={listboxId}

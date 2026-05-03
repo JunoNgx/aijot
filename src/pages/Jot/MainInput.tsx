@@ -33,6 +33,8 @@ interface Props {
     currCollectionTags: string[]
     listboxId?: string
     activeDescendantId?: string
+    visibleItems?: Item[]
+    onMassTagSave?: (tagStr: string) => void
 }
 
 export default function MainInput({
@@ -46,6 +48,8 @@ export default function MainInput({
     currCollectionTags,
     listboxId,
     activeDescendantId,
+    visibleItems,
+    onMassTagSave,
 }: Props) {
     const [inputValue, setInputValue] = useState("")
     const {
@@ -185,6 +189,8 @@ export default function MainInput({
                 setInputValue={setInputValue}
                 inputRef={inputRef}
                 onSubmit={handleSubmit}
+                visibleItems={visibleItems}
+                onMassTagSave={onMassTagSave}
             />
         </div>
     )

@@ -15,7 +15,7 @@ export function useCollectionsQuery() {
     const collectionsQuery = useQuery({
         queryKey: [...queryKeys.collections, shouldCustomSortCollections],
         queryFn: async () => {
-            const userCollections = await storage.getCollections()
+            const userCollections = await storage.getNonDeletedCollections()
             const coreCollections: Collection[] = [
                 buildCoreCollection("core-all", all, all.sortOrder, "all"),
                 buildCoreCollection(

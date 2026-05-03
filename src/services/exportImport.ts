@@ -7,7 +7,7 @@ export const EXPORT_VERSION = 1
 export async function exportData(settings: ExportSettings): Promise<void> {
     const [items, collections] = await Promise.all([
         storage.getItems(),
-        storage.getCollections(),
+        storage.getAllCollections(),
     ])
 
     const data: ExportData = {
@@ -45,7 +45,7 @@ export async function getImportSummary(
 ): Promise<ImportSummary> {
     const [existingItems, existingCollections] = await Promise.all([
         storage.getItems(),
-        storage.getCollections(),
+        storage.getAllCollections(),
     ])
 
     const existingItemIds = new Set(existingItems.map((i) => i.id))

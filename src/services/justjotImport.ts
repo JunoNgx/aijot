@@ -125,7 +125,7 @@ function normaliseJustJotDate(dateStr: string): string {
 export async function transformJustJotToAijot(
     data: JustJotExportData,
 ): Promise<{ collections: Collection[]; items: Item[] }> {
-    const existingCollections = await storage.getCollections()
+    const existingCollections = await storage.getAllCollections()
     const existingSlugs = new Set(existingCollections.map((c) => c.slug))
 
     const slugMap = new Map<string, string>()
@@ -183,7 +183,7 @@ export async function getJustJotImportSummary(
 
     const [existingItems, existingCollections] = await Promise.all([
         storage.getItems(),
-        storage.getCollections(),
+        storage.getAllCollections(),
     ])
 
     const existingItemIds = new Set(existingItems.map((i) => i.id))

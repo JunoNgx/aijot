@@ -34,7 +34,7 @@ export async function runFullDriveSync(
 
     const [localItems, localCollections] = await Promise.all([
         storage.getItems(),
-        storage.getCollections(),
+        storage.getAllCollections(),
     ])
 
     let mergedItems = localItems

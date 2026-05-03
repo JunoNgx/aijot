@@ -9,7 +9,8 @@ export interface StorageAdapter {
     bulkPutItems(items: Item[]): Promise<void>
 
     // Collections
-    getCollections(): Promise<Collection[]>
+    getAllCollections(): Promise<Collection[]>
+    getNonDeletedCollections(): Promise<Collection[]>
     getCollectionBySlug(slug: string): Promise<Collection | undefined>
     putCollection(collection: Collection): Promise<void>
     deleteCollection(id: string): Promise<void>

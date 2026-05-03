@@ -43,8 +43,12 @@ export const dexieAdapter: StorageAdapter = {
         await db.items.bulkPut(items)
     },
 
-    async getCollections() {
+    async getAllCollections() {
         return db.collections.toArray()
+    },
+
+    async getNonDeletedCollections() {
+        return db.collections.filter((c) => !c.deletedAt).toArray()
     },
 
     async getCollectionBySlug(slug) {

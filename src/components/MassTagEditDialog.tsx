@@ -83,8 +83,52 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
     }
 
     const isSaveDisabled = mode !== "remove" && !tagStr.trim()
-
     const selectedModeDetail = MODE_DETAILS[mode]
+
+    const countText = `${items.length} ${pluralise(items.length, "item")} will be updated`
+
+    const modeRadioOptions = (
+        <div
+            className={styles.ModeGroup}
+            role="radiogroup"
+            aria-label="Tag operation mode"
+        >
+            {(Object.keys(MODE_DETAILS) as MassTagMode[]).map((m) => (
+                <label key={m} className={styles.ModeGroup__Label}>
+                    <input
+                        type="radio"
+                        name="mass-tag-mode"
+                        value={m}
+                        checked={m === mode}
+                        onChange={() => setMode(m)}
+                    />
+                    {MODE_DETAILS[m].label}
+                </label>
+            ))}
+        </div>
+    )
+
+    const tagSummaryItems = totalUniqueTags > 0 ? (
+        <div className={styles.MassTagEditDialog__Field}>
+            <span className={styles.TagSummary}>
+                {topTagCounts.map(([tag, count]) => (
+                    <span key={tag} className={styles.TagSummary__Tag}>
+                        <span className={styles.TagSummary__TagName}>
+                            {tag}
+                        </span>
+                        <span className={styles.TagSummary__TagCount}>
+                            ({count})
+                        </span>
+                    </span>
+                ))}
+                {totalUniqueTags > MAX_SHOWN_TAGS && (
+                    <span className={styles.TagSummary__TagMore}>
+                        +{totalUniqueTags - MAX_SHOWN_TAGS} more
+                    </span>
+                )}
+            </span>
+        </div>
+    ) : null
 
     return (
         <div className={styles.MassTagEditDialog}>
@@ -97,50 +141,12 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
             </button>
             <div className={styles.MassTagEditDialog__Field}>
                 <span className={styles.MassTagEditDialog__Count}>
-                    {items.length} {pluralise(items.length, "item")} will be
-                    updated
+                    {countText}
                 </span>
             </div>
-            {totalUniqueTags > 0 && (
-                <div className={styles.MassTagEditDialog__Field}>
-                    <span className={styles.TagSummary}>
-                        {topTagCounts.map(([tag, count]) => (
-                            <span key={tag} className={styles.TagSummary__Tag}>
-                                <span className={styles.TagSummary__TagName}>
-                                    {tag}
-                                </span>
-                                <span className={styles.TagSummary__TagCount}>
-                                    ({count})
-                                </span>
-                            </span>
-                        ))}
-                        {totalUniqueTags > MAX_SHOWN_TAGS && (
-                            <span className={styles.TagSummary__TagMore}>
-                                +{totalUniqueTags - MAX_SHOWN_TAGS} more
-                            </span>
-                        )}
-                    </span>
-                </div>
-            )}
+            {tagSummaryItems}
             <div className={styles.MassTagEditDialog__Field}>
-                <div
-                    className={styles.ModeGroup}
-                    role="radiogroup"
-                    aria-label="Tag operation mode"
-                >
-                    {(Object.keys(MODE_DETAILS) as MassTagMode[]).map((m) => (
-                        <label key={m} className={styles.ModeGroup__Label}>
-                            <input
-                                type="radio"
-                                name="mass-tag-mode"
-                                value={m}
-                                checked={m === mode}
-                                onChange={() => setMode(m)}
-                            />
-                            {MODE_DETAILS[m].label}
-                        </label>
-                    ))}
-                </div>
+                {modeRadioOptions}
                 <span className={styles.ModeGroup__Description}>
                     {selectedModeDetail.description}
                 </span>

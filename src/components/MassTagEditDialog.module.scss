@@ -30,25 +30,6 @@
         color: var(--colMain);
     }
 
-    &__ModeGroup {
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    &__ModeLabel {
-        display: flex;
-        align-items: center;
-        gap: 0.375rem;
-        cursor: pointer;
-        font-size: var(--fontSizeSm);
-    }
-
-    &__ModeDescription {
-        font-size: var(--fontSizeXs);
-        color: var(--colSub);
-        margin-top: 0.25rem;
-    }
-
     &__Footer {
         composes: Dialog__Footer from global;
     }
@@ -64,6 +45,25 @@
 
     &__BtnSave {
         composes: Btn Btn--Pri from global;
+    }
+}
+
+.ModeGroup {
+    display: flex;
+    gap: 0.5rem;
+
+    &__Label {
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+        cursor: pointer;
+        font-size: var(--fontSizeSm);
+    }
+
+    &__Description {
+        font-size: var(--fontSizeXs);
+        color: var(--colSub);
+        margin-top: 0.25rem;
     }
 }
 

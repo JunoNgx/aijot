@@ -124,15 +124,12 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
             )}
             <div className={styles.MassTagEditDialog__Field}>
                 <div
-                    className={styles.MassTagEditDialog__ModeGroup}
+                    className={styles.ModeGroup}
                     role="radiogroup"
                     aria-label="Tag operation mode"
                 >
                     {(Object.keys(MODE_DETAILS) as MassTagMode[]).map((m) => (
-                        <label
-                            key={m}
-                            className={styles.MassTagEditDialog__ModeLabel}
-                        >
+                        <label key={m} className={styles.ModeGroup__Label}>
                             <input
                                 type="radio"
                                 name="mass-tag-mode"
@@ -144,7 +141,7 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
                         </label>
                     ))}
                 </div>
-                <span className={styles.MassTagEditDialog__ModeDescription}>
+                <span className={styles.ModeGroup__Description}>
                     {selectedModeDetail.description}
                 </span>
             </div>

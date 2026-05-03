@@ -305,7 +305,7 @@ export function useItemsMutations() {
         onSuccess: (_data, { items, mode }) => {
             const actionLabel = getTagModeActionLabel(mode)
             toast(`Tags ${actionLabel} ${items.length} items`, {
-                duration: Infinity,
+                duration: 10 * 1000,
                 action: {
                     label: "Undo",
                     onClick: () => {

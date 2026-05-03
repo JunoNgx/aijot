@@ -26,6 +26,7 @@ import {
     SHORTCUT_TOGGLE_ITEM_EXPANDED_MODE,
     SHORTCUT_NAV_PREV_COLLECTION,
     SHORTCUT_NAV_NEXT_COLLECTION,
+    SHORTCUT_MASS_TAG_EDIT,
 } from "@/config/constants"
 import styles from "./ShortcutDialog.module.scss"
 
@@ -199,6 +200,10 @@ export default function ShortcutDialog() {
                         <ShortcutItem
                             shortcut={SHORTCUT_TOGGLE_ITEM_EXPANDED_MODE}
                             description="Toggle expanded item info"
+                        />
+                        <ShortcutItem
+                            shortcut={SHORTCUT_MASS_TAG_EDIT}
+                            description="Mass edit tags (Jot page)"
                         />
                     </div>
                 </section>

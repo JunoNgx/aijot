@@ -30,36 +30,6 @@
         color: var(--colMain);
     }
 
-    &__TagSummary {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.25rem;
-        font-size: var(--fontSizeSm);
-        color: var(--colTextAlt);
-    }
-
-    &__Tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.25rem;
-    }
-
-    &__TagName {
-        font-size: var(--fontSizeSm);
-        color: var(--colSub);
-    }
-
-    &__TagCount {
-        font-size: var(--fontSizeSm);
-        color: var(--colTextAlt);
-    }
-
-    &__TagMore {
-        font-size: var(--fontSizeSm);
-        color: var(--colSub);
-        font-style: italic;
-    }
-
     &__ModeGroup {
         display: flex;
         gap: 0.5rem;
@@ -94,5 +64,35 @@
 
     &__BtnSave {
         composes: Btn Btn--Pri from global;
+    }
+}
+
+.TagSummary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    font-size: var(--fontSizeSm);
+    color: var(--colTextAlt);
+
+    &__Tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    &__TagName {
+        font-size: var(--fontSizeSm);
+        color: var(--colSub);
+    }
+
+    &__TagCount {
+        font-size: var(--fontSizeSm);
+        color: var(--colTextAlt);
+    }
+
+    &__TagMore {
+        font-size: var(--fontSizeSm);
+        color: var(--colSub);
+        font-style: italic;
     }
 }

@@ -135,6 +135,7 @@ export function useSyncFn() {
             setLastSyncTime,
             setSyncError,
             setSyncStatus,
+            setAuthToken,
             handleAuthExpired,
         ],
     )

@@ -99,16 +99,14 @@ export default function Jot() {
     useDocumentTitle(currCollection?.name)
 
     const isTrash = currCollection?.coreType === "trash"
-    const baseItems = isTrash
-        ? (trashedItemsQuery.data ?? [])
-        : (itemsQuery.data ?? [])
-    const collectionItems = useMemo(
-        () =>
-            currCollection
-                ? filterByCollection(baseItems, currCollection)
-                : baseItems,
-        [baseItems, currCollection],
-    )
+    const collectionItems = useMemo(() => {
+        const items = isTrash
+            ? (trashedItemsQuery.data ?? [])
+            : (itemsQuery.data ?? [])
+        return currCollection
+            ? filterByCollection(items, currCollection)
+            : items
+    }, [isTrash, trashedItemsQuery.data, itemsQuery.data, currCollection])
     const visibleItems = useMemo(
         () => filterItems(collectionItems, searchData),
         [collectionItems, searchData],

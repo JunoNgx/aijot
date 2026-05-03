@@ -1,6 +1,5 @@
 import { useDialogStore } from "@/store/dialogStore"
 import MassTagEditDialog from "@/components/MassTagEditDialog"
-import type { Item } from "@/types"
 
 interface OpenMassTagEditDialogOptions {
     itemCount: number
@@ -12,12 +11,6 @@ export function openMassTagEditDialog({
     onSave,
 }: OpenMassTagEditDialogOptions) {
     useDialogStore.getState().openDialog({
-        children: (
-            <MassTagEditDialog
-                itemCount={itemCount}
-                onSave={onSave}
-                onClose={() => useDialogStore.getState().closeAllDialogs()}
-            />
-        ),
+        children: <MassTagEditDialog itemCount={itemCount} onSave={onSave} />,
     })
 }

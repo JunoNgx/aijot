@@ -56,6 +56,7 @@ export default function CollectionDropdown() {
 
         const itemClassName = [
             styles.CollectionItem,
+            styles["CollectionItem--Collection"],
             isActive ? styles["CollectionItem--Active"] : "",
         ].join(" ")
 
@@ -113,7 +114,7 @@ export default function CollectionDropdown() {
                         />
                         {currCollection && (
                             <DropdownMenu.Item
-                                className={styles.CollectionItem}
+                                className={`${styles.CollectionItem} ${styles["CollectionItem--Action"]}`}
                                 onSelect={() =>
                                     openCollectionDialog(currCollection)
                                 }
@@ -125,7 +126,7 @@ export default function CollectionDropdown() {
                             </DropdownMenu.Item>
                         )}
                         <DropdownMenu.Item
-                            className={styles.CollectionItem}
+                                className={`${styles.CollectionItem} ${styles["CollectionItem--Action"]}`}
                             onSelect={() => openCollectionDialog()}
                         >
                             <IconPlus {...ICON_PROPS_ITEM_DROPDOWN} />

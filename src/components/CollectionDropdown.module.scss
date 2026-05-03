@@ -35,6 +35,10 @@
 .CollectionItem {
     composes: Dropdown__Item from global;
 
+    &--Collection {
+        padding: 0.5rem !important;
+    }
+
     &--Active {
         color: var(--colBg);
     }

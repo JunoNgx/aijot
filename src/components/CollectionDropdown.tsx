@@ -14,7 +14,7 @@ import {
     COLLECTION_HOTKEY_COUNT,
     DROPDOWN_OFFSET,
     ICON_PROPS_CURR_COLLECTION,
-    ICON_PROPS_NORMAL,
+    ICON_PROPS_ITEM_DROPDOWN,
 } from "@/config/constants"
 import styles from "./CollectionDropdown.module.scss"
 
@@ -97,7 +97,7 @@ export default function CollectionDropdown() {
                 >
                     {trigger}
                     <IconChevronDown
-                        {...ICON_PROPS_NORMAL}
+                        {...ICON_PROPS_ITEM_DROPDOWN}
                         className={styles.CollectionDropdown__TriggerChevron}
                     />
                 </DropdownMenu.Trigger>
@@ -118,7 +118,7 @@ export default function CollectionDropdown() {
                                     openCollectionDialog(currCollection)
                                 }
                             >
-                                <IconPencil {...ICON_PROPS_NORMAL} />
+                                <IconPencil {...ICON_PROPS_ITEM_DROPDOWN} />
                                 <span className={styles.CollectionItem__Label}>
                                     Edit this collection
                                 </span>
@@ -128,7 +128,7 @@ export default function CollectionDropdown() {
                             className={styles.CollectionItem}
                             onSelect={() => openCollectionDialog()}
                         >
-                            <IconPlus {...ICON_PROPS_NORMAL} />
+                            <IconPlus {...ICON_PROPS_ITEM_DROPDOWN} />
                             <span className={styles.CollectionItem__Label}>
                                 New collection
                             </span>

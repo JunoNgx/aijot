@@ -33,6 +33,11 @@ export const ICON_PROPS_NORMAL = {
     strokeWidth: 2,
 }
 
+export const ICON_PROPS_ITEM_DROPDOWN = {
+    size: 16,
+    strokeWidth: 2,
+}
+
 export const ICON_PROPS_ACTION = {
     size: 20,
     strokeWidth: 2,

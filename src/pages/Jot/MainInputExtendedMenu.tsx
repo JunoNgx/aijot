@@ -12,7 +12,7 @@ import { useCommandPaletteStore } from "@/store/commandPaletteStore"
 import {
     SYNTAX_PREFIX_TODO,
     SYNTAX_PREFIX_LONG_TEXT,
-    ICON_PROPS_NORMAL,
+    ICON_PROPS_ITEM_DROPDOWN,
 } from "@/config/constants"
 import styles from "./MainInputExtendedMenu.module.scss"
 
@@ -64,7 +64,7 @@ export default function MainInputExtendedMenu({
                 className={styles.MainInputExtendedMenu__Trigger}
                 aria-label="Main input options"
             >
-                <IconChevronDown {...ICON_PROPS_NORMAL} />
+                <IconChevronDown {...ICON_PROPS_ITEM_DROPDOWN} />
             </DropdownMenu.Trigger>
             <DropdownMenu.Portal>
                 <DropdownMenu.Content
@@ -85,7 +85,7 @@ export default function MainInputExtendedMenu({
                             prependSyntax(SYNTAX_PREFIX_LONG_TEXT, true)
                         }
                     >
-                        <IconLayoutNavbar {...ICON_PROPS_NORMAL} />
+                        <IconLayoutNavbar {...ICON_PROPS_ITEM_DROPDOWN} />
                         with title
                     </DropdownMenu.Item>
 
@@ -93,7 +93,7 @@ export default function MainInputExtendedMenu({
                         className={styles.MainInputExtendedMenu__Item}
                         onSelect={() => prependSyntax(SYNTAX_PREFIX_TODO, true)}
                     >
-                        <IconCheckbox {...ICON_PROPS_NORMAL} />
+                        <IconCheckbox {...ICON_PROPS_ITEM_DROPDOWN} />
                         as todo
                     </DropdownMenu.Item>
 
@@ -101,7 +101,7 @@ export default function MainInputExtendedMenu({
                         className={styles.MainInputExtendedMenu__Item}
                         onSelect={handleFromClipboard}
                     >
-                        <IconClipboardPlus {...ICON_PROPS_NORMAL} />
+                        <IconClipboardPlus {...ICON_PROPS_ITEM_DROPDOWN} />
                         from clipboard
                     </DropdownMenu.Item>
 
@@ -119,7 +119,7 @@ export default function MainInputExtendedMenu({
                         className={styles.MainInputExtendedMenu__Item}
                         onSelect={handleClearInput}
                     >
-                        <IconX {...ICON_PROPS_NORMAL} />
+                        <IconX {...ICON_PROPS_ITEM_DROPDOWN} />
                         clear input
                     </DropdownMenu.Item>
 
@@ -129,7 +129,7 @@ export default function MainInputExtendedMenu({
                             useCommandPaletteStore.getState().open("main")
                         }
                     >
-                        <IconFocus {...ICON_PROPS_NORMAL} />
+                        <IconFocus {...ICON_PROPS_ITEM_DROPDOWN} />
                         open cmdPalette
                     </DropdownMenu.Item>
                 </DropdownMenu.Content>

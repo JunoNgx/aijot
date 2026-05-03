@@ -13,7 +13,7 @@ import { openShortcutDialog } from "@/utils/openShortcutDialog"
 import {
     DEFAULT_USERNAME,
     DROPDOWN_OFFSET,
-    ICON_PROPS_NORMAL,
+    ICON_PROPS_ITEM_DROPDOWN,
     ROUTE_COLLECTION,
     ROUTE_JOT,
 } from "@/config/constants"
@@ -42,7 +42,7 @@ export default function UserDropdown() {
                         {userDisplayName}
                     </span>
                     <IconChevronDown
-                        {...ICON_PROPS_NORMAL}
+                        {...ICON_PROPS_ITEM_DROPDOWN}
                         className={styles.UserDropdown__Chevron}
                     />
                 </DropdownMenu.Trigger>
@@ -58,7 +58,7 @@ export default function UserDropdown() {
                                     className={styles.UserDropdown__Item}
                                     onSelect={navigateToJot}
                                 >
-                                    <IconWritingSign {...ICON_PROPS_NORMAL} />
+                                    <IconWritingSign {...ICON_PROPS_ITEM_DROPDOWN} />
                                     Jot
                                 </DropdownMenu.Item>
                                 <DropdownMenu.Separator
@@ -70,14 +70,14 @@ export default function UserDropdown() {
                             className={styles.UserDropdown__Item}
                             onSelect={navigateToSettings}
                         >
-                            <IconSettings {...ICON_PROPS_NORMAL} />
+                            <IconSettings {...ICON_PROPS_ITEM_DROPDOWN} />
                             Settings
                         </DropdownMenu.Item>
                         <DropdownMenu.Item
                             className={styles.UserDropdown__Item}
                             onSelect={navigateToCollections}
                         >
-                            <IconStack2 {...ICON_PROPS_NORMAL} />
+                            <IconStack2 {...ICON_PROPS_ITEM_DROPDOWN} />
                             Collections
                         </DropdownMenu.Item>
                         <DropdownMenu.Separator
@@ -87,14 +87,14 @@ export default function UserDropdown() {
                             className={styles.UserDropdown__Item}
                             onSelect={openShortcutDialog}
                         >
-                            <IconKeyboard {...ICON_PROPS_NORMAL} />
+                            <IconKeyboard {...ICON_PROPS_ITEM_DROPDOWN} />
                             Shortcuts
                         </DropdownMenu.Item>
                         <DropdownMenu.Item
                             className={styles.UserDropdown__Item}
                             onSelect={navigateToHelp}
                         >
-                            <IconHelp {...ICON_PROPS_NORMAL} />
+                            <IconHelp {...ICON_PROPS_ITEM_DROPDOWN} />
                             Help
                         </DropdownMenu.Item>
                     </DropdownMenu.Content>

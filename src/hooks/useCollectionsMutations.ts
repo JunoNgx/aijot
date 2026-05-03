@@ -122,8 +122,41 @@ export function useCollectionsMutations() {
                 context?.previousCollections,
             )
         },
-        onSuccess: () => {
-            toast.success("Collection deleted")
+        onSuccess: (_data, collection) => {
+            toast("Collection has been deleted", {
+                action: {
+                    label: "Undo",
+                    onClick: () => {
+                        restoreCollectionMutation.mutate(collection)
+                    },
+                },
+            })
+        },
+        onSettled: () => {
+            invalidateCollectionQueries()
+        },
+    })
+
+    const restoreCollectionMutation = useMutation({
+        mutationFn: async (collection: Collection) => {
+            const { deletedAt: _deletedAt, ...restoredCollection } = collection
+            await storage.putCollection({
+                ...restoredCollection,
+                updatedAt: DateTime.now().toISO(),
+            })
+        },
+        onMutate: async () => {
+            await queryClient.cancelQueries({ queryKey: queryKeys.collections })
+            const previousCollections = queryClient.getQueryData<Collection[]>(
+                queryKeys.collections,
+            )
+            return { previousCollections }
+        },
+        onError: (_err, _collection, context) => {
+            queryClient.setQueryData(
+                queryKeys.collections,
+                context?.previousCollections,
+            )
         },
         onSettled: () => {
             invalidateCollectionQueries()
@@ -135,5 +168,6 @@ export function useCollectionsMutations() {
         updateCollectionMutation,
         hardDeleteCollectionMutation,
         softDeleteCollectionMutation,
+        restoreCollectionMutation,
     }
 }

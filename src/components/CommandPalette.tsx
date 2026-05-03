@@ -6,7 +6,10 @@ import { useLocalUserSettings } from "@/store/localUserSettings"
 import { useNavigateRoutes } from "@/hooks/useNavigateRoutes"
 import { useCollectionsQuery } from "@/hooks/useCollectionsQuery"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
+import { useTransientUiState } from "@/store/transientUiState"
+import { useItemsMutations } from "@/hooks/useItemsMutations"
 import { openCollectionDialog } from "@/utils/openCollectionDialog"
+import { openMassTagEditDialog } from "@/utils/openMassTagEditDialog"
 import { themes } from "@/config/themes"
 import type { ThemeName } from "@/config/themes"
 import styles from "./CommandPalette.module.scss"
@@ -19,6 +22,7 @@ import {
     IconPalette,
     IconCheck,
     IconPlus,
+    IconTags,
 } from "@tabler/icons-react"
 
 export type CommandPaletteMode = "main" | "theme"
@@ -60,6 +64,14 @@ export default function CommandPalette({
     )
     const { collectionsQuery } = useCollectionsQuery()
     const collections = collectionsQuery.data ?? []
+
+    const { massTagEditMutation } = useItemsMutations()
+    const mainListVisibleItems = useTransientUiState(
+        (s) => s.mainListVisibleItems,
+    )
+    const isOnJotPage =
+        location.pathname === ROUTE_JOT ||
+        location.pathname.startsWith(`${ROUTE_JOT}/`)
 
     const isMainMode = mode === "main"
     const isThemeMode = mode === "theme"
@@ -293,6 +305,35 @@ export default function CommandPalette({
         </Command.Group>
     )
 
+    const massTagEditItem =
+        isOnJotPage && mainListVisibleItems.length > 0 ? (
+            <Command.Item
+                value="mass edit tags"
+                className={styles.CommandPaletteItem__Item}
+                onSelect={() => {
+                    openMassTagEditDialog({
+                        itemCount: mainListVisibleItems.length,
+                        onSave: (tagStr) =>
+                            massTagEditMutation.mutate({
+                                items: mainListVisibleItems,
+                                tagStr,
+                            }),
+                    })
+                    onClose()
+                }}
+            >
+                <IconTags {...ICON_PROPS_NORMAL} />
+                <div className={styles.CommandPaletteItem__ItemContent}>
+                    <span className={styles.CommandPaletteItem__LabelLine}>
+                        Mass edit tags
+                    </span>
+                    <span className={styles.CommandPaletteItem__SubLabel}>
+                        {mainListVisibleItems.length} currently visible items
+                    </span>
+                </div>
+            </Command.Item>
+        ) : null
+
     const changeThemeItem = (
         <Command.Item
             value="change theme"
@@ -317,6 +358,7 @@ export default function CommandPalette({
             }
             className={styles.CommandPaletteGroup__Group}
         >
+            {massTagEditItem}
             {changeThemeItem}
         </Command.Group>
     )

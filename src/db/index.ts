@@ -9,7 +9,7 @@ import { DateTime } from "luxon"
 // Platform factory: swap adapter here for Electron (SQLite) in future
 export const storage: StorageAdapter = dexieAdapter
 
-export async function purgeExpiredItems(): Promise<void> {
+export async function purgeExpiredData(): Promise<void> {
     const trashCutoff = DateTime.now()
         .minus({ days: TRASH_PURGE_DURATION_DAY })
         .toUTC()
@@ -20,6 +20,7 @@ export async function purgeExpiredItems(): Promise<void> {
         .toISO()
     await storage.purgeTrashedItems(trashCutoff)
     await storage.purgeSoftDeletedItems(tombstoneCutoff)
+    await storage.purgeSoftDeletedCollections(tombstoneCutoff)
 }
 
 export async function forceDeleteDb(): Promise<void> {

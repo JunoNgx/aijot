@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { DateTime } from "luxon"
 import { toast } from "sonner"
 import { storage } from "@/db"
 import { queryKeys } from "@/db/queryKeys"
@@ -69,9 +70,40 @@ export function useCollectionsMutations() {
         },
     })
 
-    const deleteCollectionMutation = useMutation({
+    const hardDeleteCollectionMutation = useMutation({
         mutationFn: async (collection: Collection) => {
             await storage.deleteCollection(collection.id)
+        },
+        onMutate: async (collection) => {
+            await queryClient.cancelQueries({ queryKey: queryKeys.collections })
+            const previousCollections = queryClient.getQueryData<Collection[]>(
+                queryKeys.collections,
+            )
+            queryClient.setQueryData<Collection[]>(
+                queryKeys.collections,
+                (prev) => (prev ?? []).filter((c) => c.id !== collection.id),
+            )
+            return { previousCollections }
+        },
+        onError: (_err, _collection, context) => {
+            queryClient.setQueryData(
+                queryKeys.collections,
+                context?.previousCollections,
+            )
+        },
+        onSettled: () => {
+            invalidateCollectionQueries()
+        },
+    })
+
+    const softDeleteCollectionMutation = useMutation({
+        mutationFn: async (collection: Collection) => {
+            const now = DateTime.now().toISO()
+            await storage.putCollection({
+                ...collection,
+                deletedAt: now,
+                updatedAt: now,
+            })
         },
         onMutate: async (collection) => {
             await queryClient.cancelQueries({ queryKey: queryKeys.collections })
@@ -101,6 +133,7 @@ export function useCollectionsMutations() {
     return {
         createCollectionMutation,
         updateCollectionMutation,
-        deleteCollectionMutation,
+        hardDeleteCollectionMutation,
+        softDeleteCollectionMutation,
     }
 }

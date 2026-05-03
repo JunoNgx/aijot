@@ -11,7 +11,7 @@ class AijotDb extends Dexie {
         super("aijot")
         this.version(DB_VERSION).stores({
             items: "id, type, jottedAt, trashedAt, deletedAt, *tags",
-            collections: "id, sortOrder, slug",
+            collections: "id, sortOrder, slug, deletedAt",
         })
     }
 }
@@ -82,6 +82,14 @@ export const dexieAdapter: StorageAdapter = {
             .below(cutoffIso)
             .primaryKeys()
         await db.items.bulkDelete(expiredIds as string[])
+    },
+
+    async purgeSoftDeletedCollections(cutoffIso) {
+        const expiredIds = await db.collections
+            .where("deletedAt")
+            .below(cutoffIso)
+            .primaryKeys()
+        await db.collections.bulkDelete(expiredIds as string[])
     },
 
     async clearAllData() {

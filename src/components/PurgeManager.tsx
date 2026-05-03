@@ -1,13 +1,13 @@
 import { useEffect } from "react"
-import { purgeExpiredItems } from "@/db"
+import { purgeExpiredData } from "@/db"
 
 export default function PurgeManager() {
     useEffect(() => {
-        purgeExpiredItems()
+        purgeExpiredData()
 
         const handleVisibilityChange = () => {
             if (document.visibilityState === "visible") {
-                purgeExpiredItems()
+                purgeExpiredData()
             }
         }
 

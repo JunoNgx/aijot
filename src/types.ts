@@ -43,6 +43,7 @@ export interface Collection {
     sortOrder: number
     tags: string[]
     types: ItemType[]
+    deletedAt?: string
     // Not stored in DB; set on core collections only
     coreType?: CoreCollectionType
 }

@@ -54,11 +54,11 @@ export default function CollectionDialog({ collection }: Props) {
     const {
         createCollectionMutation,
         updateCollectionMutation,
-        deleteCollectionMutation,
+        softDeleteCollectionMutation,
     } = useCollectionsMutations()
     const isSaving =
         createCollectionMutation.isPending || updateCollectionMutation.isPending
-    const isDeleting = deleteCollectionMutation.isPending
+    const isDeleting = softDeleteCollectionMutation.isPending
     const { setAll, setUntagged, setTrash } = useCoreCollectionSettings()
     const closeAllDialogs = useDialogStore((s) => s.closeAllDialogs)
     const defaultCollectionSlug = useSyncedUserSettings(
@@ -207,7 +207,7 @@ export default function CollectionDialog({ collection }: Props) {
 
     const handleDelete = () => {
         if (!collection) return
-        deleteCollectionMutation.mutate(collection)
+        softDeleteCollectionMutation.mutate(collection)
         closeAllDialogs()
     }
 

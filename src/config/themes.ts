@@ -74,7 +74,8 @@ const monkeyTypeThemes = [
         colText: "#ffffff",
         colDanger: "#bd4141",
     },
-    { // Fixed danger colour
+    {
+        // Fixed danger colour
         name: "Blue Dolphin",
         colBg: "#003950",
         colMain: "#ffcefb",
@@ -398,7 +399,8 @@ const monkeyTypeThemes = [
         colText: "#ffffff",
         colDanger: "#ff3333",
     },
-    { // Fixed danger colour
+    {
+        // Fixed danger colour
         name: "Vesper",
         colBg: "#1d1d2b",
         colMain: "#c4b5fc",
@@ -414,7 +416,8 @@ const monkeyTypeThemes = [
         colText: "#d4d4d4",
         colDanger: "#f14c4c",
     },
-    { // Fixed danger colour
+    {
+        // Fixed danger colour
         name: "Witch Girl",
         colBg: "#2d1f2d",
         colMain: "#ffc8dd",

@@ -27,6 +27,8 @@ export interface Item {
     previousContentRecordedAt?: string
 }
 
+export type MassTagEditMode = "add" | "replace" | "remove"
+
 // ============================================================
 // Collection
 // ============================================================

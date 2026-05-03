@@ -5,7 +5,7 @@ import { storage } from "@/db"
 import { queryKeys } from "@/db/queryKeys"
 import { fetchLinkMeta } from "@/services/linkFetch"
 import { useTransientUiState } from "@/store/transientUiState"
-import type { Item } from "@/types"
+import type { Item, MassTagEditMode } from "@/types"
 import { sortItems } from "@/utils/helpers"
 
 export function useItemsMutations() {
@@ -237,35 +237,61 @@ export function useItemsMutations() {
             .filter((t) => t.length > 0)
     }
 
+    const applyTagMode = (
+        existingTags: string[],
+        incomingTags: string[],
+        mode: MassTagEditMode,
+    ): string[] => {
+        if (mode === "add") {
+            return [...new Set([...existingTags, ...incomingTags])]
+        }
+        if (mode === "remove") {
+            return existingTags.filter((tag) => !incomingTags.includes(tag))
+        }
+        return incomingTags
+    }
+
+    const getTagModeActionLabel = (mode: MassTagEditMode): string => {
+        if (mode === "add") return "added to"
+        if (mode === "remove") return "removed from"
+        return "set for"
+    }
+
     const massTagEditMutation = useMutation({
         mutationFn: async ({
             items,
             tagStr,
+            mode,
         }: {
             items: Item[]
             tagStr: string
+            mode: MassTagEditMode
         }) => {
-            const tags = parseTagStr(tagStr)
+            const incomingTags = parseTagStr(tagStr)
             const now = DateTime.now().toISO()
-            const updatedItems: Item[] = items.map((item) => ({
-                ...item,
-                tags,
-                updatedAt: now,
-            }))
+            const updatedItems: Item[] = items.map((item) => {
+                const updatedTags = applyTagMode(item.tags, incomingTags, mode)
+                return { ...item, tags: updatedTags, updatedAt: now }
+            })
             await storage.bulkPutItems(updatedItems)
         },
-        onMutate: async ({ items, tagStr }) => {
+        onMutate: async ({ items, tagStr, mode }) => {
             await queryClient.cancelQueries({ queryKey: queryKeys.items })
             const previousItems = queryClient.getQueryData<Item[]>(
                 queryKeys.items,
             )
 
-            const tags = parseTagStr(tagStr)
+            const incomingTags = parseTagStr(tagStr)
             queryClient.setQueryData<Item[]>(queryKeys.items, (prev) =>
                 (prev ?? []).map((item) => {
                     const isAffected = items.some((i) => i.id === item.id)
                     if (!isAffected) return item
-                    return { ...item, tags }
+                    const updatedTags = applyTagMode(
+                        item.tags,
+                        incomingTags,
+                        mode,
+                    )
+                    return { ...item, tags: updatedTags }
                 }),
             )
 
@@ -276,8 +302,9 @@ export function useItemsMutations() {
                 queryClient.setQueryData(queryKeys.items, context.previousItems)
             }
         },
-        onSuccess: (_data, { items }) => {
-            toast(`Tags updated for ${items.length} items`, {
+        onSuccess: (_data, { items, mode }) => {
+            const actionLabel = getTagModeActionLabel(mode)
+            toast(`Tags ${actionLabel} ${items.length} items`, {
                 duration: Infinity,
                 action: {
                     label: "Undo",

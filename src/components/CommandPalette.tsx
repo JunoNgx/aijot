@@ -312,11 +312,12 @@ export default function CommandPalette({
                 className={styles.CommandPaletteItem__Item}
                 onSelect={() => {
                     openMassTagEditDialog({
-                        itemCount: mainListVisibleItems.length,
-                        onSave: (tagStr) =>
+                        items: mainListVisibleItems,
+                        onSave: (tagStr, mode) =>
                             massTagEditMutation.mutate({
                                 items: mainListVisibleItems,
                                 tagStr,
+                                mode,
                             }),
                     })
                     onClose()

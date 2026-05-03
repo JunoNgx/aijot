@@ -134,11 +134,12 @@ export default function MainInputExtendedMenu({
                             className={styles.MainInputExtendedMenu__Item}
                             onSelect={() =>
                                 openMassTagEditDialog({
-                                    itemCount: visibleItems.length,
-                                    onSave: (tagStr) =>
+                                    items: visibleItems,
+                                    onSave: (tagStr, mode) =>
                                         massTagEditMutation.mutate({
                                             items: visibleItems,
                                             tagStr,
+                                            mode,
                                         }),
                                 })
                             }

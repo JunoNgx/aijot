@@ -118,19 +118,18 @@ export default function Jot() {
     const selectedItem =
         selectedIndex >= 0 ? visibleItems[selectedIndex] : undefined
 
-    const handleMassTagSave = useCallback(
-        (tagStr: string) => {
-            massTagEditMutation.mutate({ items: visibleItems, tagStr })
-        },
-        [visibleItems, massTagEditMutation],
-    )
-
     const handleOpenMassTagEditDialog = useCallback(() => {
         openMassTagEditDialog({
-            itemCount: visibleItems.length,
-            onSave: handleMassTagSave,
+            items: visibleItems,
+            onSave: (tagStr, mode) => {
+                massTagEditMutation.mutate({
+                    items: visibleItems,
+                    tagStr,
+                    mode,
+                })
+            },
         })
-    }, [visibleItems.length, handleMassTagSave])
+    }, [visibleItems, massTagEditMutation])
 
     useEffect(() => {
         if (selectedIndex <= 0) {

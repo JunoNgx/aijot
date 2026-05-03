@@ -57,12 +57,12 @@
         align-items: center;
         gap: 0.375rem;
         cursor: pointer;
-        font-size: var(--fontSizeSm);
+        font-size: var(--fontSizeMd);
     }
 
     &__Description {
-        font-size: var(--fontSizeXs);
-        color: var(--colSub);
+        font-size: var(--fontSizeSm);
+        color: var(--colTextAlt);
         margin-top: 0.25rem;
     }
 }

@@ -108,27 +108,28 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
         </div>
     )
 
-    const tagSummaryItems = totalUniqueTags > 0 ? (
-        <div className={styles.MassTagEditDialog__Field}>
-            <span className={styles.TagSummary}>
-                {topTagCounts.map(([tag, count]) => (
-                    <span key={tag} className={styles.TagSummary__Tag}>
-                        <span className={styles.TagSummary__TagName}>
-                            {tag}
+    const tagSummaryItems =
+        totalUniqueTags > 0 ? (
+            <div className={styles.MassTagEditDialog__Field}>
+                <span className={styles.TagSummary}>
+                    {topTagCounts.map(([tag, count]) => (
+                        <span key={tag} className={styles.TagSummary__Tag}>
+                            <span className={styles.TagSummary__TagName}>
+                                {tag}
+                            </span>
+                            <span className={styles.TagSummary__TagCount}>
+                                ({count})
+                            </span>
                         </span>
-                        <span className={styles.TagSummary__TagCount}>
-                            ({count})
+                    ))}
+                    {totalUniqueTags > MAX_SHOWN_TAGS && (
+                        <span className={styles.TagSummary__TagMore}>
+                            +{totalUniqueTags - MAX_SHOWN_TAGS} more
                         </span>
-                    </span>
-                ))}
-                {totalUniqueTags > MAX_SHOWN_TAGS && (
-                    <span className={styles.TagSummary__TagMore}>
-                        +{totalUniqueTags - MAX_SHOWN_TAGS} more
-                    </span>
-                )}
-            </span>
-        </div>
-    ) : null
+                    )}
+                </span>
+            </div>
+        ) : null
 
     return (
         <div className={styles.MassTagEditDialog}>

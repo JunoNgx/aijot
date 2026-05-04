@@ -6,6 +6,7 @@ import {
     useRef,
 } from "react"
 import * as Accordion from "@radix-ui/react-accordion"
+import { useHotkeys } from "react-hotkeys-hook"
 import { DateTime } from "luxon"
 // import { EditorView, keymap, drawSelection } from "@codemirror/view"
 // import { EditorState } from "@codemirror/state"
@@ -16,7 +17,6 @@ import { useItemsMutations } from "@/hooks/useItemsMutations"
 import { useItemActions } from "@/hooks/useItemActions"
 import { useDebounced } from "@/hooks/useDebounced"
 import { useDialogStore } from "@/store/dialogStore"
-import { getHotkeyHandler } from "@/utils/hotkeyHandler"
 import { SHORTCUT_SAVE_AND_CLOSE } from "@/config/constants"
 import { formatDatetime } from "@/utils/helpers"
 import { openPreviousVersionDialog } from "@/utils/openPreviousVersionDialog"
@@ -214,15 +214,10 @@ export default function ItemDialog({ item, onClose }: Props) {
         closeAllDialogs()
     }, [handleSave, closeAllDialogs])
 
-    const saveHotkeyHandler = useCallback(
-        (e: React.KeyboardEvent) => {
-            const handler = getHotkeyHandler([
-                [SHORTCUT_SAVE_AND_CLOSE, handleSaveAndClose],
-            ])
-            handler(e)
-        },
-        [handleSaveAndClose],
-    )
+    useHotkeys(SHORTCUT_SAVE_AND_CLOSE, handleSaveAndClose, {
+        enableOnFormTags: true,
+        preventDefault: true,
+    })
 
     const debouncedSave = useDebounced(handleSave, AUTOSAVE_DEBOUNCE_MS)
 
@@ -294,7 +289,6 @@ export default function ItemDialog({ item, onClose }: Props) {
                 setContentVal(e.target.value)
                 markChanged()
             }}
-            onKeyDown={saveHotkeyHandler}
         />
     )
 
@@ -357,7 +351,6 @@ export default function ItemDialog({ item, onClose }: Props) {
                                 className="Dialog__Input HalfInput"
                                 value={faviconUrlVal}
                                 onChange={handleFaviconUrlChange}
-                                onKeyDown={saveHotkeyHandler}
                                 placeholder="https://..."
                             />
                         </div>
@@ -424,7 +417,6 @@ export default function ItemDialog({ item, onClose }: Props) {
                         className="Dialog__Input"
                         value={titleVal}
                         onChange={handleTitleInputChange}
-                        onKeyDown={saveHotkeyHandler}
                     />
                 </div>
             )}
@@ -448,7 +440,6 @@ export default function ItemDialog({ item, onClose }: Props) {
                     className="Dialog__Input"
                     value={tagStr}
                     onChange={handleTagStrChange}
-                    onKeyDown={saveHotkeyHandler}
                     placeholder=""
                 />
             </div>

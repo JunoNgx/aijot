@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from "react"
+import { useHotkeys } from "react-hotkeys-hook"
 import { IconX } from "@tabler/icons-react"
 import { ICON_PROPS_ACTION } from "@/config/constants"
-import { getHotkeyHandler } from "@/utils/hotkeyHandler"
 import { SHORTCUT_SAVE_AND_CLOSE } from "@/config/constants"
 import { useDialogStore } from "@/store/dialogStore"
 import { pluralise } from "@/utils/helpers"
@@ -75,12 +75,10 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
         closeAllDialogs()
     }
 
-    const saveHotkeyHandler = (e: React.KeyboardEvent) => {
-        const handler = getHotkeyHandler([
-            [SHORTCUT_SAVE_AND_CLOSE, handleSaveAndClose],
-        ])
-        handler(e)
-    }
+    useHotkeys(SHORTCUT_SAVE_AND_CLOSE, handleSaveAndClose, {
+        enableOnFormTags: true,
+        preventDefault: true,
+    })
 
     const isSaveDisabled = mode !== "remove" && !tagStr.trim()
     const selectedModeDetail = MODE_DETAILS[mode]
@@ -162,7 +160,6 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
                     ref={inputRef}
                     value={tagStr}
                     onChange={handleTagStrChange}
-                    onKeyDown={saveHotkeyHandler}
                     placeholder=""
                 />
             </div>

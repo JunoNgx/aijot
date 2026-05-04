@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react"
+import { useHotkeys } from "react-hotkeys-hook"
 import { DateTime } from "luxon"
 import { nanoid } from "nanoid"
 import { EmojiPicker } from "frimousse"
@@ -11,7 +12,7 @@ import { useSyncedUserSettings } from "@/store/syncedUserSettings"
 import { generateSlug } from "@/utils/helpers"
 import styles from "./CollectionDialog.module.scss"
 import type { Collection, ItemType } from "@/types"
-import { ICON_PROPS_ACTION } from "@/config/constants"
+import { ICON_PROPS_ACTION, SHORTCUT_SAVE_AND_CLOSE } from "@/config/constants"
 
 const RANDOM_ICONS = [
     "💼", // work
@@ -210,6 +211,11 @@ export default function CollectionDialog({ collection }: Props) {
         softDeleteCollectionMutation.mutate(collection)
         closeAllDialogs()
     }
+
+    useHotkeys(SHORTCUT_SAVE_AND_CLOSE, handleSave, {
+        enableOnFormTags: true,
+        preventDefault: true,
+    })
 
     const typeCheckboxes = ALL_TYPES.map((type) => (
         <label key={type} className={styles.CollectionDialog__TypeLabel}>

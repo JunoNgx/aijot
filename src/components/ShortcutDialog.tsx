@@ -27,6 +27,7 @@ import {
     SHORTCUT_NAV_PREV_COLLECTION,
     SHORTCUT_NAV_NEXT_COLLECTION,
     SHORTCUT_MASS_TAG_EDIT,
+    SHORTCUT_DISMISS_ALL_NOTIFICATIONS,
 } from "@/config/constants"
 import styles from "./ShortcutDialog.module.scss"
 
@@ -204,6 +205,10 @@ export default function ShortcutDialog() {
                         <ShortcutItem
                             shortcut={SHORTCUT_MASS_TAG_EDIT}
                             description="Mass edit tags (Jot page)"
+                        />
+                        <ShortcutItem
+                            shortcut={SHORTCUT_DISMISS_ALL_NOTIFICATIONS}
+                            description="Dismiss all notifications"
                         />
                     </div>
                 </section>

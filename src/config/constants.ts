@@ -137,6 +137,7 @@ export const SHORTCUT_SYNC = "mod+s"
 export const SHORTCUT_SHORTCUTS_HELP = "mod+Slash"
 export const SHORTCUT_TOGGLE_ITEM_EXPANDED_MODE = "mod+backslash"
 export const SHORTCUT_MASS_TAG_EDIT = "mod+alt+E"
+export const SHORTCUT_DISMISS_ALL_NOTIFICATIONS = "mod+shift+x"
 
 export const SHORTCUT_NAV_UP = "ArrowUp"
 export const SHORTCUT_NAV_DOWN = "ArrowDown"

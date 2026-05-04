@@ -1,9 +1,13 @@
 import * as Dialog from "@radix-ui/react-dialog"
+import { toast } from "sonner"
 import { useDialogStore } from "@/store/dialogStore"
 import styles from "./DialogManager.module.scss"
 import { useHotkeys } from "react-hotkeys-hook"
 import { openShortcutDialog } from "@/utils/openShortcutDialog"
-import { SHORTCUT_SHORTCUTS_HELP } from "@/config/constants"
+import {
+    SHORTCUT_SHORTCUTS_HELP,
+    SHORTCUT_DISMISS_ALL_NOTIFICATIONS,
+} from "@/config/constants"
 
 export default function DialogManager() {
     const isOpen = useDialogStore((s) => s.isOpen)
@@ -27,6 +31,17 @@ export default function DialogManager() {
         SHORTCUT_SHORTCUTS_HELP,
         () => {
             toggleShortcutHelp(isOpen)
+        },
+        {
+            enableOnFormTags: true,
+            preventDefault: true,
+        },
+    )
+
+    useHotkeys(
+        SHORTCUT_DISMISS_ALL_NOTIFICATIONS,
+        () => {
+            toast.dismiss()
         },
         {
             enableOnFormTags: true,

@@ -182,6 +182,7 @@ export default function ItemDialog({ item, onClose }: Props) {
             title: titleRef.current.trim() || undefined,
             content: contentRef.current,
             tags: tagStrRef.current
+                .replace(/  +/g, " ")
                 .trim()
                 .split(" ")
                 .filter((t) => t.length > 0),
@@ -238,9 +239,15 @@ export default function ItemDialog({ item, onClose }: Props) {
     // }
 
     const handleTagStrChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const collapsed = e.target.value.replace(/  +/g, " ")
-        setTagStr(collapsed)
+        setTagStr(e.target.value)
         markChanged()
+    }
+
+    const handleTagStrBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+        const collapsed = e.target.value.replace(/  +/g, " ")
+        if (collapsed !== tagStr) {
+            setTagStr(collapsed)
+        }
     }
 
     const handleJottedAtChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -440,6 +447,7 @@ export default function ItemDialog({ item, onClose }: Props) {
                     className="Dialog__Input"
                     value={tagStr}
                     onChange={handleTagStrChange}
+                    onBlur={handleTagStrBlur}
                     placeholder=""
                 />
             </div>

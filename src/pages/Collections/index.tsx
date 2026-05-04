@@ -20,14 +20,8 @@ export default function Collections() {
     const queryClient = useQueryClient()
     const { collectionsQuery } = useCollectionsQuery()
     const { updateCollectionMutation } = useCollectionsMutations()
-    const {
-        setAllCollection,
-        setUntaggedCollection,
-        setTrashCollection,
-        allCollection,
-        untaggedCollection,
-        trashCollection,
-    } = useSyncedUserSettings()
+    const { setAllCollection, setUntaggedCollection, setTrashCollection } =
+        useSyncedUserSettings()
     const defaultCollectionSlug = useSyncedUserSettings(
         (s) => s.defaultCollectionSlug,
     )
@@ -38,15 +32,7 @@ export default function Collections() {
         (s) => s.setShouldCustomSortCollections,
     )
 
-    const sortedCollections = (collectionsQuery.data ?? []).map((c) => {
-        if (c.coreType === "all")
-            return { ...c, sortOrder: allCollection.sortOrder }
-        if (c.coreType === "untagged")
-            return { ...c, sortOrder: untaggedCollection.sortOrder }
-        if (c.coreType === "trash")
-            return { ...c, sortOrder: trashCollection.sortOrder }
-        return c
-    })
+    const sortedCollections = collectionsQuery.data ?? []
 
     const handleDragEnd = (result: DropResult) => {
         if (!result.destination) return

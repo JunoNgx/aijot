@@ -4,7 +4,6 @@ import { useLocalAppData } from "@/store/localAppData"
 import { useLocalSyncData } from "@/store/localSyncData"
 import { useLocalUserSettings } from "@/store/localUserSettings"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
-import { useCoreCollectionSettings } from "@/store/coreCollectionSettings"
 
 export async function clearAllData(): Promise<void> {
     try {
@@ -29,7 +28,6 @@ export function resetZustandStores(): void {
     useLocalSyncData.persist.clearStorage()
     useLocalUserSettings.persist.clearStorage()
     useSyncedUserSettings.persist.clearStorage()
-    useCoreCollectionSettings.persist.clearStorage()
 }
 
 export function clearAllStorage(): void {

@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
 import { storage } from "@/db"
 import { queryKeys } from "@/db/queryKeys"
-import { useCoreCollectionSettings } from "@/store/coreCollectionSettings"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
 import { buildCoreCollection } from "@/utils/helpers"
 import type { Collection } from "@/types"
 
 export function useCollectionsQuery() {
-    const { all, untagged, trash } = useCoreCollectionSettings()
+    const { allCollection, untaggedCollection, trashCollection } =
+        useSyncedUserSettings()
     const shouldCustomSortCollections = useSyncedUserSettings(
         (s) => s.shouldCustomSortCollections,
     )
@@ -17,17 +17,22 @@ export function useCollectionsQuery() {
         queryFn: async () => {
             const userCollections = await storage.getNonDeletedCollections()
             const coreCollections: Collection[] = [
-                buildCoreCollection("core-all", all, all.sortOrder, "all"),
+                buildCoreCollection(
+                    "core-all",
+                    allCollection,
+                    allCollection.sortOrder,
+                    "all",
+                ),
                 buildCoreCollection(
                     "core-untagged",
-                    untagged,
-                    untagged.sortOrder,
+                    untaggedCollection,
+                    untaggedCollection.sortOrder,
                     "untagged",
                 ),
                 buildCoreCollection(
                     "core-trash",
-                    trash,
-                    trash.sortOrder,
+                    trashCollection,
+                    trashCollection.sortOrder,
                     "trash",
                 ),
             ]

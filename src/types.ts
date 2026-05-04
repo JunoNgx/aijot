@@ -100,11 +100,18 @@ export interface SyncedUserSettingsStore {
     defaultCollectionSlug: string
     shouldCustomSortCollections: boolean
     shouldShowJotItemExtraInfo: boolean
+    allCollection: CoreCollectionConfig
+    untaggedCollection: CoreCollectionConfig
+    trashCollection: CoreCollectionConfig
+    settingsUpdatedAt?: string
     setUserDisplayName: (name: string) => void
     setShouldApplyTagsOfCurrCollection: (value: boolean) => void
     setDefaultCollectionSlug: (slug: string) => void
     setShouldCustomSortCollections: (value: boolean) => void
     setShouldShowJotItemExtraInfo: (value: boolean) => void
+    setAllCollection: (config: Partial<CoreCollectionConfig>) => void
+    setUntaggedCollection: (config: Partial<CoreCollectionConfig>) => void
+    setTrashCollection: (config: Partial<CoreCollectionConfig>) => void
 }
 
 export interface CoreCollectionConfig {

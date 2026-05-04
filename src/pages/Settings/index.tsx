@@ -8,7 +8,6 @@ import { useLocalAppData } from "@/store/localAppData"
 import { useLocalUserSettings } from "@/store/localUserSettings"
 import { useCommandPaletteStore } from "@/store/commandPaletteStore"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
-import { useCoreCollectionSettings } from "@/store/coreCollectionSettings"
 import { useLocalSyncData } from "@/store/localSyncData"
 import { useDialogStore } from "@/store/dialogStore"
 import { useDocumentTitle } from "@/hooks/useDocumentTitle"
@@ -89,12 +88,18 @@ export default function Settings() {
         (s) => s.setShouldShowJotItemExtraInfo,
     )
 
-    const allCollection = useCoreCollectionSettings((s) => s.all)
-    const setAll = useCoreCollectionSettings((s) => s.setAll)
-    const untaggedCollection = useCoreCollectionSettings((s) => s.untagged)
-    const setUntagged = useCoreCollectionSettings((s) => s.setUntagged)
-    const trashCollection = useCoreCollectionSettings((s) => s.trash)
-    const setTrash = useCoreCollectionSettings((s) => s.setTrash)
+    const allCollection = useSyncedUserSettings((s) => s.allCollection)
+    const setAllCollection = useSyncedUserSettings((s) => s.setAllCollection)
+    const untaggedCollection = useSyncedUserSettings(
+        (s) => s.untaggedCollection,
+    )
+    const setUntaggedCollection = useSyncedUserSettings(
+        (s) => s.setUntaggedCollection,
+    )
+    const trashCollection = useSyncedUserSettings((s) => s.trashCollection)
+    const setTrashCollection = useSyncedUserSettings(
+        (s) => s.setTrashCollection,
+    )
 
     const syncStatus = useLocalSyncData((s) => s.syncStatus)
     const syncError = useLocalSyncData((s) => s.syncError)
@@ -170,9 +175,9 @@ export default function Settings() {
             setShouldShowJotItemExtraInfo(
                 settings.syncedUserSettings.shouldShowJotItemExtraInfo,
             )
-            setAll(settings.coreCollections.all)
-            setUntagged(settings.coreCollections.untagged)
-            setTrash(settings.coreCollections.trash)
+            setAllCollection(settings.coreCollections.all)
+            setUntaggedCollection(settings.coreCollections.untagged)
+            setTrashCollection(settings.coreCollections.trash)
             queryClient.invalidateQueries({ queryKey: queryKeys.items })
             queryClient.invalidateQueries({ queryKey: queryKeys.collections })
             toast("Data imported successfully")

@@ -3,11 +3,11 @@ import { useParams, Navigate } from "react-router-dom"
 import { useHotkeys } from "react-hotkeys-hook"
 import { useItemsQuery } from "@/hooks/useItemsQuery"
 import { useCollectionsQuery } from "@/hooks/useCollectionsQuery"
-import { useCoreCollectionSettings } from "@/store/coreCollectionSettings"
 import { useLocalAppData } from "@/store/localAppData"
 import { useTransientUiState } from "@/store/transientUiState"
 import { useNavigateRoutes } from "@/hooks/useNavigateRoutes"
 import { useDocumentTitle } from "@/hooks/useDocumentTitle"
+import { useSyncedUserSettings } from "@/store/syncedUserSettings"
 import {
     SHORTCUT_FOCUS_MAIN_INPUT,
     SHORTCUT_TOGGLE_ITEM_EXPANDED_MODE,
@@ -16,7 +16,6 @@ import {
     SHORTCUT_MASS_TAG_EDIT,
     ROUTE_JOT,
 } from "@/config/constants"
-import { useSyncedUserSettings } from "@/store/syncedUserSettings"
 import { useItemsMutations } from "@/hooks/useItemsMutations"
 import { openMassTagEditDialog } from "@/utils/openMassTagEditDialog"
 import MainInput from "@/pages/Jot/MainInput"
@@ -94,7 +93,7 @@ export default function Jot() {
 
     const collections = collectionsQuery.data ?? []
     const currCollection = collections.find((c) => c.slug === slug)
-    const allSlug = useCoreCollectionSettings((s) => s.all.slug)
+    const allSlug = useSyncedUserSettings((s) => s.allCollection.slug)
 
     useDocumentTitle(currCollection?.name)
 

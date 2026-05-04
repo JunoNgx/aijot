@@ -5,7 +5,6 @@ import { DateTime } from "luxon"
 import { useCollectionsQuery } from "@/hooks/useCollectionsQuery"
 import { queryKeys } from "@/db/queryKeys"
 import { useCollectionsMutations } from "@/hooks/useCollectionsMutations"
-import { useCoreCollectionSettings } from "@/store/coreCollectionSettings"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
 import { openCollectionDialog } from "@/utils/openCollectionDialog"
 import { useDocumentTitle } from "@/hooks/useDocumentTitle"
@@ -21,8 +20,14 @@ export default function Collections() {
     const queryClient = useQueryClient()
     const { collectionsQuery } = useCollectionsQuery()
     const { updateCollectionMutation } = useCollectionsMutations()
-    const { setAll, setUntagged, setTrash, all, untagged, trash } =
-        useCoreCollectionSettings()
+    const {
+        setAllCollection,
+        setUntaggedCollection,
+        setTrashCollection,
+        allCollection,
+        untaggedCollection,
+        trashCollection,
+    } = useSyncedUserSettings()
     const defaultCollectionSlug = useSyncedUserSettings(
         (s) => s.defaultCollectionSlug,
     )
@@ -34,10 +39,10 @@ export default function Collections() {
     )
 
     const sortedCollections = (collectionsQuery.data ?? []).map((c) => {
-        if (c.coreType === "all") return { ...c, sortOrder: all.sortOrder }
+        if (c.coreType === "all") return { ...c, sortOrder: allCollection.sortOrder }
         if (c.coreType === "untagged")
-            return { ...c, sortOrder: untagged.sortOrder }
-        if (c.coreType === "trash") return { ...c, sortOrder: trash.sortOrder }
+            return { ...c, sortOrder: untaggedCollection.sortOrder }
+        if (c.coreType === "trash") return { ...c, sortOrder: trashCollection.sortOrder }
         return c
     })
 
@@ -58,7 +63,7 @@ export default function Collections() {
         else newSortOrder = (itemBefore.sortOrder + itemAfter.sortOrder) / 2
 
         if (draggedItem.coreType === "all") {
-            setAll({
+            setAllCollection({
                 sortOrder: newSortOrder,
                 updatedAt: DateTime.now().toISO(),
             })
@@ -66,7 +71,7 @@ export default function Collections() {
             return
         }
         if (draggedItem.coreType === "untagged") {
-            setUntagged({
+            setUntaggedCollection({
                 sortOrder: newSortOrder,
                 updatedAt: DateTime.now().toISO(),
             })
@@ -74,7 +79,7 @@ export default function Collections() {
             return
         }
         if (draggedItem.coreType === "trash") {
-            setTrash({
+            setTrashCollection({
                 sortOrder: newSortOrder,
                 updatedAt: DateTime.now().toISO(),
             })

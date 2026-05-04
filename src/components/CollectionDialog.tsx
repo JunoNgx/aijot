@@ -6,7 +6,6 @@ import { EmojiPicker } from "frimousse"
 import { IconX } from "@tabler/icons-react"
 import { useCollectionsQuery } from "@/hooks/useCollectionsQuery"
 import { useCollectionsMutations } from "@/hooks/useCollectionsMutations"
-import { useCoreCollectionSettings } from "@/store/coreCollectionSettings"
 import { useDialogStore } from "@/store/dialogStore"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
 import { generateSlug } from "@/utils/helpers"
@@ -60,7 +59,8 @@ export default function CollectionDialog({ collection }: Props) {
     const isSaving =
         createCollectionMutation.isPending || updateCollectionMutation.isPending
     const isDeleting = softDeleteCollectionMutation.isPending
-    const { setAll, setUntagged, setTrash } = useCoreCollectionSettings()
+    const { setAllCollection, setUntaggedCollection, setTrashCollection } =
+        useSyncedUserSettings()
     const closeAllDialogs = useDialogStore((s) => s.closeAllDialogs)
     const defaultCollectionSlug = useSyncedUserSettings(
         (s) => s.defaultCollectionSlug,
@@ -162,9 +162,10 @@ export default function CollectionDialog({ collection }: Props) {
                 icon: iconVal,
                 updatedAt: now,
             }
-            if (collection.coreType === "all") setAll(coreConfig)
-            if (collection.coreType === "untagged") setUntagged(coreConfig)
-            if (collection.coreType === "trash") setTrash(coreConfig)
+            if (collection.coreType === "all") setAllCollection(coreConfig)
+            if (collection.coreType === "untagged")
+                setUntaggedCollection(coreConfig)
+            if (collection.coreType === "trash") setTrashCollection(coreConfig)
             closeAllDialogs()
             return
         }

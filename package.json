@@ -45,7 +45,6 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.39.4",
-        "@types/google.accounts": "^0.0.18",
         "@types/luxon": "^3",
         "@types/node": "^24.12.2",
         "@types/react": "^19.2.14",

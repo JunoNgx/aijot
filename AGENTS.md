@@ -1,12 +1,5 @@
 # aijot-frontend — Implementation Notes
 
-## Reference
-
-ai\*jot is a remake of JustJot. Most of JustJot specifications are applicable to this project. JustJot is also stored as sibling directories to this project:
-
-- Frontend: `../justjot-frontend`
-- Backend: `../justjot-backend`
-
 ## Maintainer's preferences
 
 - Use 4 space indentation

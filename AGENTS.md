@@ -25,7 +25,6 @@ ai\*jot is a remake of JustJot. Most of JustJot specifications are applicable to
 - Do not use em dash
 - Avoid nesting by breaking down component templates to variables
 - Ask for permission before committing
-- NEVER amend, rebase, or otherwise rewrite git history unless explicitly instructed to do so
 - Start the commit message with github ticket number, if not on `main`; followed by conventional commit type; start the actual verb with a lowercase character (e.g. `#12 refactor: rename and add boolean prefix to variables`)
 - Avoid regex for implementation and usage when possible. Only use when absolutely necessary or the benefit is significant.
 - Do not add redundant comments that explain what the code does. Variable names should be self-explanatory. Comments should only be used for non-obvious intent, gotchas, or design decisions.
@@ -37,6 +36,7 @@ ai\*jot is a remake of JustJot. Most of JustJot specifications are applicable to
 - Use quartered rem values (e.g. 0.25rem; 0.5rem; 0.75rem) unless absolutely necessary
 - Create new css variables only with explicit instructions to do so
 - Do not set color or `font-size` without using a css variable
+- NEVER amend, rebase, or otherwise rewrite git history unless explicitly instructed to do so
 
 ## Patterns from JustJot
 

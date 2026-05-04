@@ -113,6 +113,11 @@ input[type="checkbox"] {
             transform: rotate(45deg);
         }
     }
+
+    &:focus-visible {
+        outline: var(--lineWidth) solid var(--colMain);
+        outline-offset: 2px;
+    }
 }
 
 select {

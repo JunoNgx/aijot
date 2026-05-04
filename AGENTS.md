@@ -37,6 +37,7 @@ ai\*jot is a remake of JustJot. Most of JustJot specifications are applicable to
 - Create new css variables only with explicit instructions to do so
 - Do not set color or `font-size` without using a css variable
 - NEVER amend, rebase, or otherwise rewrite git history unless explicitly instructed to do so
+- NEVER run `git push` under any circumstance
 
 ## Patterns from JustJot
 

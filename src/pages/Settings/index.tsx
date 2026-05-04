@@ -87,6 +87,7 @@ export default function Settings() {
     const setShouldShowJotItemExtraInfo = useSyncedUserSettings(
         (s) => s.setShouldShowJotItemExtraInfo,
     )
+    const importAllSettings = useSyncedUserSettings((s) => s.importAllSettings)
 
     const allCollection = useSyncedUserSettings((s) => s.allCollection)
     const setAllCollection = useSyncedUserSettings((s) => s.setAllCollection)
@@ -162,24 +163,7 @@ export default function Settings() {
         if (!pendingImport) return
         try {
             const settings = await commitImport(pendingImport)
-            setUserDisplayName(settings.syncedUserSettings.userDisplayName)
-            setShouldApplyTagsOfCurrCollection(
-                settings.syncedUserSettings.shouldApplyTagsOfCurrCollection,
-            )
-            setDefaultCollectionSlug(
-                settings.syncedUserSettings.defaultCollectionSlug,
-            )
-            setShouldCustomSortCollections(
-                settings.syncedUserSettings.shouldCustomSortCollections,
-            )
-            setShouldShowJotItemExtraInfo(
-                settings.syncedUserSettings.shouldShowJotItemExtraInfo,
-            )
-            setAllCollection(settings.coreCollections.all)
-            setUntaggedCollection(settings.coreCollections.untagged)
-            setTrashCollection(settings.coreCollections.trash)
-            queryClient.invalidateQueries({ queryKey: queryKeys.items })
-            queryClient.invalidateQueries({ queryKey: queryKeys.collections })
+            importAllSettings(settings)
             toast("Data imported successfully")
         } catch {
             toast.error("Failed to import data")

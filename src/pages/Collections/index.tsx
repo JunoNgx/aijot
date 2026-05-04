@@ -1,7 +1,8 @@
+import { useQueryClient } from "@tanstack/react-query"
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
 import { IconGripVertical, IconPlus } from "@tabler/icons-react"
 import { DateTime } from "luxon"
-import { useCollectionsQuery } from "@/hooks/useCollectionsQuery"
+import { useCollectionsQuery, queryKeys } from "@/hooks/useCollectionsQuery"
 import { useCollectionsMutations } from "@/hooks/useCollectionsMutations"
 import { useCoreCollectionSettings } from "@/store/coreCollectionSettings"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
@@ -16,6 +17,7 @@ import type { DropResult } from "@hello-pangea/dnd"
 
 export default function Collections() {
     useDocumentTitle("Collections")
+    const queryClient = useQueryClient()
     const { collectionsQuery } = useCollectionsQuery()
     const { updateCollectionMutation } = useCollectionsMutations()
     const { setAll, setUntagged, setTrash, all, untagged, trash } =
@@ -59,6 +61,7 @@ export default function Collections() {
                 sortOrder: newSortOrder,
                 updatedAt: DateTime.now().toISO(),
             })
+            queryClient.invalidateQueries({ queryKey: queryKeys.collections })
             return
         }
         if (draggedItem.coreType === "untagged") {
@@ -66,6 +69,7 @@ export default function Collections() {
                 sortOrder: newSortOrder,
                 updatedAt: DateTime.now().toISO(),
             })
+            queryClient.invalidateQueries({ queryKey: queryKeys.collections })
             return
         }
         if (draggedItem.coreType === "trash") {
@@ -73,6 +77,7 @@ export default function Collections() {
                 sortOrder: newSortOrder,
                 updatedAt: DateTime.now().toISO(),
             })
+            queryClient.invalidateQueries({ queryKey: queryKeys.collections })
             return
         }
 

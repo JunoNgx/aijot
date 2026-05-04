@@ -2628,6 +2628,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/google.accounts@npm:^0.0.18":
+  version: 0.0.18
+  resolution: "@types/google.accounts@npm:0.0.18"
+  checksum: 10c0/c8769e1061e6809ad6fcd613f8c08b22a428bab7b3385002151fba6fea4444aaee30aee3d033bb5c75ea5dccbd3af5e38d04811f8737a77c2997566dabc21a49
+  languageName: node
+  linkType: hard
+
 "@types/json-schema@npm:^7.0.15":
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
@@ -2900,6 +2907,7 @@ __metadata:
     "@radix-ui/react-dropdown-menu": "npm:^2.1.16"
     "@tabler/icons-react": "npm:^3.41.1"
     "@tanstack/react-query": "npm:^5.97.0"
+    "@types/google.accounts": "npm:^0.0.18"
     "@types/luxon": "npm:^3"
     "@types/node": "npm:^24.12.2"
     "@types/react": "npm:^19.2.14"

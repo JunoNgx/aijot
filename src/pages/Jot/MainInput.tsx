@@ -33,6 +33,7 @@ interface Props {
     currCollectionTags: string[]
     listboxId?: string
     activeDescendantId?: string
+    onBlur?: () => void
 }
 
 export default function MainInput({
@@ -46,6 +47,7 @@ export default function MainInput({
     currCollectionTags,
     listboxId,
     activeDescendantId,
+    onBlur,
 }: Props) {
     const [inputValue, setInputValue] = useState("")
     const {
@@ -174,6 +176,7 @@ export default function MainInput({
                 value={inputValue}
                 onChange={handleInputChange}
                 onKeyDown={hotkeyHandler}
+                onBlur={onBlur}
                 role="combobox"
                 aria-controls={listboxId}
                 aria-expanded={visibleItemCount > 0}

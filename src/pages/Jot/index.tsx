@@ -223,6 +223,7 @@ export default function Jot() {
                 currCollectionTags={currCollection?.tags ?? []}
                 listboxId={listboxId}
                 activeDescendantId={activeDescendantId}
+                onBlur={() => setSelectedIndex(-1)}
             />
             <div
                 id={listboxId}

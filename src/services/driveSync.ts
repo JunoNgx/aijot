@@ -1,12 +1,14 @@
 import { DateTime } from "luxon"
 import { storage } from "@/db"
 import { useLocalSyncData } from "@/store/localSyncData"
-import type { Collection, Item } from "@/types"
+import { useSyncedUserSettings } from "@/store/syncedUserSettings"
+import type { Collection, Item, ExportSettings } from "@/types"
 import { DATA_FILE, downloadFile, findFile, upsertFile } from "./driveClient"
 
 interface DriveData {
     items: Item[]
     collections: Collection[]
+    settings: ExportSettings | null
 }
 
 function mergeRecords<T extends { id: string; updatedAt: string }>(
@@ -24,6 +26,44 @@ function mergeRecords<T extends { id: string; updatedAt: string }>(
     return Array.from(recordMap.values())
 }
 
+function mergeSettings(
+    local: ExportSettings,
+    remote: ExportSettings,
+): ExportSettings {
+    const localTimestamp = local.syncedUserSettings.settingsUpdatedAt
+    const remoteTimestamp = remote.syncedUserSettings.settingsUpdatedAt
+
+    if (!localTimestamp) {
+        return remote
+    }
+
+    if (remoteTimestamp && remoteTimestamp > localTimestamp) {
+        return remote
+    }
+
+    return local
+}
+
+function getLocalSettings(): ExportSettings {
+    const state = useSyncedUserSettings.getState()
+    return {
+        syncedUserSettings: {
+            userDisplayName: state.userDisplayName,
+            shouldApplyTagsOfCurrCollection:
+                state.shouldApplyTagsOfCurrCollection,
+            defaultCollectionSlug: state.defaultCollectionSlug,
+            shouldCustomSortCollections: state.shouldCustomSortCollections,
+            shouldShowJotItemExtraInfo: state.shouldShowJotItemExtraInfo,
+            settingsUpdatedAt: state.settingsUpdatedAt,
+        },
+        coreCollections: {
+            all: state.allCollection,
+            untagged: state.untaggedCollection,
+            trash: state.trashCollection,
+        },
+    }
+}
+
 export async function runFullDriveSync(
     token: string,
     folderId: string,
@@ -31,6 +71,8 @@ export async function runFullDriveSync(
     const syncStartTime = DateTime.now().toUTC().toISO()!
 
     const lastSyncTime = useLocalSyncData.getState().lastSyncTime
+    const lastSettingsUpdateTime =
+        useSyncedUserSettings.getState().settingsUpdatedAt
 
     const [localItems, localCollections] = await Promise.all([
         storage.getItems(),
@@ -39,6 +81,7 @@ export async function runFullDriveSync(
 
     let mergedItems = localItems
     let mergedCollections = localCollections
+    let mergedSettings = getLocalSettings()
 
     const remoteFile = await findFile(token, folderId, DATA_FILE)
     const shouldDownload =
@@ -52,18 +95,34 @@ export async function runFullDriveSync(
             localCollections,
             remoteData.collections ?? [],
         )
+
+        if (remoteData.settings) {
+            mergedSettings = mergeSettings(
+                getLocalSettings(),
+                remoteData.settings,
+            )
+            useSyncedUserSettings.getState().importAllSettings(mergedSettings)
+        }
+
         await Promise.all([
             storage.bulkPutItems(mergedItems),
             storage.bulkPutCollections(mergedCollections),
         ])
     }
 
+    const settingsChangedSinceLastSync =
+        lastSettingsUpdateTime &&
+        mergedSettings.syncedUserSettings.settingsUpdatedAt &&
+        mergedSettings.syncedUserSettings.settingsUpdatedAt >
+            lastSettingsUpdateTime
+
     const shouldUpload =
         !lastSyncTime ||
         mergedItems.some((item) => item.updatedAt > lastSyncTime) ||
         mergedCollections.some(
             (collection) => collection.updatedAt > lastSyncTime,
-        )
+        ) ||
+        settingsChangedSinceLastSync
 
     if (shouldUpload) {
         await upsertFile(
@@ -73,6 +132,7 @@ export async function runFullDriveSync(
             {
                 items: mergedItems,
                 collections: mergedCollections,
+                settings: mergedSettings,
             },
             remoteFile?.id,
         )

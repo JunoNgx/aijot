@@ -112,6 +112,7 @@ export interface SyncedUserSettingsStore {
     setAllCollection: (config: Partial<CoreCollectionConfig>) => void
     setUntaggedCollection: (config: Partial<CoreCollectionConfig>) => void
     setTrashCollection: (config: Partial<CoreCollectionConfig>) => void
+    importAllSettings: (settings: ExportSettings) => void
 }
 
 export interface CoreCollectionConfig {
@@ -178,6 +179,7 @@ export interface ExportSettings {
         defaultCollectionSlug: string
         shouldCustomSortCollections: boolean
         shouldShowJotItemExtraInfo: boolean
+        settingsUpdatedAt?: string
     }
     coreCollections: {
         all: CoreCollectionConfig

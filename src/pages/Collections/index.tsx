@@ -39,10 +39,12 @@ export default function Collections() {
     )
 
     const sortedCollections = (collectionsQuery.data ?? []).map((c) => {
-        if (c.coreType === "all") return { ...c, sortOrder: allCollection.sortOrder }
+        if (c.coreType === "all")
+            return { ...c, sortOrder: allCollection.sortOrder }
         if (c.coreType === "untagged")
             return { ...c, sortOrder: untaggedCollection.sortOrder }
-        if (c.coreType === "trash") return { ...c, sortOrder: trashCollection.sortOrder }
+        if (c.coreType === "trash")
+            return { ...c, sortOrder: trashCollection.sortOrder }
         return c
     })
 

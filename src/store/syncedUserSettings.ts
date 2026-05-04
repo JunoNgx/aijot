@@ -1,7 +1,7 @@
 import { DateTime } from "luxon"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
-import type { SyncedUserSettingsStore } from "@/types"
+import type { SyncedUserSettingsStore, ExportSettings } from "@/types"
 import {
     DEFAULT_USERNAME,
     DEFAULT_ALL_COLLECTION,
@@ -60,6 +60,25 @@ export const useSyncedUserSettings = create<SyncedUserSettingsStore>()(
                     trashCollection: { ...state.trashCollection, ...config },
                     ...updateTimestamp(),
                 })),
+            importAllSettings: (settings: ExportSettings) =>
+                set({
+                    userDisplayName:
+                        settings.syncedUserSettings.userDisplayName,
+                    shouldApplyTagsOfCurrCollection:
+                        settings.syncedUserSettings
+                            .shouldApplyTagsOfCurrCollection,
+                    defaultCollectionSlug:
+                        settings.syncedUserSettings.defaultCollectionSlug,
+                    shouldCustomSortCollections:
+                        settings.syncedUserSettings.shouldCustomSortCollections,
+                    shouldShowJotItemExtraInfo:
+                        settings.syncedUserSettings.shouldShowJotItemExtraInfo,
+                    allCollection: settings.coreCollections.all,
+                    untaggedCollection: settings.coreCollections.untagged,
+                    trashCollection: settings.coreCollections.trash,
+                    settingsUpdatedAt:
+                        settings.syncedUserSettings.settingsUpdatedAt,
+                }),
         }),
         { name: "syncedUserSettings" },
     ),

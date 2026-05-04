@@ -73,6 +73,11 @@ input[type="radio"] {
         border-radius: 50%;
         background-color: var(--colMain);
     }
+
+    &:focus-visible {
+        outline: var(--lineWidth) solid var(--colMain);
+        outline-offset: 2px;
+    }
 }
 
 .HalfInput {

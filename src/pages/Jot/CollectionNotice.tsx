@@ -33,7 +33,7 @@ export default function CollectionNotice({
                     {TRASH_PURGE_DURATION_DAY} days
                 </p>
             )}
-            {displayTags.length > 0 && (
+            {collection && displayTags.length > 0 && (
                 <div className={styles.CollectionNotice__TagsWrapper}>
                     <span className={styles.CollectionNotice__TagsLabel}>
                         Showing tags:

@@ -162,3 +162,8 @@ export function pluralise(
     if (plural) return count === 1 ? singular : plural
     return count === 1 ? singular : `${singular}s`
 }
+
+export function truncateText(text: string, maxLength: number): string {
+    if (!text || text.length <= maxLength) return text
+    return text.slice(0, maxLength).trim() + "..."
+}

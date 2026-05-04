@@ -14,11 +14,14 @@ import {
     isValidHexColourCode,
     formatDatetime,
     formatDetailedDatetime,
+    truncateText,
 } from "@/utils/helpers"
 import {
     ICON_PROPS_ITEM_ICON,
     ICON_PROPS_ITEM_STATUS,
     ICON_PROPS_NORMAL,
+    JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
+    JOT_ITEM_SECONDARY_TEXT_DISPLAY_LIMIT,
 } from "@/config/constants"
 import { useLocalUserSettings } from "@/store/localUserSettings"
 import { useTransientUiState } from "@/store/transientUiState"
@@ -98,14 +101,23 @@ export default memo(function JotItem({
     const isPrimaryTextTitle = item.type !== "todo" && item.title !== undefined
     const primaryText = isPrimaryTextTitle ? item.title! : item.content
     const secondaryText = isPrimaryTextTitle ? item.content : null
+    const displayPrimaryText = truncateText(
+        primaryText,
+        JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
+    )
+    const displaySecondaryText = secondaryText
+        ? truncateText(secondaryText, JOT_ITEM_SECONDARY_TEXT_DISPLAY_LIMIT)
+        : null
     const datetime = formatDatetime(item.jottedAt, is24HourClock)
     const detailedDatetime = formatDetailedDatetime(
         item.jottedAt,
         is24HourClock,
     )
 
-    const secondaryTextEl = secondaryText && (
-        <span className={styles.JotItem__SecondaryText}>{secondaryText}</span>
+    const secondaryTextEl = displaySecondaryText && (
+        <span className={styles.JotItem__SecondaryText}>
+            {displaySecondaryText}
+        </span>
     )
 
     const rootClassName = [
@@ -178,7 +190,7 @@ export default memo(function JotItem({
                         : "",
                 ].join(" ")}
             >
-                {primaryText}
+                {displayPrimaryText}
             </span>
             {secondaryTextEl}
         </div>
@@ -225,7 +237,7 @@ export default memo(function JotItem({
                         : "",
                 ].join(" ")}
             >
-                {primaryText}
+                {displayPrimaryText}
             </span>
             {itemIndicators}
         </div>

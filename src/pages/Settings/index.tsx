@@ -61,9 +61,6 @@ export default function Settings() {
     const defaultCollectionSlug = useSyncedUserSettings(
         (s) => s.defaultCollectionSlug,
     )
-    const setDefaultCollectionSlug = useSyncedUserSettings(
-        (s) => s.setDefaultCollectionSlug,
-    )
 
     const userDisplayName = useSyncedUserSettings((s) => s.userDisplayName)
     const setUserDisplayName = useSyncedUserSettings(
@@ -90,17 +87,10 @@ export default function Settings() {
     const importAllSettings = useSyncedUserSettings((s) => s.importAllSettings)
 
     const allCollection = useSyncedUserSettings((s) => s.allCollection)
-    const setAllCollection = useSyncedUserSettings((s) => s.setAllCollection)
     const untaggedCollection = useSyncedUserSettings(
         (s) => s.untaggedCollection,
     )
-    const setUntaggedCollection = useSyncedUserSettings(
-        (s) => s.setUntaggedCollection,
-    )
     const trashCollection = useSyncedUserSettings((s) => s.trashCollection)
-    const setTrashCollection = useSyncedUserSettings(
-        (s) => s.setTrashCollection,
-    )
 
     const syncStatus = useLocalSyncData((s) => s.syncStatus)
     const syncError = useLocalSyncData((s) => s.syncError)

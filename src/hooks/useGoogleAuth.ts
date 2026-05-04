@@ -60,6 +60,7 @@ export function useGoogleAuth() {
             scope: SCOPE,
             ux_mode: "popup",
             prompt: "consent",
+            access_type: "offline",
             callback: async (response) => {
                 if (response.error) {
                     setConnectError(

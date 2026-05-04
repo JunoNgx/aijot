@@ -1,5 +1,4 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
-import { useParams } from "react-router-dom"
 import { useHotkeys } from "react-hotkeys-hook"
 import {
     IconCheck,
@@ -9,6 +8,7 @@ import {
 } from "@tabler/icons-react"
 import { useCollectionsQuery } from "@/hooks/useCollectionsQuery"
 import { useNavigateRoutes } from "@/hooks/useNavigateRoutes"
+import { useCurrentCollection } from "@/hooks/useCurrentCollection"
 import { openCollectionDialog } from "@/utils/openCollectionDialog"
 import {
     COLLECTION_HOTKEY_COUNT,
@@ -24,14 +24,12 @@ const HOTKEYS = Array.from(
 )
 
 export default function CollectionDropdown() {
-    const { slug: activeSlug } = useParams<{ slug: string }>()
     const { collectionsQuery } = useCollectionsQuery()
     const { navigateToCollection } = useNavigateRoutes()
+    const { currCollection, currSlug } = useCurrentCollection()
 
     const collections = collectionsQuery.data ?? []
     const hotkeyed = collections.slice(0, COLLECTION_HOTKEY_COUNT)
-    const currentSlug = activeSlug ?? "all"
-    const currCollection = collections.find((c) => c.slug === currentSlug)
 
     useHotkeys(HOTKEYS, (e) => {
         const index = parseInt(e.key) - 1
@@ -46,13 +44,11 @@ export default function CollectionDropdown() {
                 {currCollection.name}
             </span>
         </>
-    ) : (
-        <span>Collections</span>
-    )
+    ) : null
 
     const menuItems = collections.map((collection, index) => {
         const hotkeyNum = index < COLLECTION_HOTKEY_COUNT ? index + 1 : null
-        const isActive = collection.slug === currentSlug
+        const isActive = collection.slug === currSlug
 
         const itemClassName = [
             styles.CollectionItem,

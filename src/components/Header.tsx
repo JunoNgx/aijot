@@ -9,11 +9,16 @@ import {
 } from "@/config/constants"
 import { IconPalette } from "@tabler/icons-react"
 import { useCommandPaletteStore } from "@/store/commandPaletteStore"
+import { useCurrentCollection } from "@/hooks/useCurrentCollection"
 
 export default function Header() {
-    const isJotRoute = useMatch(ROUTE_COLLECTION)
+    const { currCollection } = useCurrentCollection()
+
+    const isJotRoute = useMatch(ROUTE_JOT)
     const isJotCollectionRoute = useMatch(ROUTE_COLLECTION)
-    const shouldShowCollectionDropdown = isJotRoute || isJotCollectionRoute
+    const isOnJotPage = isJotRoute || isJotCollectionRoute
+    const hasCurrentCollection = !!currCollection
+    const shouldShowCollectionDropdown = isOnJotPage && hasCurrentCollection
 
     return (
         <header className={styles.Header}>

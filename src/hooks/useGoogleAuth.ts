@@ -60,8 +60,8 @@ export function useGoogleAuth() {
             scope: SCOPE,
             ux_mode: "popup",
             prompt: "consent",
-            access_type: "offline",
-            callback: async (response) => {
+            access_type: "offline", // Request refresh token (Google type definitions are incomplete)
+            callback: async (response: google.accounts.oauth2.CodeResponse) => {
                 if (response.error) {
                     setConnectError(
                         response.error_description ?? response.error,
@@ -83,13 +83,13 @@ export function useGoogleAuth() {
                     setIsConnecting(false)
                 }
             },
-            error_callback: (err) => {
+            error_callback: (err: google.accounts.oauth2.ClientConfigError) => {
                 if (err.type !== "popup_closed") {
                     setConnectError(err.message ?? "Authentication failed.")
                 }
                 setIsConnecting(false)
             },
-        })
+        } as any)
 
         if (!client) {
             setConnectError("Failed to initialise Google Identity Services.")

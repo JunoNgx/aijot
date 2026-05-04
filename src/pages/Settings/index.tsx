@@ -693,6 +693,14 @@ export default function Settings() {
                 <h3
                     className={styles.Section__Title}
                     onClick={handleDebugEnableClick}
+                    tabIndex={0}
+                    role="button"
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault()
+                            handleDebugEnableClick()
+                        }
+                    }}
                 >
                     About
                 </h3>

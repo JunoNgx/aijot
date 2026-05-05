@@ -25,16 +25,16 @@ export default function ImportPreview({
             <span>
                 {newCollections} new, {updatedCollections} updated collections
             </span>
-            <div className={styles.ImportPreviewActions}>
+            <div className={styles.ImportPreview__Actions}>
                 <button
-                    className={styles.BtnAction}
+                    className={styles.ImportPreview__BtnAction}
                     type="button"
                     onClick={onConfirm}
                 >
                     Confirm
                 </button>
                 <button
-                    className={styles.BtnAction}
+                    className={styles.ImportPreview__BtnAction}
                     type="button"
                     onClick={onCancel}
                 >

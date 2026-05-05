@@ -31,24 +31,24 @@ export default function SyncSection() {
             description="Back up your data to Google Drive"
         >
             {isConnected && authToken && (
-                <div className={styles.SyncInfoWrapper}>
-                    <span className={styles.SyncEmail}>
+                <div className={styles.SyncSection__InfoWrapper}>
+                    <span className={styles.SyncSection__Email}>
                         Connected as {authToken.email}
                     </span>
-                    <span className={styles.SyncStatus}>
+                    <span className={styles.SyncSection__Status}>
                         {syncStatus === "syncing"
                             ? "Syncing..."
                             : lastSyncTimeUiText}
                     </span>
                     {syncStatus === "error" && syncError && (
-                        <span className={styles.SyncError}>
+                        <span className={styles.SyncSection__Error}>
                             Error: {syncError}
                         </span>
                     )}
                 </div>
             )}
             {connectError && (
-                <div className={styles["SyncStatus--Error"]}>
+                <div className={styles["SyncSection__Status--Error"]}>
                     {connectError}
                 </div>
             )}
@@ -56,7 +56,7 @@ export default function SyncSection() {
                 {isConnected ? (
                     <>
                         <button
-                            className={styles.BtnAction}
+                            className={styles.SyncSection__BtnAction}
                             type="button"
                             disabled={syncStatus === "syncing"}
                             onClick={() => sync()}
@@ -64,7 +64,7 @@ export default function SyncSection() {
                             Sync now
                         </button>
                         <button
-                            className={styles.BtnAction}
+                            className={styles.SyncSection__BtnAction}
                             type="button"
                             onClick={disconnect}
                         >
@@ -73,7 +73,7 @@ export default function SyncSection() {
                     </>
                 ) : (
                     <button
-                        className={styles.BtnConnect}
+                        className={styles.SyncSection__BtnConnect}
                         type="button"
                         disabled={isConnecting}
                         onClick={connect}

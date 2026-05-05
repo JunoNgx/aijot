@@ -22,12 +22,12 @@ export default function SettingsSection({
 }: Props) {
     return (
         <section
-            className={[styles.Section, sectionClassName]
+            className={[styles.SettingsSection, sectionClassName]
                 .filter(Boolean)
                 .join(" ")}
         >
             <h3
-                className={[styles.Section__Title, titleClassName]
+                className={[styles.SettingsSection__Title, titleClassName]
                     .filter(Boolean)
                     .join(" ")}
                 onClick={onTitleClick}
@@ -38,7 +38,9 @@ export default function SettingsSection({
                 {title}
             </h3>
             {description && (
-                <p className={styles.Section__Description}>{description}</p>
+                <p className={styles.SettingsSection__Description}>
+                    {description}
+                </p>
             )}
             {children}
         </section>

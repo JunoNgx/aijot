@@ -602,8 +602,8 @@ export default function Settings() {
             <SettingsSection
                 title="Danger Zone"
                 description="Removes all items and collections. Your data on Google Drive will remain intact."
-                sectionClassName={sectionStyles["Section--Spaced"]}
-                titleClassName={sectionStyles["Section__Title--Danger"]}
+                sectionClassName={sectionStyles["SettingsSection--Spaced"]}
+                titleClassName={sectionStyles["SettingsSection__Title--Danger"]}
             >
                 <button
                     className={styles.Settings__BtnDanger}
@@ -623,7 +623,7 @@ export default function Settings() {
                     >
                         Trigger test toast
                     </button>
-                    <p className={sectionStyles.Section__Description}>
+                    <p className={sectionStyles.SettingsSection__Description}>
                         Wipes local database and all local app data. Cannot be
                         undone.
                     </p>

@@ -1,34 +1,36 @@
-.SyncInfoWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
-    margin-bottom: 0.75rem;
-}
+.SyncSection {
+    &__InfoWrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+        margin-bottom: 0.75rem;
+    }
 
-.SyncEmail {
-    font-size: var(--fontSizeMd);
-    color: var(--colSub);
-}
+    &__Email {
+        font-size: var(--fontSizeMd);
+        color: var(--colSub);
+    }
 
-.SyncStatus {
-    font-size: var(--fontSizeSm);
-    color: var(--colTextAlt);
-}
+    &__Status {
+        font-size: var(--fontSizeSm);
+        color: var(--colTextAlt);
 
-.SyncStatus--Error {
-    font-size: var(--fontSizeSm);
-    color: var(--colDanger);
-}
+        &--Error {
+            font-size: var(--fontSizeSm);
+            color: var(--colDanger);
+        }
+    }
 
-.SyncError {
-    color: var(--colDanger);
-}
+    &__Error {
+        color: var(--colDanger);
+    }
 
-.BtnAction {
-    composes: Btn Btn--Sec from global;
-}
+    &__BtnAction {
+        composes: Btn Btn--Sec from global;
+    }
 
-.BtnConnect {
-    composes: Btn Btn--Pri from global;
+    &__BtnConnect {
+        composes: Btn Btn--Pri from global;
+    }
 }

@@ -9,13 +9,13 @@
     font-size: var(--fontSizeMd);
     background-color: var(--colBgAlt);
     @include StandardBorder;
-}
 
-.ImportPreviewActions {
-    display: flex;
-    gap: 0.5rem;
-}
+    &__Actions {
+        display: flex;
+        gap: 0.5rem;
+    }
 
-.BtnAction {
-    composes: Btn Btn--Sec from global;
+    &__BtnAction {
+        composes: Btn Btn--Sec from global;
+    }
 }

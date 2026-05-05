@@ -97,6 +97,33 @@ export default function CommandPalette({
         setTheme(originalThemeRef.current)
     }
 
+    const handleEditCurrentCollection = () => {
+        const collection = collections.find((c) => c.slug === currentSlug)
+        if (collection) {
+            handleNavigation(() => openCollectionDialog(collection))
+        }
+    }
+
+    const handleMassTagEdit = () => {
+        openMassTagEditDialog({
+            items: mainListVisibleItems,
+            onSave: (tagStr, mode) =>
+                massTagEditMutation.mutate({
+                    items: mainListVisibleItems,
+                    tagStr,
+                    mode,
+                }),
+        })
+        onClose()
+    }
+
+    const handleCloseAutoFocus = () => {
+        if (isThemeMode && !didCommitThemeSelection.current) {
+            revertThemePreview()
+        }
+        didCommitThemeSelection.current = false
+    }
+
     useLayoutEffect(() => {
         if (!isThemeMode) return
         originalThemeRef.current = currentTheme
@@ -196,14 +223,7 @@ export default function CommandPalette({
         <Command.Item
             value="edit current collection"
             className={styles.CommandPaletteItem__Item}
-            onSelect={() => {
-                const collection = collections.find(
-                    (c) => c.slug === currentSlug,
-                )
-                if (collection) {
-                    handleNavigation(() => openCollectionDialog(collection))
-                }
-            }}
+            onSelect={handleEditCurrentCollection}
         >
             <IconSettings {...ICON_PROPS_NORMAL} />
             <div className={styles.CommandPaletteItem__ItemContent}>
@@ -310,18 +330,7 @@ export default function CommandPalette({
             <Command.Item
                 value="mass edit tags"
                 className={styles.CommandPaletteItem__Item}
-                onSelect={() => {
-                    openMassTagEditDialog({
-                        items: mainListVisibleItems,
-                        onSave: (tagStr, mode) =>
-                            massTagEditMutation.mutate({
-                                items: mainListVisibleItems,
-                                tagStr,
-                                mode,
-                            }),
-                    })
-                    onClose()
-                }}
+                onSelect={handleMassTagEdit}
             >
                 <IconTags {...ICON_PROPS_NORMAL} />
                 <div className={styles.CommandPaletteItem__ItemContent}>
@@ -423,12 +432,7 @@ export default function CommandPalette({
                     e.preventDefault()
                 }
             }}
-            onCloseAutoFocus={() => {
-                if (isThemeMode && !didCommitThemeSelection.current) {
-                    revertThemePreview()
-                }
-                didCommitThemeSelection.current = false
-            }}
+            onCloseAutoFocus={handleCloseAutoFocus}
         >
             <Dialog.Title className="VisuallyHidden">
                 Command Palette

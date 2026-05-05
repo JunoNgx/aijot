@@ -263,6 +263,23 @@ export default function ItemDialog({ item, onClose }: Props) {
         markChanged()
     }
 
+    const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setContentVal(e.target.value)
+        markChanged()
+    }
+
+    const handleCopyOnClickChange = (
+        e: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        setShouldCopyOnClickVal(e.target.checked)
+        markChanged()
+    }
+
+    const handleIsPinnedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setIsPinnedVal(e.target.checked)
+        markChanged()
+    }
+
     const handleDeleteClick = () => {
         trashItem(item)
         closeAllDialogs()
@@ -292,10 +309,7 @@ export default function ItemDialog({ item, onClose }: Props) {
             className={`Dialog__Input ${styles.ItemDialog__Textarea}`}
             rows={isTextItem ? 24 : 4}
             value={contentVal}
-            onChange={(e) => {
-                setContentVal(e.target.value)
-                markChanged()
-            }}
+            onChange={handleContentChange}
         />
     )
 
@@ -317,10 +331,7 @@ export default function ItemDialog({ item, onClose }: Props) {
                             <input
                                 type="checkbox"
                                 checked={shouldCopyOnClickVal}
-                                onChange={(e) => {
-                                    setShouldCopyOnClickVal(e.target.checked)
-                                    markChanged()
-                                }}
+                                onChange={handleCopyOnClickChange}
                             />
                             Copy content on click as primary action
                         </label>
@@ -330,10 +341,7 @@ export default function ItemDialog({ item, onClose }: Props) {
                             <input
                                 type="checkbox"
                                 checked={isPinnedVal}
-                                onChange={(e) => {
-                                    setIsPinnedVal(e.target.checked)
-                                    markChanged()
-                                }}
+                                onChange={handleIsPinnedChange}
                             />
                             Pin this item
                         </label>

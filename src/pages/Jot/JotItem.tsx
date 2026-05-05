@@ -1,4 +1,4 @@
-import { useState, type MouseEvent, memo } from "react"
+import { useState, type MouseEvent, memo, type ReactNode } from "react"
 import * as ContextMenu from "@radix-ui/react-context-menu"
 import {
     IconNote,
@@ -85,6 +85,54 @@ function ItemIcon({
     return <IconNote {...ICON_PROPS_ITEM_ICON} />
 }
 
+interface JotItemExpandedContentProps {
+    displayPrimaryText: string
+    isPrimaryTextTitle: boolean
+    itemIsDone: boolean | undefined
+    itemIcon: ReactNode
+    itemIndicators: ReactNode
+    tagsEl: ReactNode
+    expandedDatetimeEl: ReactNode
+}
+
+function JotItemExpandedContent({
+    displayPrimaryText,
+    isPrimaryTextTitle,
+    itemIsDone,
+    itemIcon,
+    itemIndicators,
+    tagsEl,
+    expandedDatetimeEl,
+}: JotItemExpandedContentProps) {
+    return (
+        <div className={styles.JotItemExpandedContent}>
+            <div className={styles.JotItemExpandedContent__Row1}>
+                {itemIcon}
+                <span
+                    className={[
+                        styles.JotItem__PrimaryText,
+                        itemIsDone
+                            ? styles["JotItem__PrimaryText--TodoDone"]
+                            : "",
+                        isPrimaryTextTitle
+                            ? styles["JotItem__PrimaryText--Title"]
+                            : "",
+                    ].join(" ")}
+                >
+                    {displayPrimaryText}
+                </span>
+                {itemIndicators}
+            </div>
+            <div className={styles.JotItemExpandedContent__Row2}>
+                {tagsEl}
+                <span className={styles.JotItemExpandedContent__Row2Right}>
+                    {expandedDatetimeEl}
+                </span>
+            </div>
+        </div>
+    )
+}
+
 export default memo(function JotItem({
     item,
     isSelected,
@@ -127,11 +175,6 @@ export default memo(function JotItem({
     ].join(" ")
 
     const getAccessibleLabel = () => {
-        const truncateText = (text: string, maxLength: number) => {
-            if (text.length <= maxLength) return text
-            return text.slice(0, maxLength).trim() + "..."
-        }
-
         const typeLabel =
             item.type === "todo"
                 ? item.isDone
@@ -225,40 +268,6 @@ export default memo(function JotItem({
         </>
     )
 
-    const expandedRow1 = (
-        <div className={styles.JotItem__ExpandedRow1}>
-            {itemIcon}
-            <span
-                className={[
-                    styles.JotItem__PrimaryText,
-                    item.isDone ? styles["JotItem__PrimaryText--TodoDone"] : "",
-                    isPrimaryTextTitle
-                        ? styles["JotItem__PrimaryText--Title"]
-                        : "",
-                ].join(" ")}
-            >
-                {displayPrimaryText}
-            </span>
-            {itemIndicators}
-        </div>
-    )
-
-    const expandedRow2 = (
-        <div className={styles.JotItem__ExpandedRow2}>
-            {tagsEl}
-            <span className={styles.JotItem__ExpandedRow2Right}>
-                {expandedDatetimeEl}
-            </span>
-        </div>
-    )
-
-    const expandedContent = (
-        <>
-            {expandedRow1}
-            {expandedRow2}
-        </>
-    )
-
     const wrapperProps =
         item.type === "link"
             ? {
@@ -291,7 +300,19 @@ export default memo(function JotItem({
                     tabIndex={-1}
                     {...rest}
                 >
-                    {isExpandedInfoMode ? expandedContent : compactContent}
+                    {isExpandedInfoMode ? (
+                        <JotItemExpandedContent
+                            displayPrimaryText={displayPrimaryText}
+                            isPrimaryTextTitle={isPrimaryTextTitle}
+                            itemIsDone={item.isDone}
+                            itemIcon={itemIcon}
+                            itemIndicators={itemIndicators}
+                            tagsEl={tagsEl}
+                            expandedDatetimeEl={expandedDatetimeEl}
+                        />
+                    ) : (
+                        compactContent
+                    )}
                 </Tag>
             </ContextMenu.Trigger>
             <JotItemContextMenu item={item} />

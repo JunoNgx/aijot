@@ -157,14 +157,27 @@
         }
     }
 
-    &__ExpandedRow1 {
+    &__Tags {
+        @include Ellipsified;
+        font-size: var(--fontSizeSm);
+        color: var(--colSub);
+    }
+}
+
+.JotItemExpandedContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 100%;
+
+    &__Row1 {
         display: flex;
         align-items: center;
         gap: 0.5rem;
         width: 100%;
     }
 
-    &__ExpandedRow2 {
+    &__Row2 {
         display: flex;
         align-items: center;
         gap: 0.25rem;
@@ -172,13 +185,7 @@
         width: 100%;
     }
 
-    &__ExpandedRow2Right {
+    &__Row2Right {
         margin-left: auto;
-    }
-
-    &__Tags {
-        @include Ellipsified;
-        font-size: var(--fontSizeSm);
-        color: var(--colSub);
     }
 }

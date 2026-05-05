@@ -12,8 +12,45 @@ import { openCollectionDialog } from "@/utils/openCollectionDialog"
 import { openMassTagEditDialog } from "@/utils/openMassTagEditDialog"
 import { themes } from "@/config/themes"
 import type { ThemeName } from "@/config/themes"
+import type { ReactNode } from "react"
 import styles from "./CommandPalette.module.scss"
 import { ICON_PROPS_NORMAL, ROUTE_JOT } from "@/config/constants"
+
+interface CommandPaletteItemProps {
+    value: string
+    onSelect: () => void
+    icon: ReactNode
+    label: string
+    subLabel?: string
+}
+
+function CommandPaletteItem({
+    value,
+    onSelect,
+    icon,
+    label,
+    subLabel,
+}: CommandPaletteItemProps) {
+    return (
+        <Command.Item
+            value={value}
+            className={styles.CommandPaletteItem__Item}
+            onSelect={onSelect}
+        >
+            {icon}
+            <div className={styles.CommandPaletteItem__ItemContent}>
+                <span className={styles.CommandPaletteItem__LabelLine}>
+                    {label}
+                </span>
+                {subLabel && (
+                    <span className={styles.CommandPaletteItem__SubLabel}>
+                        {subLabel}
+                    </span>
+                )}
+            </div>
+        </Command.Item>
+    )
+}
 import {
     IconWritingSign,
     IconStack2,
@@ -163,75 +200,49 @@ export default function CommandPalette({
             className={styles.CommandPaletteGroup__Group}
         >
             {collections.map((collection) => (
-                <Command.Item
+                <CommandPaletteItem
                     key={collection.slug}
                     value={`${collection.name} ${collection.slug}`}
-                    className={styles.CommandPaletteItem__Item}
                     onSelect={() =>
                         handleNavigation(() =>
                             navigateToCollection(collection.slug),
                         )
                     }
-                >
-                    <span>{collection.icon}</span>
-                    <div className={styles.CommandPaletteItem__ItemContent}>
-                        <span className={styles.CommandPaletteItem__LabelLine}>
-                            {collection.name}
-                        </span>
-                        <span className={styles.CommandPaletteItem__SubLabel}>
-                            /{collection.slug}
-                        </span>
-                    </div>
-                </Command.Item>
+                    icon={<span>{collection.icon}</span>}
+                    label={collection.name}
+                    subLabel={`/${collection.slug}`}
+                />
             ))}
         </Command.Group>
     )
 
     const createCollectionItem = (
-        <Command.Item
+        <CommandPaletteItem
             value="create collection"
-            className={styles.CommandPaletteItem__Item}
             onSelect={() => handleNavigation(() => openCollectionDialog())}
-        >
-            <IconPlus {...ICON_PROPS_NORMAL} />
-            <div className={styles.CommandPaletteItem__ItemContent}>
-                <span className={styles.CommandPaletteItem__LabelLine}>
-                    Create new collection
-                </span>
-            </div>
-        </Command.Item>
+            icon={<IconPlus {...ICON_PROPS_NORMAL} />}
+            label="Create new collection"
+        />
     )
 
     const setDefaultItem = shouldIncludeSetDefaultAction && (
-        <Command.Item
+        <CommandPaletteItem
             value={`set ${currentSlug} as default`}
-            className={styles.CommandPaletteItem__Item}
             onSelect={() =>
                 handleNavigation(() => setDefaultCollectionSlug(currentSlug!))
             }
-        >
-            <IconCheck {...ICON_PROPS_NORMAL} />
-            <div className={styles.CommandPaletteItem__ItemContent}>
-                <span className={styles.CommandPaletteItem__LabelLine}>
-                    Set "{currentSlug}" as default
-                </span>
-            </div>
-        </Command.Item>
+            icon={<IconCheck {...ICON_PROPS_NORMAL} />}
+            label={`Set "${currentSlug}" as default`}
+        />
     )
 
     const editCollectionItem = isInCollection && (
-        <Command.Item
+        <CommandPaletteItem
             value="edit current collection"
-            className={styles.CommandPaletteItem__Item}
             onSelect={handleEditCurrentCollection}
-        >
-            <IconSettings {...ICON_PROPS_NORMAL} />
-            <div className={styles.CommandPaletteItem__ItemContent}>
-                <span className={styles.CommandPaletteItem__LabelLine}>
-                    Edit current collection
-                </span>
-            </div>
-        </Command.Item>
+            icon={<IconSettings {...ICON_PROPS_NORMAL} />}
+            label="Edit current collection"
+        />
     )
 
     const collectionActionsGroup = (
@@ -250,63 +261,39 @@ export default function CommandPalette({
     )
 
     const goToJotItem = (
-        <Command.Item
+        <CommandPaletteItem
             value="go to jot"
-            className={styles.CommandPaletteItem__Item}
             onSelect={() => handleNavigation(navigateToJot)}
-        >
-            <IconWritingSign {...ICON_PROPS_NORMAL} />
-            <div className={styles.CommandPaletteItem__ItemContent}>
-                <span className={styles.CommandPaletteItem__LabelLine}>
-                    Go to Jot Items
-                </span>
-            </div>
-        </Command.Item>
+            icon={<IconWritingSign {...ICON_PROPS_NORMAL} />}
+            label="Go to Jot Items"
+        />
     )
 
     const goToCollectionsItem = (
-        <Command.Item
+        <CommandPaletteItem
             value="go to collections"
-            className={styles.CommandPaletteItem__Item}
             onSelect={() => handleNavigation(navigateToCollections)}
-        >
-            <IconStack2 {...ICON_PROPS_NORMAL} />
-            <div className={styles.CommandPaletteItem__ItemContent}>
-                <span className={styles.CommandPaletteItem__LabelLine}>
-                    Go to Manage Collections
-                </span>
-            </div>
-        </Command.Item>
+            icon={<IconStack2 {...ICON_PROPS_NORMAL} />}
+            label="Go to Manage Collections"
+        />
     )
 
     const goToSettingsItem = (
-        <Command.Item
+        <CommandPaletteItem
             value="go to settings"
-            className={styles.CommandPaletteItem__Item}
             onSelect={() => handleNavigation(navigateToSettings)}
-        >
-            <IconSettings {...ICON_PROPS_NORMAL} />
-            <div className={styles.CommandPaletteItem__ItemContent}>
-                <span className={styles.CommandPaletteItem__LabelLine}>
-                    Go to Settings
-                </span>
-            </div>
-        </Command.Item>
+            icon={<IconSettings {...ICON_PROPS_NORMAL} />}
+            label="Go to Settings"
+        />
     )
 
     const helpGuideItem = (
-        <Command.Item
+        <CommandPaletteItem
             value="help guide"
-            className={styles.CommandPaletteItem__Item}
             onSelect={() => handleNavigation(navigateToHelp)}
-        >
-            <IconHelp {...ICON_PROPS_NORMAL} />
-            <div className={styles.CommandPaletteItem__ItemContent}>
-                <span className={styles.CommandPaletteItem__LabelLine}>
-                    Help Guide
-                </span>
-            </div>
-        </Command.Item>
+            icon={<IconHelp {...ICON_PROPS_NORMAL} />}
+            label="Help Guide"
+        />
     )
 
     const navigationGroup = (
@@ -327,36 +314,22 @@ export default function CommandPalette({
 
     const massTagEditItem =
         isOnJotPage && mainListVisibleItems.length > 0 ? (
-            <Command.Item
+            <CommandPaletteItem
                 value="mass edit tags"
-                className={styles.CommandPaletteItem__Item}
                 onSelect={handleMassTagEdit}
-            >
-                <IconTags {...ICON_PROPS_NORMAL} />
-                <div className={styles.CommandPaletteItem__ItemContent}>
-                    <span className={styles.CommandPaletteItem__LabelLine}>
-                        Mass edit tags
-                    </span>
-                    <span className={styles.CommandPaletteItem__SubLabel}>
-                        {mainListVisibleItems.length} currently visible items
-                    </span>
-                </div>
-            </Command.Item>
+                icon={<IconTags {...ICON_PROPS_NORMAL} />}
+                label="Mass edit tags"
+                subLabel={`${mainListVisibleItems.length} currently visible items`}
+            />
         ) : null
 
     const changeThemeItem = (
-        <Command.Item
+        <CommandPaletteItem
             value="change theme"
-            className={styles.CommandPaletteItem__Item}
             onSelect={() => onModeChange("theme")}
-        >
-            <IconPalette {...ICON_PROPS_NORMAL} />
-            <div className={styles.CommandPaletteItem__ItemContent}>
-                <span className={styles.CommandPaletteItem__LabelLine}>
-                    Change Theme...
-                </span>
-            </div>
-        </Command.Item>
+            icon={<IconPalette {...ICON_PROPS_NORMAL} />}
+            label="Change Theme..."
+        />
     )
 
     const actionsGroup = (

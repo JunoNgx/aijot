@@ -163,6 +163,11 @@ export default function Settings() {
         }
     }
 
+    const handleCancelImport = () => {
+        setPendingImport(null)
+        setImportSummary(null)
+    }
+
     const handleJustJotImportFile = async (
         e: React.ChangeEvent<HTMLInputElement>,
     ) => {
@@ -195,6 +200,11 @@ export default function Settings() {
             setPendingJustJotImport(null)
             setJustJotImportSummary(null)
         }
+    }
+
+    const handleCancelJustJotImport = () => {
+        setPendingJustJotImport(null)
+        setJustJotImportSummary(null)
     }
 
     const handleClearData = async () => {
@@ -284,6 +294,23 @@ export default function Settings() {
             setIsDebugMode(true)
             toast("Debug mode enabled")
         }
+    }
+
+    const handleAboutKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault()
+            handleDebugEnableClick()
+        }
+    }
+
+    const handleTriggerTestToast = () => {
+        toast("Debug toast message with slightly long content", {
+            action: {
+                label: "Btn",
+                onClick: () => {},
+            },
+            duration: Infinity,
+        })
     }
 
     const itemDisplayDescId = "SettingDescDisplayMode"
@@ -434,9 +461,9 @@ export default function Settings() {
                             aria-describedby={itemDisplayDescId}
                             type="checkbox"
                             checked={shouldShowJotItemExtraInfo}
-                            onChange={(e) => {
+                            onChange={(e) =>
                                 setShouldShowJotItemExtraInfo(e.target.checked)
-                            }}
+                            }
                         />
                         Display jot items with extra info by default
                     </label>
@@ -463,9 +490,7 @@ export default function Settings() {
                             aria-describedby={hourModeDescId}
                             type="checkbox"
                             checked={is24HourClock}
-                            onChange={(e) => {
-                                setIs24HourClock(e.target.checked)
-                            }}
+                            onChange={(e) => setIs24HourClock(e.target.checked)}
                         />
                         Use 24-hour clock
                     </label>
@@ -488,9 +513,9 @@ export default function Settings() {
                         <button
                             type="button"
                             className={styles.Settings__BtnAction}
-                            onClick={() => {
+                            onClick={() =>
                                 useCommandPaletteStore.getState().open("theme")
-                            }}
+                            }
                         >
                             Change Theme
                         </button>
@@ -613,10 +638,7 @@ export default function Settings() {
                             <button
                                 className={styles.Settings__BtnAction}
                                 type="button"
-                                onClick={() => {
-                                    setPendingImport(null)
-                                    setImportSummary(null)
-                                }}
+                                onClick={handleCancelImport}
                             >
                                 Cancel
                             </button>
@@ -645,10 +667,7 @@ export default function Settings() {
                             <button
                                 className={styles.Settings__BtnAction}
                                 type="button"
-                                onClick={() => {
-                                    setPendingJustJotImport(null)
-                                    setJustJotImportSummary(null)
-                                }}
+                                onClick={handleCancelJustJotImport}
                             >
                                 Cancel
                             </button>
@@ -674,12 +693,7 @@ export default function Settings() {
                     onClick={handleDebugEnableClick}
                     tabIndex={0}
                     role="button"
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault()
-                            handleDebugEnableClick()
-                        }
-                    }}
+                    onKeyDown={handleAboutKeyDown}
                 >
                     About
                 </h3>
@@ -731,18 +745,7 @@ export default function Settings() {
                     <button
                         className={styles.Settings__Btn}
                         type="button"
-                        onClick={() =>
-                            toast(
-                                "Debug toast message with slightly long content",
-                                {
-                                    action: {
-                                        label: "Btn",
-                                        onClick: () => {},
-                                    },
-                                    duration: Infinity,
-                                },
-                            )
-                        }
+                        onClick={handleTriggerTestToast}
                     >
                         Trigger test toast
                     </button>

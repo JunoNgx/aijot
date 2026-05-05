@@ -161,6 +161,8 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
                     value={tagStr}
                     onChange={handleTagStrChange}
                     placeholder=""
+                    spellCheck={false}
+                    autoCapitalize="none"
                 />
             </div>
             <div className={styles.MassTagEditDialog__Footer}>

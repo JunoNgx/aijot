@@ -449,6 +449,8 @@ export default function ItemDialog({ item, onClose }: Props) {
                     onChange={handleTagStrChange}
                     onBlur={handleTagStrBlur}
                     placeholder=""
+                    spellCheck={false}
+                    autoCapitalize="none"
                 />
             </div>
             <Accordion.Root type="multiple" className={styles.Accordion}>

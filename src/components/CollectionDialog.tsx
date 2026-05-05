@@ -330,6 +330,8 @@ export default function CollectionDialog({ collection }: Props) {
                     className="Dialog__Input"
                     value={slugVal}
                     onChange={handleSlugChange}
+                    spellCheck={false}
+                    autoCapitalize="none"
                 />
             </div>
             <div className="FlexRow">
@@ -358,6 +360,8 @@ export default function CollectionDialog({ collection }: Props) {
                     value={tagStr}
                     onChange={handleTagStrChange}
                     placeholder=""
+                    spellCheck={false}
+                    autoCapitalize="none"
                 />
             </div>
             {defaultSection}

@@ -1,3 +1,4 @@
+import type { ReactNode } from "react"
 import { IconX } from "@tabler/icons-react"
 import { useDialogStore } from "@/store/dialogStore"
 import { parseShortcut } from "@/utils/helpers"
@@ -40,12 +41,12 @@ interface ShortcutItemProps {
 function ShortcutCombo({ shortcut }: { shortcut: string }) {
     const keys = parseShortcut(shortcut)
     return (
-        <span className={styles.ShortcutDialog__Combo}>
+        <span className={styles.ShortcutCombo}>
             {keys.map((key, index) => (
-                <span key={index} className={styles.ShortcutDialog__KeyWrapper}>
+                <span key={index} className={styles.ShortcutCombo__KeyWrapper}>
                     <kbd>{key}</kbd>
                     {index < keys.length - 1 && (
-                        <span className={styles.ShortcutDialog__Plus}>+</span>
+                        <span className={styles.ShortcutCombo__Plus}>+</span>
                     )}
                 </span>
             ))}
@@ -59,18 +60,34 @@ function ShortcutItem({
     shortcutAlt,
 }: ShortcutItemProps) {
     return (
-        <div className={styles.ShortcutDialog__Item}>
-            <div className={styles.ShortcutDialog__Keys}>
+        <div className={styles.ShortcutItem}>
+            <div className={styles.ShortcutItem__Keys}>
                 <ShortcutCombo shortcut={shortcut} />
                 {shortcutAlt && (
                     <>
-                        <span className={styles.ShortcutDialog__Or}>or</span>
+                        <span className={styles.ShortcutItem__Or}>or</span>
                         <ShortcutCombo shortcut={shortcutAlt} />
                     </>
                 )}
             </div>
-            <span className={styles.ShortcutDialog__Desc}>{description}</span>
+            <span className={styles.ShortcutItem__Desc}>{description}</span>
         </div>
+    )
+}
+
+interface ShortcutSectionProps {
+    title: string
+    note?: string
+    children: ReactNode
+}
+
+function ShortcutSection({ title, note, children }: ShortcutSectionProps) {
+    return (
+        <section className={styles.ShortcutSection}>
+            <h3 className={styles.ShortcutSection__Title}>{title}</h3>
+            {note && <p className={styles.ShortcutSection__Note}>{note}</p>}
+            <div className={styles.ShortcutSection__Grid}>{children}</div>
+        </section>
     )
 }
 
@@ -94,147 +111,129 @@ export default function ShortcutDialog() {
             </div>
 
             <div className={styles.ShortcutDialog__Sections}>
-                <section className={styles.ShortcutDialog__Section}>
-                    <h3 className={styles.ShortcutDialog__SectionTitle}>
-                        Navigation
-                    </h3>
-                    <div className={styles.ShortcutDialog__Grid}>
-                        <ShortcutItem
-                            shortcut={SHORTCUT_NAV_UP}
-                            description="Previous"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_NAV_DOWN}
-                            description="Next"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_NAV_UP_SKIP}
-                            description="Skip 5 up"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_NAV_DOWN_SKIP}
-                            description="Skip 5 down"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_NAV_TOP}
-                            description="First"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_NAV_BOTTOM}
-                            description="Last"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_NAV_ACTION}
-                            description="Primary action"
-                        />
-                        <ShortcutItem
-                            shortcut="Escape"
-                            description="Clear selection"
-                        />
-                    </div>
-                </section>
+                <ShortcutSection title="Navigation">
+                    <ShortcutItem
+                        shortcut={SHORTCUT_NAV_UP}
+                        description="Previous"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_NAV_DOWN}
+                        description="Next"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_NAV_UP_SKIP}
+                        description="Skip 5 up"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_NAV_DOWN_SKIP}
+                        description="Skip 5 down"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_NAV_TOP}
+                        description="First"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_NAV_BOTTOM}
+                        description="Last"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_NAV_ACTION}
+                        description="Primary action"
+                    />
+                    <ShortcutItem
+                        shortcut="Escape"
+                        description="Clear selection"
+                    />
+                </ShortcutSection>
 
-                <section className={styles.ShortcutDialog__Section}>
-                    <h3 className={styles.ShortcutDialog__SectionTitle}>
-                        Item Actions
-                    </h3>
-                    <div className={styles.ShortcutDialog__Grid}>
-                        <ShortcutItem
-                            shortcut={SHORTCUT_ITEM_EDIT}
-                            description="Edit"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_ITEM_COPY}
-                            description="Copy content"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_ITEM_TRASH}
-                            description="Trash"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_ITEM_RESTORE}
-                            description="Restore"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_ITEM_TOGGLE_COPY_ON_CLICK}
-                            description="Toggle copy-on-click"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_ITEM_REFETCH}
-                            description="Refetch link (links only)"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_ITEM_CONVERT_TO_TODO}
-                            description="Convert to todo (text only)"
-                        />
-                    </div>
-                </section>
+                <ShortcutSection title="Item Actions">
+                    <ShortcutItem
+                        shortcut={SHORTCUT_ITEM_EDIT}
+                        description="Edit"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_ITEM_COPY}
+                        description="Copy content"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_ITEM_TRASH}
+                        description="Trash"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_ITEM_RESTORE}
+                        description="Restore"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_ITEM_TOGGLE_COPY_ON_CLICK}
+                        description="Toggle copy-on-click"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_ITEM_REFETCH}
+                        description="Refetch link (links only)"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_ITEM_CONVERT_TO_TODO}
+                        description="Convert to todo (text only)"
+                    />
+                </ShortcutSection>
 
-                <section className={styles.ShortcutDialog__Section}>
-                    <h3 className={styles.ShortcutDialog__SectionTitle}>App</h3>
-                    <div className={styles.ShortcutDialog__Grid}>
-                        <ShortcutItem
-                            shortcut={SHORTCUT_FOCUS_MAIN_INPUT}
-                            description="Focus input"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_CMD_PAL}
-                            shortcutAlt={SHORTCUT_CMD_PAL_ALT}
-                            description="Command palette"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_CMD_PAL_THEME}
-                            description="Theme switch palette"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_SAVE_AND_CLOSE}
-                            description="Save and close (editor)"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_SYNC}
-                            description="Sync to Google Drive"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_SHORTCUTS_HELP}
-                            description="Show shortcuts"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_TOGGLE_ITEM_EXPANDED_MODE}
-                            description="Toggle expanded item info"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_MASS_TAG_EDIT}
-                            description="Mass edit tags (Jot page)"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_DISMISS_ALL_NOTIFICATIONS}
-                            description="Dismiss all notifications"
-                        />
-                    </div>
-                </section>
+                <ShortcutSection title="App">
+                    <ShortcutItem
+                        shortcut={SHORTCUT_FOCUS_MAIN_INPUT}
+                        description="Focus input"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_CMD_PAL}
+                        shortcutAlt={SHORTCUT_CMD_PAL_ALT}
+                        description="Command palette"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_CMD_PAL_THEME}
+                        description="Theme switch palette"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_SAVE_AND_CLOSE}
+                        description="Save and close (editor)"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_SYNC}
+                        description="Sync to Google Drive"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_SHORTCUTS_HELP}
+                        description="Show shortcuts"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_TOGGLE_ITEM_EXPANDED_MODE}
+                        description="Toggle expanded item info"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_MASS_TAG_EDIT}
+                        description="Mass edit tags (Jot page)"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_DISMISS_ALL_NOTIFICATIONS}
+                        description="Dismiss all notifications"
+                    />
+                </ShortcutSection>
 
-                <section className={styles.ShortcutDialog__Section}>
-                    <h3 className={styles.ShortcutDialog__SectionTitle}>
-                        Collections
-                    </h3>
-                    <p className={styles.ShortcutDialog__SectionNote}>
-                        Requires the main input to be unfocused.
-                    </p>
-                    <div className={styles.ShortcutDialog__Grid}>
-                        <ShortcutItem
-                            shortcut={SHORTCUT_NAV_PREV_COLLECTION}
-                            description="Previous collection"
-                        />
-                        <ShortcutItem
-                            shortcut={SHORTCUT_NAV_NEXT_COLLECTION}
-                            description="Next collection"
-                        />
-                        <ShortcutItem
-                            shortcut="mod+n"
-                            description="Jump to collection n (1-9)"
-                        />
-                    </div>
-                </section>
+                <ShortcutSection
+                    title="Collections"
+                    note="Requires the main input to be unfocused."
+                >
+                    <ShortcutItem
+                        shortcut={SHORTCUT_NAV_PREV_COLLECTION}
+                        description="Previous collection"
+                    />
+                    <ShortcutItem
+                        shortcut={SHORTCUT_NAV_NEXT_COLLECTION}
+                        description="Next collection"
+                    />
+                    <ShortcutItem
+                        shortcut="mod+n"
+                        description="Jump to collection n (1-9)"
+                    />
+                </ShortcutSection>
             </div>
         </div>
     )

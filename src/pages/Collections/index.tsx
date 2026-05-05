@@ -13,7 +13,7 @@ import { ICON_PROPS_BUTTON, ICON_PROPS_NORMAL } from "@/config/constants"
 import BackBtn from "@/components/BackBtn"
 
 import type { Collection } from "@/types"
-import type { DropResult } from "@hello-pangea/dnd"
+import type { DraggableProvided, DropResult } from "@hello-pangea/dnd"
 
 export default function Collections() {
     useDocumentTitle("Collections")
@@ -50,24 +50,14 @@ export default function Collections() {
         else if (!itemAfter) newSortOrder = itemBefore.sortOrder + 1000
         else newSortOrder = (itemBefore.sortOrder + itemAfter.sortOrder) / 2
 
-        if (draggedItem.coreType === "all") {
-            setAllCollection({
-                sortOrder: newSortOrder,
-                updatedAt: DateTime.now().toISO(),
-            })
-            queryClient.invalidateQueries({ queryKey: queryKeys.collections })
-            return
-        }
-        if (draggedItem.coreType === "untagged") {
-            setUntaggedCollection({
-                sortOrder: newSortOrder,
-                updatedAt: DateTime.now().toISO(),
-            })
-            queryClient.invalidateQueries({ queryKey: queryKeys.collections })
-            return
-        }
-        if (draggedItem.coreType === "trash") {
-            setTrashCollection({
+        const coreSetters = {
+            all: setAllCollection,
+            untagged: setUntaggedCollection,
+            trash: setTrashCollection,
+        } as const
+
+        if (draggedItem.coreType && draggedItem.coreType in coreSetters) {
+            coreSetters[draggedItem.coreType]({
                 sortOrder: newSortOrder,
                 updatedAt: DateTime.now().toISO(),
             })
@@ -89,50 +79,24 @@ export default function Collections() {
             index={index}
         >
             {(provided, snapshot) => (
-                <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    className={[
-                        styles.CollectionItem,
-                        snapshot.isDragging
-                            ? styles["CollectionItem--Dragging"]
-                            : "",
-                    ].join(" ")}
-                >
-                    <button
-                        className={styles.CollectionItem__TriggerBtn}
-                        onClick={() => openCollectionDialog(collection)}
-                    >
-                        <CollectionRow
-                            collection={collection}
-                            isDefault={
-                                collection.slug === defaultCollectionSlug
-                            }
-                        />
-                    </button>
-                    <span
-                        className={styles.CollectionItem__DragHandle}
-                        {...provided.dragHandleProps}
-                    >
-                        <IconGripVertical {...ICON_PROPS_NORMAL} />
-                    </span>
-                </div>
+                <CollectionItem
+                    collection={collection}
+                    isDefault={collection.slug === defaultCollectionSlug}
+                    innerRef={provided.innerRef}
+                    draggableProps={provided.draggableProps}
+                    dragHandleProps={provided.dragHandleProps}
+                    isDragging={snapshot.isDragging}
+                />
             )}
         </Draggable>
     ))
 
     const staticRows = sortedCollections.map((collection) => (
-        <div key={collection.id} className={styles.CollectionItem}>
-            <button
-                className={styles.CollectionItem__TriggerBtn}
-                onClick={() => openCollectionDialog(collection)}
-            >
-                <CollectionRow
-                    collection={collection}
-                    isDefault={collection.slug === defaultCollectionSlug}
-                />
-            </button>
-        </div>
+        <CollectionItem
+            key={collection.id}
+            collection={collection}
+            isDefault={collection.slug === defaultCollectionSlug}
+        />
     ))
 
     return (
@@ -141,33 +105,10 @@ export default function Collections() {
             <div className={styles.Collections__Header}>
                 <h1 className={styles.Collections__Title}>Collections</h1>
             </div>
-            <label className={styles.Collections__SortLabel}>
-                Sort mode
-                <span className={styles.Collections__SortToggle}>
-                    <label className={styles.Collections__SortOption}>
-                        <input
-                            type="radio"
-                            name="sortOrder"
-                            checked={shouldCustomSortCollections}
-                            onChange={() =>
-                                setShouldCustomSortCollections(true)
-                            }
-                        />
-                        Custom
-                    </label>
-                    <label className={styles.Collections__SortOption}>
-                        <input
-                            type="radio"
-                            name="sortOrder"
-                            checked={!shouldCustomSortCollections}
-                            onChange={() =>
-                                setShouldCustomSortCollections(false)
-                            }
-                        />
-                        A-Z
-                    </label>
-                </span>
-            </label>
+            <SortModeToggle
+                value={shouldCustomSortCollections}
+                onChange={setShouldCustomSortCollections}
+            />
             <div className="FlexRow FlexRow--FlexEnd">
                 <button
                     className={styles.Collections__BtnNew}
@@ -204,37 +145,101 @@ export default function Collections() {
     )
 }
 
-interface CollectionRowProps {
+interface CollectionItemProps {
     collection: Collection
     isDefault: boolean
+    innerRef?: DraggableProvided["innerRef"]
+    draggableProps?: DraggableProvided["draggableProps"]
+    dragHandleProps?: DraggableProvided["dragHandleProps"]
+    isDragging?: boolean
 }
 
-function CollectionRow({ collection, isDefault }: CollectionRowProps) {
+function CollectionItem({
+    collection,
+    isDefault,
+    innerRef,
+    draggableProps,
+    dragHandleProps,
+    isDragging,
+}: CollectionItemProps) {
     return (
-        <>
-            <span className={styles.CollectionItem__Icon}>
-                {collection.icon}
-            </span>
-            <span className={styles.CollectionItem__Name}>
-                {collection.name}
-            </span>
-            {collection.tags.length > 0 && (
-                <span className={styles.CollectionItem__Tags}>
-                    {collection.tags.join(" ")}
+        <div
+            ref={innerRef}
+            {...draggableProps}
+            className={[
+                styles.CollectionItem,
+                isDragging ? styles["CollectionItem--Dragging"] : "",
+            ].join(" ")}
+        >
+            <button
+                className={styles.CollectionItem__TriggerBtn}
+                onClick={() => openCollectionDialog(collection)}
+            >
+                <span className={styles.CollectionItem__Icon}>
+                    {collection.icon}
                 </span>
-            )}
-            {collection.coreType && (
-                <span className={styles.CollectionItem__CoreBadge}>
-                    [{collection.coreType}]
+                <span className={styles.CollectionItem__Name}>
+                    {collection.name}
                 </span>
-            )}
-            <span className={styles.CollectionItem__Indicators}>
-                {isDefault && (
-                    <span className={styles.CollectionItem__DefaultBadge}>
-                        [default]
+                {collection.tags.length > 0 && (
+                    <span className={styles.CollectionItem__Tags}>
+                        {collection.tags.join(" ")}
                     </span>
                 )}
+                {collection.coreType && (
+                    <span className={styles.CollectionItem__CoreBadge}>
+                        [{collection.coreType}]
+                    </span>
+                )}
+                <span className={styles.CollectionItem__Indicators}>
+                    {isDefault && (
+                        <span className={styles.CollectionItem__DefaultBadge}>
+                            [default]
+                        </span>
+                    )}
+                </span>
+            </button>
+            {dragHandleProps && (
+                <span
+                    className={styles.CollectionItem__DragHandle}
+                    {...dragHandleProps}
+                >
+                    <IconGripVertical {...ICON_PROPS_NORMAL} />
+                </span>
+            )}
+        </div>
+    )
+}
+
+interface SortModeToggleProps {
+    value: boolean
+    onChange: (value: boolean) => void
+}
+
+function SortModeToggle({ value, onChange }: SortModeToggleProps) {
+    return (
+        <label className={styles.SortModeToggle}>
+            Sort mode
+            <span className={styles.SortModeToggle__Toggle}>
+                <label className={styles.SortModeToggle__Option}>
+                    <input
+                        type="radio"
+                        name="sortOrder"
+                        checked={value}
+                        onChange={() => onChange(true)}
+                    />
+                    Custom
+                </label>
+                <label className={styles.SortModeToggle__Option}>
+                    <input
+                        type="radio"
+                        name="sortOrder"
+                        checked={!value}
+                        onChange={() => onChange(false)}
+                    />
+                    A-Z
+                </label>
             </span>
-        </>
+        </label>
     )
 }

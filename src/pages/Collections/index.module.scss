@@ -15,30 +15,6 @@
         composes: Btn Btn--Pri from global;
     }
 
-    &__SortLabel {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 1rem;
-        font-size: var(--fontSizeMd);
-        font-weight: 600;
-    }
-
-    &__SortToggle {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        font-size: var(--fontSizeMd);
-        font-weight: 400;
-    }
-
-    &__SortOption {
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-        cursor: pointer;
-    }
-
     &__SortHint {
         font-size: var(--fontSizeSm);
         color: var(--colTextAlt);
@@ -50,6 +26,30 @@
         flex-direction: column;
         gap: 0.5rem;
         margin-top: 1rem;
+    }
+}
+
+.SortModeToggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: var(--fontSizeMd);
+    font-weight: 600;
+
+    &__Toggle {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        font-size: var(--fontSizeMd);
+        font-weight: 400;
+    }
+
+    &__Option {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        cursor: pointer;
     }
 }
 

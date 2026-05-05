@@ -1,4 +1,11 @@
-import { useState, useEffect, useRef, useMemo, useCallback } from "react"
+import {
+    useState,
+    useEffect,
+    useLayoutEffect,
+    useRef,
+    useMemo,
+    useCallback,
+} from "react"
 import { useParams, Navigate } from "react-router-dom"
 import { useHotkeys } from "react-hotkeys-hook"
 import { useItemsQuery } from "@/hooks/useItemsQuery"
@@ -87,9 +94,17 @@ export default function Jot() {
     const defaultShouldShowJotItemExtraInfo = useSyncedUserSettings(
         (s) => s.shouldShowJotItemExtraInfo,
     )
-    const [isShowingJotItemExtraInfo, setIsShowingJotItemExtraInfo] = useState(
-        defaultShouldShowJotItemExtraInfo,
+    const isShowingJotItemExtraInfo = useTransientUiState(
+        (s) => s.isShowingJotItemExtraInfo,
     )
+    const setIsShowingJotItemExtraInfo = useTransientUiState(
+        (s) => s.setIsShowingJotItemExtraInfo,
+    )
+
+    useLayoutEffect(() => {
+        setIsShowingJotItemExtraInfo(defaultShouldShowJotItemExtraInfo)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const collections = collectionsQuery.data ?? []
     const currCollection = collections.find((c) => c.slug === slug)
@@ -148,7 +163,9 @@ export default function Jot() {
     useHotkeys(
         SHORTCUT_TOGGLE_ITEM_EXPANDED_MODE,
         () => {
-            setIsShowingJotItemExtraInfo((prev) => !prev)
+            setIsShowingJotItemExtraInfo(
+                !useTransientUiState.getState().isShowingJotItemExtraInfo,
+            )
         },
         { enableOnFormTags: true },
     )

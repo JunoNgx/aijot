@@ -6,6 +6,7 @@ import {
     IconCheckbox,
     IconClipboardPlus,
     IconX,
+    IconSquare,
     IconFocus,
     IconTags,
 } from "@tabler/icons-react"
@@ -34,6 +35,9 @@ export default function MainInputExtendedMenu({
     onSubmit,
 }: Props) {
     const visibleItems = useTransientUiState((s) => s.mainListVisibleItems)
+    const isShowingJotItemExtraInfo = useTransientUiState(
+        (s) => s.isShowingJotItemExtraInfo,
+    )
     const { massTagEditMutation } = useItemsMutations()
     const prependSyntax = (syntax: string, shouldAddSpace = false) => {
         const newValue = shouldAddSpace
@@ -62,6 +66,14 @@ export default function MainInputExtendedMenu({
     const handleClearInput = () => {
         setInputValue("")
         inputRef.current?.focus()
+    }
+
+    const handleToggleExpandedMode = () => {
+        useTransientUiState
+            .getState()
+            .setIsShowingJotItemExtraInfo(
+                !useTransientUiState.getState().isShowingJotItemExtraInfo,
+            )
     }
 
     return (
@@ -127,6 +139,18 @@ export default function MainInputExtendedMenu({
                     >
                         <IconX {...ICON_PROPS_ITEM_DROPDOWN} />
                         clear input
+                    </DropdownMenu.Item>
+
+                    <DropdownMenu.Item
+                        className={styles.MainInputExtendedMenu__Item}
+                        onSelect={handleToggleExpandedMode}
+                    >
+                        {isShowingJotItemExtraInfo ? (
+                            <IconCheckbox {...ICON_PROPS_ITEM_DROPDOWN} />
+                        ) : (
+                            <IconSquare {...ICON_PROPS_ITEM_DROPDOWN} />
+                        )}
+                        expanded mode
                     </DropdownMenu.Item>
 
                     {visibleItems.length > 0 && (

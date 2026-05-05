@@ -53,7 +53,6 @@ Two-layer split for all data operations:
 ### Navigation
 
 - `useNavigateRoutes` hook: all `navigate()` calls centralised here. No inline `navigate()` in components.
-- Route guard as a render-less `<NavigationHandler>` component (uses `useLocation` + `useEffect`). Avoids React Router loader/guard patterns.
 
 ### Collection sort order
 

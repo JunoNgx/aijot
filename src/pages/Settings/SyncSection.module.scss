@@ -1,0 +1,34 @@
+.SyncInfoWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.SyncEmail {
+    font-size: var(--fontSizeMd);
+    color: var(--colSub);
+}
+
+.SyncStatus {
+    font-size: var(--fontSizeSm);
+    color: var(--colTextAlt);
+}
+
+.SyncStatus--Error {
+    font-size: var(--fontSizeSm);
+    color: var(--colDanger);
+}
+
+.SyncError {
+    color: var(--colDanger);
+}
+
+.BtnAction {
+    composes: Btn Btn--Sec from global;
+}
+
+.BtnConnect {
+    composes: Btn Btn--Pri from global;
+}

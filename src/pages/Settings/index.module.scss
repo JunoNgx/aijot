@@ -13,22 +13,6 @@
         font-size: var(--fontSizeMd);
     }
 
-    &__ImportPreview {
-        display: inline-flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        margin-top: 0.75rem;
-        padding: 0.5rem 0.625rem;
-        font-size: var(--fontSizeMd);
-        background-color: var(--colBgAlt);
-        @include StandardBorder;
-    }
-
-    &__ImportPreviewActions {
-        display: flex;
-        gap: 0.5rem;
-    }
-
     &__Btn {
         composes: Btn Btn--Sec from global;
     }
@@ -68,30 +52,6 @@
         font-size: var(--fontSizeSm);
         color: var(--colTextAlt);
         margin: 0.5rem 0 0;
-    }
-}
-
-.Section {
-    margin-bottom: 2rem;
-
-    &--Spaced {
-        margin-top: 8rem;
-    }
-
-    &__Title {
-        font-size: var(--fontSizeLg);
-        color: var(--colSub);
-        font-weight: 600;
-
-        &--Danger {
-            color: var(--colDanger);
-        }
-    }
-
-    &__Description {
-        font-size: var(--fontSizeSm);
-        color: var(--colTextAlt);
-        margin-bottom: 1rem;
     }
 }
 
@@ -145,28 +105,5 @@
 
     &__Checkbox {
         composes: Checkbox from global;
-    }
-
-    &__SyncInfoWrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.25rem;
-
-        margin-bottom: 0.75rem;
-    }
-
-    &__SyncEmail {
-        font-size: var(--fontSizeMd);
-        color: var(--colSub);
-    }
-
-    &__SyncStatus {
-        font-size: var(--fontSizeSm);
-        color: var(--colTextAlt);
-    }
-
-    &__SyncError {
-        color: var(--colDanger);
     }
 }

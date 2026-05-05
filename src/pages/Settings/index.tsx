@@ -2,13 +2,12 @@ import { useRef, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 import { useGoogleAuth } from "@/hooks/useGoogleAuth"
-import { useSyncFn } from "@/hooks/useSync"
 import { useNavigateRoutes } from "@/hooks/useNavigateRoutes"
 import { useLocalAppData } from "@/store/localAppData"
 import { useLocalUserSettings } from "@/store/localUserSettings"
 import { useCommandPaletteStore } from "@/store/commandPaletteStore"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
-import { useLocalSyncData } from "@/store/localSyncData"
+
 import { useDialogStore } from "@/store/dialogStore"
 import { useDocumentTitle } from "@/hooks/useDocumentTitle"
 import { SANS_SERIF_FONTS, MONO_FONTS } from "@/config/fonts"
@@ -25,13 +24,16 @@ import {
 } from "@/services/justjotImport"
 import { clearAllData, resetApp } from "@/utils/clearData"
 import { APP_VERSION, COMMIT_SHA } from "@/config/constants"
-import { formatFullDatetime } from "@/utils/helpers"
 import { useThemeActions } from "@/hooks/useThemeActions"
 import type { ExportData, ImportSummary } from "@/types"
 import type { JustJotExportData } from "@/services/justjotImport"
 import { queryKeys } from "@/db/queryKeys"
 import styles from "./index.module.scss"
+import sectionStyles from "./SettingsSection.module.scss"
 import BackBtn from "@/components/BackBtn"
+import SettingsSection from "./SettingsSection"
+import SyncSection from "./SyncSection"
+import ImportPreview from "@/components/ImportPreview"
 
 export default function Settings() {
     useDocumentTitle("Settings")
@@ -92,25 +94,11 @@ export default function Settings() {
     )
     const trashCollection = useSyncedUserSettings((s) => s.trashCollection)
 
-    const syncStatus = useLocalSyncData((s) => s.syncStatus)
-    const syncError = useLocalSyncData((s) => s.syncError)
-    const lastSyncTime = useLocalSyncData((s) => s.lastSyncTime)
-    const lastSyncTimeUiText = lastSyncTime
-        ? `Last sync: ${formatFullDatetime(lastSyncTime, is24HourClock)}`
-        : "Last sync: Never"
     const setShouldShowDemoDataBanner = useLocalAppData(
         (s) => s.setShouldShowDemoDataBanner,
     )
 
-    const {
-        isConnected,
-        isConnecting,
-        connectError,
-        connect,
-        disconnect,
-        authToken,
-    } = useGoogleAuth()
-    const { sync } = useSyncFn()
+    const { disconnect } = useGoogleAuth()
     const { randomiseTheme } = useThemeActions()
     const { navigateToHelp, navigateToPrivacy, navigateToTerms } =
         useNavigateRoutes()
@@ -322,70 +310,9 @@ export default function Settings() {
             <BackBtn />
             <h2 className={styles.Settings__Title}>Settings</h2>
 
-            <section className={styles.Section}>
-                <h3 className={styles.Section__Title}>Sync</h3>
-                <p className={styles.Section__Description}>
-                    Back up your data to Google Drive
-                </p>
-                {isConnected && authToken && (
-                    <div className={styles.Field__SyncInfoWrapper}>
-                        <span className={styles.Field__SyncEmail}>
-                            Connected as {authToken.email}
-                        </span>
-                        <span className={styles.Field__SyncStatus}>
-                            {syncStatus === "syncing"
-                                ? "Syncing..."
-                                : lastSyncTimeUiText}
-                        </span>
-                        {syncStatus === "error" && syncError && (
-                            <span className={styles.Field__SyncError}>
-                                Error: {syncError}
-                            </span>
-                        )}
-                    </div>
-                )}
-                {connectError && (
-                    <div
-                        className={`${styles.Field__SyncStatus} ${styles["Field__SyncStatus--Error"]}`}
-                    >
-                        {connectError}
-                    </div>
-                )}
-                <div className="FlexRow">
-                    {isConnected ? (
-                        <>
-                            <button
-                                className={styles.Settings__BtnAction}
-                                type="button"
-                                disabled={syncStatus === "syncing"}
-                                onClick={() => sync()}
-                            >
-                                Sync now
-                            </button>
-                            <button
-                                className={styles.Settings__BtnAction}
-                                type="button"
-                                onClick={disconnect}
-                            >
-                                Disconnect
-                            </button>
-                        </>
-                    ) : (
-                        <button
-                            className={styles.Settings__BtnConnect}
-                            type="button"
-                            disabled={isConnecting}
-                            onClick={connect}
-                        >
-                            {isConnecting ? "Connecting..." : "Connect"}
-                        </button>
-                    )}
-                </div>
-            </section>
+            <SyncSection />
 
-            <section className={styles.Section}>
-                <h3 className={styles.Section__Title}>Preferences</h3>
-
+            <SettingsSection title="Preferences">
                 <div className={`${styles.Field} ${styles["Field--FlexRow"]}`}>
                     <label
                         className={styles.Field__Label}
@@ -475,15 +402,12 @@ export default function Settings() {
                         toggled mid-session.
                     </small>
                 </div>
-            </section>
+            </SettingsSection>
 
-            <section className={styles.Section}>
-                <h3 className={styles.Section__Title}>Local device config</h3>
-                <p className={styles.Section__Description}>
-                    The following settings are not synchronised to your cloud
-                    data
-                </p>
-
+            <SettingsSection
+                title="Local device config"
+                description="The following settings are not synchronised to your cloud data"
+            >
                 <div className={styles.Field}>
                     <label className={styles.Field__Checkbox}>
                         <input
@@ -570,13 +494,12 @@ export default function Settings() {
                         ))}
                     </select>
                 </div>
-            </section>
+            </SettingsSection>
 
-            <section className={styles.Section}>
-                <h3 className={styles.Section__Title}>Data</h3>
-                <p className={styles.Section__Description}>
-                    Export or import your items, collections, and settings
-                </p>
+            <SettingsSection
+                title="Data"
+                description="Export or import your items, collections, and settings"
+            >
                 <div className="FlexRow">
                     <button
                         className={styles.Settings__BtnAction}
@@ -617,67 +540,30 @@ export default function Settings() {
                     />
                 </div>
                 {pendingImport && importSummary && (
-                    <div className={styles.Settings__ImportPreview}>
-                        <span>
-                            {importSummary.newItems} new,{" "}
-                            {importSummary.updatedItems} updated items
-                        </span>
-                        <span>
-                            {importSummary.newCollections} new,{" "}
-                            {importSummary.updatedCollections} updated
-                            collections
-                        </span>
-                        <div className={styles.Settings__ImportPreviewActions}>
-                            <button
-                                className={styles.Settings__BtnAction}
-                                type="button"
-                                onClick={handleConfirmImport}
-                            >
-                                Confirm
-                            </button>
-                            <button
-                                className={styles.Settings__BtnAction}
-                                type="button"
-                                onClick={handleCancelImport}
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
+                    <ImportPreview
+                        newItems={importSummary.newItems}
+                        updatedItems={importSummary.updatedItems}
+                        newCollections={importSummary.newCollections}
+                        updatedCollections={importSummary.updatedCollections}
+                        onConfirm={handleConfirmImport}
+                        onCancel={handleCancelImport}
+                    />
                 )}
                 {pendingJustJotImport && justJotImportSummary && (
-                    <div className={styles.Settings__ImportPreview}>
-                        <span>
-                            {justJotImportSummary.newItems} new,{" "}
-                            {justJotImportSummary.updatedItems} updated items
-                        </span>
-                        <span>
-                            {justJotImportSummary.newCollections} new,{" "}
-                            {justJotImportSummary.updatedCollections} updated
-                            collections
-                        </span>
-                        <div className={styles.Settings__ImportPreviewActions}>
-                            <button
-                                className={styles.Settings__BtnAction}
-                                type="button"
-                                onClick={handleConfirmJustJotImport}
-                            >
-                                Confirm
-                            </button>
-                            <button
-                                className={styles.Settings__BtnAction}
-                                type="button"
-                                onClick={handleCancelJustJotImport}
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
+                    <ImportPreview
+                        newItems={justJotImportSummary.newItems}
+                        updatedItems={justJotImportSummary.updatedItems}
+                        newCollections={justJotImportSummary.newCollections}
+                        updatedCollections={
+                            justJotImportSummary.updatedCollections
+                        }
+                        onConfirm={handleConfirmJustJotImport}
+                        onCancel={handleCancelJustJotImport}
+                    />
                 )}
-            </section>
+            </SettingsSection>
 
-            <section className={styles.Section}>
-                <h3 className={styles.Section__Title}>Help</h3>
+            <SettingsSection title="Help">
                 <button
                     className={styles.Settings__BtnAction}
                     type="button"
@@ -685,18 +571,13 @@ export default function Settings() {
                 >
                     Help guide
                 </button>
-            </section>
+            </SettingsSection>
 
-            <section className={styles.Section}>
-                <h3
-                    className={styles.Section__Title}
-                    onClick={handleDebugEnableClick}
-                    tabIndex={0}
-                    role="button"
-                    onKeyDown={handleAboutKeyDown}
-                >
-                    About
-                </h3>
+            <SettingsSection
+                title="About"
+                onTitleClick={handleDebugEnableClick}
+                onTitleKeyDown={handleAboutKeyDown}
+            >
                 <p className={styles.Settings__Version}>
                     Version {APP_VERSION} ({COMMIT_SHA})
                 </p>
@@ -716,20 +597,14 @@ export default function Settings() {
                         Terms of Services
                     </button>
                 </div>
-            </section>
+            </SettingsSection>
 
-            <section
-                className={`${styles.Section} ${styles["Section--Spaced"]}`}
+            <SettingsSection
+                title="Danger Zone"
+                description="Removes all items and collections. Your data on Google Drive will remain intact."
+                sectionClassName={sectionStyles["Section--Spaced"]}
+                titleClassName={sectionStyles["Section__Title--Danger"]}
             >
-                <h3
-                    className={`${styles.Section__Title} ${styles["Section__Title--Danger"]}`}
-                >
-                    Danger Zone
-                </h3>
-                <p className={styles.Section__Description}>
-                    Removes all items and collections. Your data on Google Drive
-                    will remain intact.
-                </p>
                 <button
                     className={styles.Settings__BtnDanger}
                     type="button"
@@ -737,11 +612,10 @@ export default function Settings() {
                 >
                     Clear all data
                 </button>
-            </section>
+            </SettingsSection>
 
             {isDebugMode && (
-                <section className={styles.Section}>
-                    <h3 className={styles.Section__Title}>Debug</h3>
+                <SettingsSection title="Debug">
                     <button
                         className={styles.Settings__Btn}
                         type="button"
@@ -749,7 +623,7 @@ export default function Settings() {
                     >
                         Trigger test toast
                     </button>
-                    <p className={styles.Section__Description}>
+                    <p className={sectionStyles.Section__Description}>
                         Wipes local database and all local app data. Cannot be
                         undone.
                     </p>
@@ -760,7 +634,7 @@ export default function Settings() {
                     >
                         Reset app
                     </button>
-                </section>
+                </SettingsSection>
             )}
         </div>
     )

@@ -1,0 +1,23 @@
+.Section {
+    margin-bottom: 2rem;
+
+    &--Spaced {
+        margin-top: 8rem;
+    }
+
+    &__Title {
+        font-size: var(--fontSizeLg);
+        color: var(--colSub);
+        font-weight: 600;
+
+        &--Danger {
+            color: var(--colDanger);
+        }
+    }
+
+    &__Description {
+        font-size: var(--fontSizeSm);
+        color: var(--colTextAlt);
+        margin-bottom: 1rem;
+    }
+}

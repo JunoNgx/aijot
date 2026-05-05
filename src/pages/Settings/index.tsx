@@ -33,7 +33,7 @@ import sectionStyles from "./SettingsSection.module.scss"
 import BackBtn from "@/components/BackBtn"
 import SettingsSection from "./SettingsSection"
 import SyncSection from "./SyncSection"
-import ImportPreview from "@/components/ImportPreview"
+import ImportPreview from "./ImportPreview"
 
 export default function Settings() {
     useDocumentTitle("Settings")

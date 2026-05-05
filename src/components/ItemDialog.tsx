@@ -26,6 +26,110 @@ import type { Item } from "@/types"
 
 const AUTOSAVE_DEBOUNCE_MS = 5000
 
+interface MoreOptionsAccordionProps {
+    shouldCopyOnClickVal: boolean
+    handleCopyOnClickChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    isPinnedVal: boolean
+    handleIsPinnedChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    jottedAtInputVal: string
+    handleJottedAtChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    isLinkItem: boolean
+    faviconUrlVal: string
+    handleFaviconUrlChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    item: Item
+}
+
+function MoreOptionsAccordion({
+    shouldCopyOnClickVal,
+    handleCopyOnClickChange,
+    isPinnedVal,
+    handleIsPinnedChange,
+    jottedAtInputVal,
+    handleJottedAtChange,
+    isLinkItem,
+    faviconUrlVal,
+    handleFaviconUrlChange,
+    item,
+}: MoreOptionsAccordionProps) {
+    return (
+        <Accordion.Item
+            value="advanced"
+            className={styles.MoreOptionsAccordion__Item}
+        >
+            <Accordion.Header className={styles.MoreOptionsAccordion__Header}>
+                <Accordion.Trigger
+                    className={styles.MoreOptionsAccordion__Trigger}
+                >
+                    <span>More options</span>
+                    <IconChevronDown
+                        {...ICON_PROPS_ACTION}
+                        className={styles.MoreOptionsAccordion__Chevron}
+                    />
+                </Accordion.Trigger>
+            </Accordion.Header>
+            <Accordion.Content className={styles.MoreOptionsAccordion__Content}>
+                <div className={styles.MoreOptionsAccordion__ContentInner}>
+                    <div className={styles.ItemDialog__Field}>
+                        <label className={styles.ItemDialog__Checkbox}>
+                            <input
+                                type="checkbox"
+                                checked={shouldCopyOnClickVal}
+                                onChange={handleCopyOnClickChange}
+                            />
+                            Copy content on click as primary action
+                        </label>
+                    </div>
+                    <div className={styles.ItemDialog__Field}>
+                        <label className={styles.ItemDialog__Checkbox}>
+                            <input
+                                type="checkbox"
+                                checked={isPinnedVal}
+                                onChange={handleIsPinnedChange}
+                            />
+                            Pin this item
+                        </label>
+                    </div>
+                    <div className={styles.ItemDialog__Field}>
+                        <label className={styles.ItemDialog__Label}>
+                            Jotted at
+                        </label>
+                        <input
+                            className="Dialog__Input HalfInput"
+                            type="datetime-local"
+                            value={jottedAtInputVal}
+                            onChange={handleJottedAtChange}
+                        />
+                    </div>
+                    {isLinkItem && (
+                        <div className={styles.ItemDialog__Field}>
+                            <label className={styles.ItemDialog__Label}>
+                                Favicon
+                            </label>
+                            <input
+                                className="Dialog__Input HalfInput"
+                                value={faviconUrlVal}
+                                onChange={handleFaviconUrlChange}
+                                placeholder="https://..."
+                            />
+                        </div>
+                    )}
+                    {item.previousContent && (
+                        <button
+                            className={`
+                                ${styles.ItemDialog__BtnAction}
+                                ${styles.ItemDialog__BtnPrevVersion}
+                            `}
+                            onClick={() => openPreviousVersionDialog(item)}
+                        >
+                            View previous version
+                        </button>
+                    )}
+                </div>
+            </Accordion.Content>
+        </Accordion.Item>
+    )
+}
+
 // interface CodeMirrorEditorProps {
 //     initialValue: string
 //     onChange: (value: string) => void
@@ -313,79 +417,6 @@ export default function ItemDialog({ item, onClose }: Props) {
         />
     )
 
-    const moreOptionsAccordion = (
-        <Accordion.Item value="advanced" className={styles.Accordion__Item}>
-            <Accordion.Header className={styles.Accordion__Header}>
-                <Accordion.Trigger className={styles.Accordion__Trigger}>
-                    <span>More options</span>
-                    <IconChevronDown
-                        {...ICON_PROPS_ACTION}
-                        className={styles.Accordion__Chevron}
-                    />
-                </Accordion.Trigger>
-            </Accordion.Header>
-            <Accordion.Content className={styles.Accordion__Content}>
-                <div className={styles.Accordion__ContentInner}>
-                    <div className={styles.ItemDialog__Field}>
-                        <label className={styles.ItemDialog__Checkbox}>
-                            <input
-                                type="checkbox"
-                                checked={shouldCopyOnClickVal}
-                                onChange={handleCopyOnClickChange}
-                            />
-                            Copy content on click as primary action
-                        </label>
-                    </div>
-                    <div className={styles.ItemDialog__Field}>
-                        <label className={styles.ItemDialog__Checkbox}>
-                            <input
-                                type="checkbox"
-                                checked={isPinnedVal}
-                                onChange={handleIsPinnedChange}
-                            />
-                            Pin this item
-                        </label>
-                    </div>
-                    <div className={styles.ItemDialog__Field}>
-                        <label className={styles.ItemDialog__Label}>
-                            Jotted at
-                        </label>
-                        <input
-                            className="Dialog__Input HalfInput"
-                            type="datetime-local"
-                            value={jottedAtInputVal}
-                            onChange={handleJottedAtChange}
-                        />
-                    </div>
-                    {isLinkItem && (
-                        <div className={styles.ItemDialog__Field}>
-                            <label className={styles.ItemDialog__Label}>
-                                Favicon
-                            </label>
-                            <input
-                                className="Dialog__Input HalfInput"
-                                value={faviconUrlVal}
-                                onChange={handleFaviconUrlChange}
-                                placeholder="https://..."
-                            />
-                        </div>
-                    )}
-                    {item.previousContent && (
-                        <button
-                            className={`
-                                ${styles.ItemDialog__BtnAction}
-                                ${styles.ItemDialog__BtnPrevVersion}
-                            `}
-                            onClick={() => openPreviousVersionDialog(item)}
-                        >
-                            View previous version
-                        </button>
-                    )}
-                </div>
-            </Accordion.Content>
-        </Accordion.Item>
-    )
-
     const deleteButton = (
         <button
             className={styles.ItemDialog__BtnDelete}
@@ -461,8 +492,22 @@ export default function ItemDialog({ item, onClose }: Props) {
                     autoCapitalize="none"
                 />
             </div>
-            <Accordion.Root type="multiple" className={styles.Accordion}>
-                {moreOptionsAccordion}
+            <Accordion.Root
+                type="multiple"
+                className={styles.MoreOptionsAccordion}
+            >
+                <MoreOptionsAccordion
+                    shouldCopyOnClickVal={shouldCopyOnClickVal}
+                    handleCopyOnClickChange={handleCopyOnClickChange}
+                    isPinnedVal={isPinnedVal}
+                    handleIsPinnedChange={handleIsPinnedChange}
+                    jottedAtInputVal={jottedAtInputVal}
+                    handleJottedAtChange={handleJottedAtChange}
+                    isLinkItem={isLinkItem}
+                    faviconUrlVal={faviconUrlVal}
+                    handleFaviconUrlChange={handleFaviconUrlChange}
+                    item={item}
+                />
             </Accordion.Root>
             <div className={styles.ItemDialog__Footer}>
                 {deleteButton}

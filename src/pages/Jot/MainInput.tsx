@@ -109,7 +109,8 @@ export default function MainInput({
 
     const handleEscapePress = () => {
         onSelectedIndexChange(-1)
-        inputRef.current?.blur()
+        // void prevents Automatic Semicolon Insertion ambiguity when line starts with (
+        void (document.activeElement as HTMLElement)?.blur()
     }
 
     const hotkeyHandler = getHotkeyHandler([

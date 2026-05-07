@@ -38,8 +38,8 @@ This convention has improved (subjective) readability without any encountered is
 ## Running locally
 
 ```
-yarn
-yarn dev
+pnpm install
+pnpm dev
 ```
 
 ### Environment variable

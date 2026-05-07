@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect, useEffect } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Command } from "cmdk"
 import * as Dialog from "@radix-ui/react-dialog"
 import { useLocation } from "react-router-dom"
@@ -77,7 +77,7 @@ export default function CommandPalette({
 }: CommandPaletteProps) {
     const currentTheme = useLocalUserSettings((s) => s.theme)
     const setTheme = useLocalUserSettings((s) => s.setTheme)
-    const originalThemeRef = useRef(currentTheme)
+    const [originalTheme] = useState(currentTheme)
     const listRef = useRef<HTMLDivElement>(null)
     const didCommitThemeSelection = useRef(false)
 
@@ -131,7 +131,7 @@ export default function CommandPalette({
 
     const revertThemePreview = () => {
         if (!isThemeMode) return
-        setTheme(originalThemeRef.current)
+        setTheme(originalTheme)
     }
 
     const handleEditCurrentCollection = () => {
@@ -160,12 +160,6 @@ export default function CommandPalette({
         }
         didCommitThemeSelection.current = false
     }
-
-    useLayoutEffect(() => {
-        if (!isThemeMode) return
-        originalThemeRef.current = currentTheme
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     useEffect(() => {
         if (isThemeMode) {
@@ -368,7 +362,7 @@ export default function CommandPalette({
                             {theme.name}
                         </span>
                     </div>
-                    {theme.name === originalThemeRef.current && (
+                    {theme.name === originalTheme && (
                         <span className={styles.CommandPaletteItem__Check}>
                             <IconCheck {...ICON_PROPS_NORMAL} />
                         </span>

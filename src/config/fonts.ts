@@ -11,6 +11,11 @@ export const SANS_SERIF_FONTS: FontOption[] = [
         importPath: "@fontsource/space-grotesk",
     },
     {
+        name: "Fira Sans",
+        cssName: "Fira Sans",
+        importPath: "@fontsource/ira-sans",
+    },
+    {
         name: "Inclusive Sans",
         cssName: "Inclusive Sans",
         importPath: "@fontsource/inclusive-sans",

@@ -101,21 +101,31 @@ function JotItemTextContent({
     secondaryTextEl: ReactNode
     isCopied: boolean
 }) {
-    if (isCopied) {
-        return (
-            <span
-                className={`${styles.JotItemTextContent__PrimaryText} ${styles.JotItemTextContent__CopiedText}`}
-            >
-                Copied
-            </span>
-        )
-    }
+    const copiedContent = (
+        <span
+            className={`
+                ${styles.JotItemTextContent__PrimaryText}
+                ${styles.JotItemTextContent__CopiedText}
+            `}
+        >
+            Copied
+        </span>
+    )
 
-    return (
+    const regularContent = (
         <>
             {primaryTextEl}
             {secondaryTextEl}
         </>
+    )
+
+    return (
+        <div
+            className={styles.JotItemTextContent}
+            key={isCopied ? "copied" : "normal"}
+        >
+            {isCopied ? copiedContent : regularContent}
+        </div>
     )
 }
 
@@ -241,18 +251,6 @@ export default memo(function JotItem({
     )
 
     const isCopied = copiedItemIds.includes(item.id)
-    const itemBody = (
-        <div
-            className={styles.JotItem__Body}
-            key={isCopied ? "copied" : "normal"}
-        >
-            <JotItemTextContent
-                primaryTextEl={primaryTextEl}
-                secondaryTextEl={secondaryTextEl}
-                isCopied={isCopied}
-            />
-        </div>
-    )
 
     const itemIcon = (
         <span className={styles.JotItem__Icon}>
@@ -277,7 +275,11 @@ export default memo(function JotItem({
     const compactContent = (
         <>
             {itemIcon}
-            {itemBody}
+            <JotItemTextContent
+                primaryTextEl={primaryTextEl}
+                secondaryTextEl={secondaryTextEl}
+                isCopied={isCopied}
+            />
             {itemIndicators}
             {compactDatetimeEl}
         </>

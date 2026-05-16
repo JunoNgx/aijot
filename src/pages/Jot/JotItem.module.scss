@@ -54,26 +54,6 @@
         border-radius: 50%;
     }
 
-    &__Body {
-        display: flex;
-        align-items: center;
-        min-width: 0;
-        gap: 0.5rem;
-        flex-grow: 10;
-        animation: bodySlideUp var(--transTime) ease-in-out forwards;
-
-        @keyframes bodySlideUp {
-            from {
-                opacity: 0;
-                transform: translateY(0.5rem);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    }
-
     &__StatusWrapper {
         display: flex;
         align-items: center;
@@ -123,6 +103,24 @@
 }
 
 .JotItemTextContent {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 0.5rem;
+    flex-grow: 10;
+    animation: bodySlideUp var(--transTime) ease-in-out forwards;
+
+    @keyframes bodySlideUp {
+        from {
+            opacity: 0;
+            transform: translateY(0.5rem);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
     &__PrimaryText,
     &__SecondaryText {
         @include Ellipsified;

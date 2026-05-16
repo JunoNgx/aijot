@@ -1,0 +1,60 @@
+@use "styles/mixins" as *;
+@use "styles/vars" as *;
+
+.JotItemTextContent {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 0.5rem;
+    flex-grow: 10;
+    animation: bodySlideUp var(--transTime) ease-in-out forwards;
+
+    @keyframes bodySlideUp {
+        from {
+            opacity: 0;
+            transform: translateY(0.5rem);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    &__PrimaryText,
+    &__SecondaryText {
+        @include Ellipsified;
+    }
+
+    &__PrimaryText {
+        font-size: var(--fontSizeMd);
+        color: var(--colText);
+        flex-shrink: 0;
+
+        &--TodoDone {
+            text-decoration: line-through;
+            color: var(--colTextAlt);
+        }
+    }
+
+    &__SecondaryText {
+        font-size: var(--fontSizeSm);
+        color: var(--colTextAlt);
+        flex-shrink: 10;
+    }
+
+    &__CopiedText {
+        color: var(--colMain);
+        animation: copiedFadeIn var(--transTime) ease-in-out forwards;
+
+        @keyframes copiedFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    }
+}

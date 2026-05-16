@@ -1,23 +1,12 @@
-import { useState, type MouseEvent, memo, type ReactNode } from "react"
+import { type MouseEvent, memo } from "react"
 import * as ContextMenu from "@radix-ui/react-context-menu"
+import { IconClipboard, IconPinFilled } from "@tabler/icons-react"
 import {
-    IconNote,
-    IconLink,
-    IconWorld,
-    IconSquare,
-    IconCheckbox,
-    IconClipboard,
-    IconHourglassLow,
-    IconPinFilled,
-} from "@tabler/icons-react"
-import {
-    isValidHexColourCode,
     formatDatetime,
     formatDetailedDatetime,
     truncateText,
 } from "@/utils/helpers"
 import {
-    ICON_PROPS_ITEM_ICON,
     ICON_PROPS_ITEM_STATUS,
     JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
     JOT_ITEM_SECONDARY_TEXT_DISPLAY_LIMIT,
@@ -25,6 +14,9 @@ import {
 import { useLocalUserSettings } from "@/store/localUserSettings"
 import { useTransientUiState } from "@/store/transientUiState"
 import { useItemActions } from "@/hooks/useItemActions"
+import { JotItemIcon } from "./JotItemIcon"
+import { JotItemTextContent } from "./JotItemTextContent"
+import { JotItemExpandedContent } from "./JotItemExpandedContent"
 import JotItemContextMenu from "./JotItemContextMenu"
 import type { Item } from "@/types"
 import styles from "./JotItem.module.scss"
@@ -56,122 +48,6 @@ interface Props {
     id?: string
 }
 
-function FaviconIcon({ url }: { url: string }) {
-    const [hasFailed, setHasFailed] = useState(false)
-    if (hasFailed) return <IconLink {...ICON_PROPS_ITEM_ICON} />
-    return (
-        <img
-            src={url}
-            onError={() => setHasFailed(true)}
-            className={styles.JotItem__Favicon}
-            alt=""
-        />
-    )
-}
-
-function ItemIcon({
-    item,
-    fetchingItemIds,
-}: {
-    item: Item
-    fetchingItemIds: string[]
-}) {
-    if (fetchingItemIds.includes(item.id)) {
-        return <IconHourglassLow {...ICON_PROPS_ITEM_ICON} />
-    }
-
-    if (item.type === "todo") {
-        return item.isDone ? (
-            <IconCheckbox {...ICON_PROPS_ITEM_ICON} />
-        ) : (
-            <IconSquare {...ICON_PROPS_ITEM_ICON} />
-        )
-    }
-    if (item.type === "link") {
-        if (item.faviconUrl) return <FaviconIcon url={item.faviconUrl} />
-        return <IconWorld {...ICON_PROPS_ITEM_ICON} />
-    }
-    const lastSevenChars = item.content.slice(-7)
-    if (isValidHexColourCode(lastSevenChars)) {
-        return (
-            <span
-                className={styles.JotItem__ColourBlock}
-                style={{ backgroundColor: lastSevenChars }}
-            />
-        )
-    }
-    return <IconNote {...ICON_PROPS_ITEM_ICON} />
-}
-
-interface JotItemExpandedContentProps {
-    mainContentEl: ReactNode
-    itemIcon: ReactNode
-    itemIndicators: ReactNode
-    tagsEl: ReactNode
-    expandedDatetimeEl: ReactNode
-}
-
-function JotItemTextContent({
-    primaryTextEl,
-    secondaryTextEl,
-    isCopied,
-}: {
-    primaryTextEl: ReactNode
-    secondaryTextEl: ReactNode
-    isCopied: boolean
-}) {
-    const copiedContent = (
-        <span
-            className={`
-                ${styles.JotItemTextContent__PrimaryText}
-                ${styles.JotItemTextContent__CopiedText}
-            `}
-        >
-            Copied
-        </span>
-    )
-
-    const regularContent = (
-        <>
-            {primaryTextEl}
-            {secondaryTextEl}
-        </>
-    )
-
-    return (
-        <div
-            className={styles.JotItemTextContent}
-            key={isCopied ? "copied" : "normal"}
-        >
-            {isCopied ? copiedContent : regularContent}
-        </div>
-    )
-}
-
-function JotItemExpandedContent({
-    mainContentEl,
-    itemIcon,
-    itemIndicators,
-    tagsEl,
-    expandedDatetimeEl,
-}: JotItemExpandedContentProps) {
-    return (
-        <div className={styles.JotItemExpandedContent}>
-            <div className={styles.JotItemExpandedContent__Row1}>
-                {itemIcon}
-                {mainContentEl}
-                {itemIndicators}
-            </div>
-            <div className={styles.JotItemExpandedContent__Row2}>
-                {tagsEl}
-                <span className={styles.JotItemExpandedContent__Row2Right}>
-                    {expandedDatetimeEl}
-                </span>
-            </div>
-        </div>
-    )
-}
-
 export default memo(function JotItem({
     item,
     isSelected,
@@ -197,24 +73,6 @@ export default memo(function JotItem({
     const detailedDatetime = formatDetailedDatetime(
         item.jottedAt,
         is24HourClock,
-    )
-
-    const secondaryTextEl = secondaryText && (
-        <span className={styles.JotItemTextContent__SecondaryText}>
-            {secondaryText}
-        </span>
-    )
-
-    const primaryTextEl = (
-        <span
-            className={`
-                ${styles.JotItemTextContent__PrimaryText}
-                ${item.isDone ? styles["JotItemTextContent__PrimaryText--TodoDone"] : ""}
-                ${isPrimaryTextTitle ? styles["JotItemTextContent__PrimaryText--Title"] : ""}
-            `}
-        >
-            {primaryText}
-        </span>
     )
 
     const rootClassName = `
@@ -251,15 +109,20 @@ export default memo(function JotItem({
 
     const textContentEl = (
         <JotItemTextContent
-            primaryTextEl={primaryTextEl}
-            secondaryTextEl={secondaryTextEl}
+            primaryText={primaryText}
+            secondaryText={secondaryText}
             isCopied={isCopied}
+            isDone={item.isDone}
+            isPrimaryTextTitle={isPrimaryTextTitle}
         />
     )
 
     const itemIcon = (
         <span className={styles.JotItem__Icon}>
-            <ItemIcon item={item} fetchingItemIds={fetchingLinkMetaItemIds} />
+            <JotItemIcon
+                item={item}
+                fetchingItemIds={fetchingLinkMetaItemIds}
+            />
         </span>
     )
 

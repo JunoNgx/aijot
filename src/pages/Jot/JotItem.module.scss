@@ -39,21 +39,6 @@
         color: var(--colText);
     }
 
-    --iconSize: 24px;
-
-    &__Favicon {
-        width: var(--iconSize);
-        height: var(--iconSize);
-        object-fit: contain;
-    }
-
-    &__ColourBlock {
-        display: inline-block;
-        width: var(--iconSize);
-        height: var(--iconSize);
-        border-radius: 50%;
-    }
-
     &__StatusWrapper {
         display: flex;
         align-items: center;
@@ -99,93 +84,5 @@
         @include Ellipsified;
         font-size: var(--fontSizeSm);
         color: var(--colSub);
-    }
-}
-
-.JotItemTextContent {
-    display: flex;
-    align-items: center;
-    min-width: 0;
-    gap: 0.5rem;
-    flex-grow: 10;
-    animation: bodySlideUp var(--transTime) ease-in-out forwards;
-
-    @keyframes bodySlideUp {
-        from {
-            opacity: 0;
-            transform: translateY(0.5rem);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    &__PrimaryText,
-    &__SecondaryText {
-        @include Ellipsified;
-    }
-
-    &__PrimaryText {
-        font-size: var(--fontSizeMd);
-        color: var(--colText);
-        flex-shrink: 0;
-
-        &--TodoDone {
-            text-decoration: line-through;
-            color: var(--colTextAlt);
-        }
-
-        // &--Title {
-        //     color: var(--colMain);
-        // }
-    }
-
-    &__SecondaryText {
-        font-size: var(--fontSizeSm);
-        color: var(--colTextAlt);
-        flex-shrink: 10;
-    }
-
-    &__CopiedText {
-        color: var(--colMain);
-        animation: copiedFadeIn var(--transTime) ease-in-out forwards;
-
-        @keyframes copiedFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-    }
-}
-
-.JotItemExpandedContent {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    width: 100%;
-
-    &__Row1 {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        width: 100%;
-    }
-
-    &__Row2 {
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-        flex-wrap: wrap;
-        width: 100%;
-    }
-
-    &__Row2Right {
-        margin-left: auto;
     }
 }

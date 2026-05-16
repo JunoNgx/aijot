@@ -1,0 +1,16 @@
+$iconSize: 24px;
+
+.JotItemIcon {
+    &__Favicon {
+        width: $iconSize;
+        height: $iconSize;
+        object-fit: contain;
+    }
+
+    &__ColourBlock {
+        display: inline-block;
+        width: $iconSize;
+        height: $iconSize;
+        border-radius: 50%;
+    }
+}

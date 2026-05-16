@@ -60,6 +60,15 @@
         margin: 0.25rem 0 0;
         padding-left: 1.25rem;
     }
+
+    &__Link {
+        color: var(--colMain);
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 
 .Field {

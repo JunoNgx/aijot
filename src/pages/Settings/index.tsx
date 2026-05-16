@@ -582,6 +582,28 @@ export default function Settings() {
                     Version {APP_VERSION} ({COMMIT_SHA})
                 </p>
                 <p className={styles.Settings__Version}>
+                    Made by{" "}
+                    <a
+                        className={styles.Settings__Link}
+                        href="https://JunoNgx.com"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Juno Nguyen
+                    </a>
+                </p>
+                <p className={styles.Settings__Version}>
+                    <a
+                        className={styles.Settings__Link}
+                        href="https://github.com/JunoNgx/aijot-frontend"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Source code
+                    </a>{" "}
+                    (MIT License)
+                </p>
+                <p className={styles.Settings__Version}>
                     <strong>Third party licenses</strong>
                 </p>
                 <ul className={styles.Settings__Licenses}>

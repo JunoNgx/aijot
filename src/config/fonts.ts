@@ -36,6 +36,11 @@ export const SANS_SERIF_FONTS: FontOption[] = [
         importPath: "@fontsource/hanken-grotesk",
     },
     {
+        name: "Standard Book",
+        cssName: "Standard Book",
+        importPath: "@/assets/fonts/standardBook.css",
+    },
+    {
         name: "Work Sans",
         cssName: "Work Sans",
         importPath: "@fontsource/work-sans",

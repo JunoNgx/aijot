@@ -15,6 +15,7 @@ import "@fontsource/space-mono"
 import "@fontsource/roboto-mono"
 import "@fontsource/fira-code"
 import "@fontsource/dm-mono"
+import "@/assets/fonts/standardBook.css"
 import "./styles/global.scss"
 
 const queryClient = new QueryClient({

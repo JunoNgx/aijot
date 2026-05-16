@@ -289,6 +289,10 @@ export default memo(function JotItem({
         </>
     )
 
+    const handleClick = (e: MouseEvent) => {
+        triggerPrimaryAction(item, e)
+    }
+
     const wrapperProps =
         item.type === "link"
             ? {
@@ -296,16 +300,8 @@ export default memo(function JotItem({
                   href: item.content,
                   target: "_blank",
                   rel: "noopener noreferrer",
-                  onClick: (e: MouseEvent) => {
-                      triggerPrimaryAction(item, e)
-                  },
               }
-            : {
-                  as: "button" as const,
-                  onClick: (e: MouseEvent) => {
-                      triggerPrimaryAction(item, e)
-                  },
-              }
+            : { as: "button" as const }
     const { as: Tag, ...rest } = wrapperProps
 
     return (
@@ -319,6 +315,7 @@ export default memo(function JotItem({
                     aria-selected={isSelected}
                     aria-label={getAccessibleLabel()}
                     tabIndex={-1}
+                    onClick={handleClick}
                     {...rest}
                 >
                     {isExpandedInfoMode ? (

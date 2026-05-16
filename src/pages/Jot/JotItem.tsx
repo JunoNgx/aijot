@@ -19,7 +19,6 @@ import {
 import {
     ICON_PROPS_ITEM_ICON,
     ICON_PROPS_ITEM_STATUS,
-    ICON_PROPS_NORMAL,
     JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
     JOT_ITEM_SECONDARY_TEXT_DISPLAY_LIMIT,
 } from "@/config/constants"
@@ -40,7 +39,7 @@ interface Props {
 
 function FaviconIcon({ url }: { url: string }) {
     const [hasFailed, setHasFailed] = useState(false)
-    if (hasFailed) return <IconLink {...ICON_PROPS_NORMAL} />
+    if (hasFailed) return <IconLink {...ICON_PROPS_ITEM_ICON} />
     return (
         <img
             src={url}

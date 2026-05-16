@@ -1,5 +1,5 @@
 .BackBtn {
-    composes: Btn--Quart from global;
+    composes: Btn Btn--Quart from global;
     padding-left: 0 !important;
     margin-bottom: 1rem;
 }

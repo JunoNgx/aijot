@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { IconArrowNarrowLeft } from "@tabler/icons-react"
 import { ICON_PROPS_ACTION } from "@/config/constants"
+import "./BackBtn.scss"
 
 export default function BackBtn() {
     const navigate = useNavigate()

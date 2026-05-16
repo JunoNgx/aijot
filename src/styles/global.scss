@@ -623,8 +623,7 @@ a {
     }
 
     &__ActionBtn {
-        @extend .Btn;
-        @extend .Btn--Sec;
+        @extend .Btn, .Btn--Sec;
         flex-shrink: 0;
     }
 }

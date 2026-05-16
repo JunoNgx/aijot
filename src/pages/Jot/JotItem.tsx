@@ -90,6 +90,7 @@ interface JotItemExpandedContentProps {
     itemIsDone: boolean | undefined
     itemIcon: ReactNode
     itemIndicators: ReactNode
+    secondaryTextEl: ReactNode
     tagsEl: ReactNode
     expandedDatetimeEl: ReactNode
 }
@@ -100,6 +101,7 @@ function JotItemExpandedContent({
     itemIsDone,
     itemIcon,
     itemIndicators,
+    secondaryTextEl,
     tagsEl,
     expandedDatetimeEl,
 }: JotItemExpandedContentProps) {
@@ -120,6 +122,7 @@ function JotItemExpandedContent({
                 >
                     {displayPrimaryText}
                 </span>
+                {secondaryTextEl}
                 {itemIndicators}
             </div>
             <div className={styles.JotItemExpandedContent__Row2}>
@@ -306,6 +309,7 @@ export default memo(function JotItem({
                             itemIsDone={item.isDone}
                             itemIcon={itemIcon}
                             itemIndicators={itemIndicators}
+                            secondaryTextEl={secondaryTextEl}
                             tagsEl={tagsEl}
                             expandedDatetimeEl={expandedDatetimeEl}
                         />

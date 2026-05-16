@@ -222,7 +222,6 @@ a {
     }
 
     &--Clear {
-        @extend .Btn;
         appearance: none;
         background: none;
         border: none;
@@ -246,7 +245,7 @@ a {
     }
 
     &--Icon {
-        @extend .Btn--Clear;
+        @extend .Btn, .Btn--Clear;
         padding: 0.25rem;
         color: var(--colText);
 

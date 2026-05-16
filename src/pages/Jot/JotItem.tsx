@@ -188,25 +188,21 @@ export default memo(function JotItem({
 
     const primaryTextEl = (
         <span
-            className={[
-                styles.JotItemTextContent__PrimaryText,
-                item.isDone
-                    ? styles["JotItemTextContent__PrimaryText--TodoDone"]
-                    : "",
-                isPrimaryTextTitle
-                    ? styles["JotItemTextContent__PrimaryText--Title"]
-                    : "",
-            ].join(" ")}
+            className={`
+                ${styles.JotItemTextContent__PrimaryText}
+                ${item.isDone ? styles["JotItemTextContent__PrimaryText--TodoDone"] : ""}
+                ${isPrimaryTextTitle ? styles["JotItemTextContent__PrimaryText--Title"] : ""}
+            `}
         >
             {primaryText}
         </span>
     )
 
-    const rootClassName = [
-        styles.JotItem,
-        isSelected ? styles["JotItem--Selected"] : "",
-        isExpandedInfoMode ? styles["JotItem--Expanded"] : "",
-    ].join(" ")
+    const rootClassName = `
+        ${styles.JotItem}
+        ${isSelected ? styles["JotItem--Selected"] : ""}
+        ${isExpandedInfoMode ? styles["JotItem--Expanded"] : ""}
+    `
 
     const getAccessibleLabel = () => {
         const typeLabel =

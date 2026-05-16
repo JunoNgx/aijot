@@ -72,6 +72,7 @@
     }
 
     &__InlineAction {
+        composes: Btn--Tert from global;
         display: inline;
         padding: 0;
         vertical-align: baseline;

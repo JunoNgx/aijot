@@ -101,7 +101,7 @@ export default function ShortcutDialog() {
                     Hotkey shortcuts
                 </h2>
                 <button
-                    className="Btn Btn--Icon"
+                    className={styles.ShortcutDialog__CloseBtn}
                     onClick={closeAllDialogs}
                     type="button"
                     aria-label="Close"

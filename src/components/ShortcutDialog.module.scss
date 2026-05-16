@@ -16,6 +16,10 @@
         margin: 0;
     }
 
+    &__CloseBtn {
+        composes: Btn--Icon from global;
+    }
+
     &__Sections {
         display: flex;
         flex-direction: column;

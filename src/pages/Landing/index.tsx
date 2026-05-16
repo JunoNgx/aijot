@@ -55,7 +55,7 @@ export default function Landing() {
                     other well-known and proven colour palettes.{" "}
                     <button
                         type="button"
-                        className={`Btn Btn--Tert ${styles.Landing__InlineAction}`}
+                        className={styles.Landing__InlineAction}
                         onClick={randomiseTheme}
                     >
                         Randomise
@@ -63,7 +63,7 @@ export default function Landing() {
                     or{" "}
                     <button
                         type="button"
-                        className={`Btn Btn--Tert ${styles.Landing__InlineAction}`}
+                        className={styles.Landing__InlineAction}
                         onClick={() => {
                             useCommandPaletteStore.getState().open("theme")
                         }}

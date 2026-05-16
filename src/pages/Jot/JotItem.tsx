@@ -104,7 +104,7 @@ function JotItemTextContent({
     if (isCopied) {
         return (
             <span
-                className={`${styles.JotItemTextContent__PrimaryText} ${styles.JotItemTextContent__Copied}`}
+                className={`${styles.JotItemTextContent__PrimaryText} ${styles.JotItemTextContent__CopiedText}`}
             >
                 Copied
             </span>

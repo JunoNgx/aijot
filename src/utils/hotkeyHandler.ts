@@ -8,14 +8,14 @@ function isShortcutMatch(e: React.KeyboardEvent, shortcut: string): boolean {
     const key = parts[parts.length - 1]
     const mods = parts.slice(0, -1).map((p) => p.toLowerCase())
 
-    const isModNeeded = mods.includes("mod")
-    const isShiftNeeded = mods.includes("shift")
-    const isAltNeeded = mods.includes("alt")
+    const hasMod = mods.includes("mod")
+    if (hasMod !== (e.metaKey || e.ctrlKey)) return false
 
-    const hasMod = e.metaKey || e.ctrlKey
-    if (isModNeeded !== hasMod) return false
-    if (isShiftNeeded !== e.shiftKey) return false
-    if (isAltNeeded !== e.altKey) return false
+    const hasShift = mods.includes("shift")
+    if (hasShift !== e.shiftKey) return false
+
+    const hasAlt = mods.includes("alt")
+    if (hasAlt !== e.altKey) return false
 
     return e.key === key || e.key.toLowerCase() === key.toLowerCase()
 }

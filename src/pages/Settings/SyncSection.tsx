@@ -36,9 +36,7 @@ export default function SyncSection() {
                         Connected as {authToken.email}
                     </span>
                     <span className="SyncSection__Status">
-                        {syncStatus === "syncing"
-                            ? "Syncing..."
-                            : lastSyncTimeUiText}
+                        {lastSyncTimeUiText}
                     </span>
                     {syncStatus === "error" && syncError && (
                         <span className="SyncSection__Error">

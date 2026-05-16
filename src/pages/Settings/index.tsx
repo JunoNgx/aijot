@@ -581,6 +581,13 @@ export default function Settings() {
                 <p className={styles.Settings__Version}>
                     Version {APP_VERSION} ({COMMIT_SHA})
                 </p>
+                <p className={styles.Settings__Version}>
+                    <strong>Third party licenses</strong>
+                </p>
+                <ul className={styles.Settings__Licenses}>
+                    <li>Monkey Type theme definitions (GPLv3)</li>
+                    <li>Standard Book font by Bryce Wilner (SIL OFL v1.1)</li>
+                </ul>
                 <div className="FlexRow">
                     <button
                         className={styles.Settings__BtnAction}

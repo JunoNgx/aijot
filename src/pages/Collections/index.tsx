@@ -8,7 +8,7 @@ import { useCollectionsMutations } from "@/hooks/useCollectionsMutations"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
 import { openCollectionDialog } from "@/utils/openCollectionDialog"
 import { useDocumentTitle } from "@/hooks/useDocumentTitle"
-import styles from "./index.module.scss"
+import "./index.scss"
 import { ICON_PROPS_BUTTON, ICON_PROPS_NORMAL } from "@/config/constants"
 import BackBtn from "@/components/BackBtn"
 
@@ -79,7 +79,7 @@ export default function Collections() {
             index={index}
         >
             {(provided, snapshot) => (
-                <CollectionItem
+                <CollectionSortItem
                     collection={collection}
                     isDefault={collection.slug === defaultCollectionSlug}
                     innerRef={provided.innerRef}
@@ -92,7 +92,7 @@ export default function Collections() {
     ))
 
     const staticRows = sortedCollections.map((collection) => (
-        <CollectionItem
+        <CollectionSortItem
             key={collection.id}
             collection={collection}
             isDefault={collection.slug === defaultCollectionSlug}
@@ -100,10 +100,10 @@ export default function Collections() {
     ))
 
     return (
-        <div className={styles.Collections}>
+        <div className="Collections">
             <BackBtn />
-            <div className={styles.Collections__Header}>
-                <h1 className={styles.Collections__Title}>Collections</h1>
+            <div className="Collections__Header">
+                <h1 className="Collections__Title">Collections</h1>
             </div>
             <SortModeToggle
                 value={shouldCustomSortCollections}
@@ -111,7 +111,7 @@ export default function Collections() {
             />
             <div className="FlexRow FlexRow--FlexEnd">
                 <button
-                    className={styles.Collections__BtnNew}
+                    className="Collections__BtnNew"
                     onClick={() => openCollectionDialog()}
                 >
                     <IconPlus {...ICON_PROPS_BUTTON} />
@@ -120,14 +120,14 @@ export default function Collections() {
             </div>
             {shouldCustomSortCollections ? (
                 <>
-                    <p className={styles.Collections__SortHint}>
+                    <p className="Collections__SortHint">
                         Drag and drop to custom sort the list
                     </p>
                     <DragDropContext onDragEnd={handleDragEnd}>
                         <Droppable droppableId="collections">
                             {(provided) => (
                                 <div
-                                    className={styles.Collections__List}
+                                    className="Collections__List"
                                     ref={provided.innerRef}
                                     {...provided.droppableProps}
                                 >
@@ -139,13 +139,13 @@ export default function Collections() {
                     </DragDropContext>
                 </>
             ) : (
-                <div className={styles.Collections__List}>{staticRows}</div>
+                <div className="Collections__List">{staticRows}</div>
             )}
         </div>
     )
 }
 
-interface CollectionItemProps {
+interface CollectionSortItemProps {
     collection: Collection
     isDefault: boolean
     innerRef?: DraggableProvided["innerRef"]
@@ -154,46 +154,43 @@ interface CollectionItemProps {
     isDragging?: boolean
 }
 
-function CollectionItem({
+function CollectionSortItem({
     collection,
     isDefault,
     innerRef,
     draggableProps,
     dragHandleProps,
     isDragging,
-}: CollectionItemProps) {
+}: CollectionSortItemProps) {
     return (
         <div
             ref={innerRef}
             {...draggableProps}
-            className={[
-                styles.CollectionItem,
-                isDragging ? styles["CollectionItem--Dragging"] : "",
-            ].join(" ")}
+            className={`CollectionSortItem${isDragging ? " CollectionSortItem--Dragging" : ""}`}
         >
             <button
-                className={styles.CollectionItem__TriggerBtn}
+                className="CollectionSortItem__TriggerBtn"
                 onClick={() => openCollectionDialog(collection)}
             >
-                <span className={styles.CollectionItem__Icon}>
+                <span className="CollectionSortItem__Icon">
                     {collection.icon}
                 </span>
-                <span className={styles.CollectionItem__Name}>
+                <span className="CollectionSortItem__Name">
                     {collection.name}
                 </span>
                 {collection.tags.length > 0 && (
-                    <span className={styles.CollectionItem__Tags}>
+                    <span className="CollectionSortItem__Tags">
                         {collection.tags.join(" ")}
                     </span>
                 )}
                 {collection.coreType && (
-                    <span className={styles.CollectionItem__CoreBadge}>
+                    <span className="CollectionSortItem__CoreBadge">
                         [{collection.coreType}]
                     </span>
                 )}
-                <span className={styles.CollectionItem__Indicators}>
+                <span className="CollectionSortItem__Indicators">
                     {isDefault && (
-                        <span className={styles.CollectionItem__DefaultBadge}>
+                        <span className="CollectionSortItem__DefaultBadge">
                             [default]
                         </span>
                     )}
@@ -201,7 +198,7 @@ function CollectionItem({
             </button>
             {dragHandleProps && (
                 <span
-                    className={styles.CollectionItem__DragHandle}
+                    className="CollectionSortItem__DragHandle"
                     {...dragHandleProps}
                 >
                     <IconGripVertical {...ICON_PROPS_NORMAL} />
@@ -218,10 +215,10 @@ interface SortModeToggleProps {
 
 function SortModeToggle({ value, onChange }: SortModeToggleProps) {
     return (
-        <label className={styles.SortModeToggle}>
+        <label className="SortModeToggle">
             Sort mode
-            <span className={styles.SortModeToggle__Toggle}>
-                <label className={styles.SortModeToggle__Option}>
+            <span className="SortModeToggle__Toggle">
+                <label className="SortModeToggle__Option">
                     <input
                         type="radio"
                         name="sortOrder"
@@ -230,7 +227,7 @@ function SortModeToggle({ value, onChange }: SortModeToggleProps) {
                     />
                     Custom
                 </label>
-                <label className={styles.SortModeToggle__Option}>
+                <label className="SortModeToggle__Option">
                     <input
                         type="radio"
                         name="sortOrder"

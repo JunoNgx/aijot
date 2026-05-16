@@ -35,6 +35,14 @@
 .CollectionItem {
     @extend .Dropdown__Item;
 
+    &:hover,
+    &:focus {
+        .CollectionItem__RightContent kbd {
+            color: var(--colBg);
+            border-color: var(--colBg);
+        }
+    }
+
     &--Collection {
         padding: 0.5rem;
     }

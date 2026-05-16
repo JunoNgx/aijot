@@ -598,3 +598,35 @@ Import collections and items from a JustJot JSON export. JustJot uses folders (i
 - [x] On error at any step: toast `"Failed to import JustJot data"`
 - [x] Reset pending state after confirm or cancel
 - [x] Run `yarn format`
+
+---
+
+## Task 38 — Migrate from SCSS Modules to Plain SCSS
+
+GitHub issue #7
+
+Replace CSS Modules (`.module.scss` + `styles` object imports + `composes`) with plain SCSS and `@extend`.
+
+### Changes per file
+
+**SCSS: `X.module.scss` → `X.scss`**
+
+1. `git mv` to strip `.module`
+2. Add `@use "styles/global";`
+3. Replace `composes: CLS from global;` with `@extend global.CLS;`
+
+**TS/TSX**
+
+1. `import styles from "./X.module.scss"` → `import "./X.scss"`
+2. `styles.ClassName` → `"ClassName"` (plain string)
+3. Template literals / array joins with `styles.X` → plain strings. Keep template literals only when conditionals require them.
+
+### Commit sequence
+
+- [ ] Phase 1 — `src/components/` (13 scss + 13 tsx = 26 files)
+- [ ] Phase 2 — `src/pages/Jot/` (10 scss + 9 tsx = 19 files)
+- [ ] Phase 3 — `src/pages/Settings/` (4 scss + 4 tsx = 8 files)
+- [ ] Phase 4 — `src/pages/Collections/` (1 scss + 1 tsx = 2 files)
+- [ ] Phase 5 — `src/pages/Landing/` (1 scss + 1 tsx = 2 files)
+- [ ] Phase 6 — `src/pages/{Help,Privacy,Terms}/` (3 scss + 3 tsx = 6 files)
+- [ ] Phase 7 — `src/` (App) (1 scss + 1 tsx = 2 files)

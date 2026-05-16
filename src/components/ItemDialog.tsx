@@ -431,7 +431,7 @@ export default function ItemDialog({ item, onClose }: Props) {
             disabled={isSaving}
             onClick={handleSaveAndClose}
         >
-            {isSaving ? "Saving..." : "Save"}
+            Save
         </button>
     )
 

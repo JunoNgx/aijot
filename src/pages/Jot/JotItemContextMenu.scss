@@ -16,22 +16,22 @@
     }
 
     &[data-state="open"] {
-        animation: contextMenuScaleIn var(--transTime) ease-in-out !important;
+        animation: contextMenuScaleIn var(--transTime) ease-in-out;
         transform-origin: top left;
     }
 
     &[data-state="closed"] {
-        animation: none !important;
+        animation: none;
     }
 
     &__Item {
         @extend .Dropdown__Item;
 
         &--Destructive {
-            color: var(--colDanger) !important;
+            color: var(--colDanger);
 
             &:hover {
-                color: var(--colBg) !important;
+                color: var(--colBg);
             }
         }
     }

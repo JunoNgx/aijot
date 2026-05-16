@@ -7,7 +7,7 @@
 
     &__Trigger {
         @extend .Dropdown__Trigger, .Btn, .Btn--Clear;
-        padding: 0.5rem !important;
+        padding: 0.5rem;
         box-sizing: border-box;
         max-width: 100%;
     }
@@ -36,7 +36,7 @@
     @extend .Dropdown__Item;
 
     &--Collection {
-        padding: 0.5rem !important;
+        padding: 0.5rem;
     }
 
     &--Active {

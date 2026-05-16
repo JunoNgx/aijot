@@ -19,6 +19,6 @@
     &__BtnLoad {
         @extend .Btn, .Btn--Pri;
         flex-shrink: 1;
-        padding: 0.25rem !important;
+        padding: 0.25rem;
     }
 }

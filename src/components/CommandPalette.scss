@@ -10,7 +10,7 @@
     &__Content {
         @extend .DialogWrapper__Content;
         z-index: var(--zIndexCommandPaletteContent);
-        overflow-y: hidden !important;
+        overflow-y: hidden;
     }
 
     &__Command {

@@ -2,6 +2,6 @@
 
 .BackBtn {
     @extend .Btn, .Btn--Quart;
-    padding-left: 0 !important;
+    padding-left: 0;
     margin-bottom: 1rem;
 }

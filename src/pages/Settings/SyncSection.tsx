@@ -27,6 +27,19 @@ export default function SyncSection() {
     } = useGoogleAuth()
     const { sync } = useSyncFn()
 
+    const isSyncing = syncStatus === "syncing"
+    const syncButtonContent = isSyncing ? (
+        <>
+            <IconRefresh
+                {...ICON_PROPS_NORMAL}
+                className="SyncSection__BtnIcon SyncSection__BtnIcon--Spinning"
+            />
+            Syncing...
+        </>
+    ) : (
+        "Sync now"
+    )
+
     return (
         <SettingsSection
             title="Sync"
@@ -58,20 +71,10 @@ export default function SyncSection() {
                         <button
                             className="SyncSection__BtnAction"
                             type="button"
-                            disabled={syncStatus === "syncing"}
+                            disabled={isSyncing}
                             onClick={() => sync()}
                         >
-                            <IconRefresh
-                                {...ICON_PROPS_NORMAL}
-                                className={
-                                    syncStatus === "syncing"
-                                        ? "SyncSection__BtnIcon SyncSection__BtnIcon--Spinning"
-                                        : "SyncSection__BtnIcon"
-                                }
-                            />
-                            {syncStatus === "syncing"
-                                ? "Syncing..."
-                                : "Sync now"}
+                            {syncButtonContent}
                         </button>
                         <button
                             className="SyncSection__BtnAction"

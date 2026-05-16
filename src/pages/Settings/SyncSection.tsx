@@ -61,7 +61,9 @@ export default function SyncSection() {
                             disabled={syncStatus === "syncing"}
                             onClick={() => sync()}
                         >
-                            Sync now
+                            {syncStatus === "syncing"
+                                ? "Syncing..."
+                                : "Sync now"}
                         </button>
                         <button
                             className="SyncSection__BtnAction"

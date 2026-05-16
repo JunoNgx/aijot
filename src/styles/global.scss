@@ -219,6 +219,10 @@ a {
         background-color: transparent;
         color: var(--colTextAlt);
         text-decoration: none;
+
+        &:hover {
+            background-color: var(--colBgAlt);
+        }
     }
 
     &--Clear {

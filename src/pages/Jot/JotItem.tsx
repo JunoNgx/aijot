@@ -252,6 +252,14 @@ export default memo(function JotItem({
 
     const isCopied = copiedItemIds.includes(item.id)
 
+    const textContentEl = (
+        <JotItemTextContent
+            primaryTextEl={primaryTextEl}
+            secondaryTextEl={secondaryTextEl}
+            isCopied={isCopied}
+        />
+    )
+
     const itemIcon = (
         <span className={styles.JotItem__Icon}>
             <ItemIcon item={item} fetchingItemIds={fetchingLinkMetaItemIds} />
@@ -275,11 +283,7 @@ export default memo(function JotItem({
     const compactContent = (
         <>
             {itemIcon}
-            <JotItemTextContent
-                primaryTextEl={primaryTextEl}
-                secondaryTextEl={secondaryTextEl}
-                isCopied={isCopied}
-            />
+            {textContentEl}
             {itemIndicators}
             {compactDatetimeEl}
         </>
@@ -304,14 +308,6 @@ export default memo(function JotItem({
               }
     const { as: Tag, ...rest } = wrapperProps
 
-    const mainContentEl = (
-        <JotItemTextContent
-            primaryTextEl={primaryTextEl}
-            secondaryTextEl={secondaryTextEl}
-            isCopied={isCopied}
-        />
-    )
-
     return (
         <ContextMenu.Root>
             <ContextMenu.Trigger asChild>
@@ -327,7 +323,7 @@ export default memo(function JotItem({
                 >
                     {isExpandedInfoMode ? (
                         <JotItemExpandedContent
-                            mainContentEl={mainContentEl}
+                            mainContentEl={textContentEl}
                             itemIcon={itemIcon}
                             itemIndicators={itemIndicators}
                             tagsEl={tagsEl}

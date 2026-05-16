@@ -28,7 +28,7 @@
     &__PrimaryText {
         font-size: var(--fontSizeMd);
         color: var(--colText);
-        flex-shrink: 0;
+        flex-shrink: 1;
 
         &--TodoDone {
             text-decoration: line-through;
@@ -39,7 +39,7 @@
     &__SecondaryText {
         font-size: var(--fontSizeSm);
         color: var(--colTextAlt);
-        flex-shrink: 10;
+        flex-shrink: 20;
     }
 
     &__CopiedText {

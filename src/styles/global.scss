@@ -130,6 +130,7 @@ select {
 }
 
 kbd {
+    display: inline-block;
     color: var(--colSub);
     border-style: solid;
     border-width: 1px;

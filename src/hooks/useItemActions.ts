@@ -123,6 +123,7 @@ export function useItemActions() {
             return
         }
         if (item.type === "link") {
+            // Intentionally do nothing; action is handled natively by browser
             return
         }
         if (item.type === "text") {

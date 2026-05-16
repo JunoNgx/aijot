@@ -64,7 +64,7 @@
     }
 
     &__TriggerBtn {
-        @include ClearBtn;
+        composes: Btn Btn--Clear from global;
         display: flex;
         align-items: center;
         gap: 0.75rem;

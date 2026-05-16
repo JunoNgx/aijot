@@ -1,9 +1,7 @@
-@use "styles/mixins" as *;
-
 .MainInputExtendedMenu {
     &__Trigger {
         composes: Dropdown__Trigger from global;
-        @include ClearBtn;
+        composes: Btn Btn--Clear from global;
     }
 
     &__Content {

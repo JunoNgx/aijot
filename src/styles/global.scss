@@ -221,6 +221,20 @@ a {
         text-decoration: none;
     }
 
+    &--Clear {
+        @extend .Btn;
+        appearance: none;
+        background: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        color: inherit;
+        line-height: inherit;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+    }
+
     &--Danger {
         color: var(--colDanger);
         background-color: var(--colDangerAlt);
@@ -232,7 +246,7 @@ a {
     }
 
     &--Icon {
-        @include ClearBtn;
+        @extend .Btn--Clear;
         padding: 0.25rem;
         color: var(--colText);
 

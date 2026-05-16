@@ -6,7 +6,7 @@
 
     &__Trigger {
         composes: Dropdown__Trigger from global;
-        @include ClearBtn;
+        composes: Btn Btn--Clear from global;
         padding: 0.5rem !important;
         box-sizing: border-box;
         max-width: 100%;

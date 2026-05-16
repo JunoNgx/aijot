@@ -4,7 +4,7 @@ import { useLocalAppData } from "@/store/localAppData"
 import { storage } from "@/db"
 import { queryKeys } from "@/db/queryKeys"
 import { buildDemoCollections, buildDemoItems } from "@/utils/itemFactory"
-import styles from "./DemoDataBanner.module.scss"
+import "./DemoDataBanner.scss"
 
 export default function DemoDataBanner() {
     const { setShouldShowDemoDataBanner } = useLocalAppData()
@@ -31,12 +31,12 @@ export default function DemoDataBanner() {
     }
 
     return (
-        <div className={styles.DemoDataBanner}>
-            <div className={styles.DemoDataBanner__Text}>
+        <div className="DemoDataBanner">
+            <div className="DemoDataBanner__Text">
                 Welcome (back) to ai*jot. If you're new, try having a tour with
                 the demo data. Or{" "}
                 <button
-                    className={styles.DemoDataBanner__BtnDismiss}
+                    className="DemoDataBanner__BtnDismiss"
                     onClick={handleDismiss}
                 >
                     dismiss this
@@ -44,7 +44,7 @@ export default function DemoDataBanner() {
                 .
             </div>
             <button
-                className={styles.DemoDataBanner__BtnLoad}
+                className="DemoDataBanner__BtnLoad"
                 disabled={isLoadingDemoData}
                 onClick={handleLoadDemoData}
             >

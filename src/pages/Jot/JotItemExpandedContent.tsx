@@ -1,5 +1,5 @@
 import { type ReactNode } from "react"
-import styles from "./JotItemExpandedContent.module.scss"
+import "./JotItemExpandedContent.scss"
 
 interface Props {
     mainContentEl: ReactNode
@@ -17,15 +17,15 @@ export function JotItemExpandedContent({
     expandedDatetimeEl,
 }: Props) {
     return (
-        <div className={styles.JotItemExpandedContent}>
-            <div className={styles.JotItemExpandedContent__Row1}>
+        <div className="JotItemExpandedContent">
+            <div className="JotItemExpandedContent__Row1">
                 {itemIcon}
                 {mainContentEl}
                 {itemIndicators}
             </div>
-            <div className={styles.JotItemExpandedContent__Row2}>
+            <div className="JotItemExpandedContent__Row2">
                 {tagsEl}
-                <span className={styles.JotItemExpandedContent__Row2Right}>
+                <span className="JotItemExpandedContent__Row2Right">
                     {expandedDatetimeEl}
                 </span>
             </div>

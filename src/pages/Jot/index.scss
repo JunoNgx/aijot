@@ -1,5 +1,7 @@
+@use "styles/global" as *;
+
 .Jot {
-    composes: RouteWrapper from global;
+    @extend .RouteWrapper;
     display: flex;
     flex-direction: column;
     height: 100%;

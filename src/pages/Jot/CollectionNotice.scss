@@ -1,3 +1,5 @@
+@use "styles/global" as *;
+
 .CollectionNotice {
     position: relative;
     padding: 1rem 0;
@@ -5,7 +7,7 @@
     text-align: center;
 
     &__SyncWrapper {
-        composes: FlexRow FlexRow--FlexEnd from global;
+        @extend .FlexRow, .FlexRow--FlexEnd;
         margin-top: 0 !important;
     }
 

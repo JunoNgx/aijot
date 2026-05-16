@@ -10,7 +10,7 @@ import {
 import { isValidHexColourCode } from "@/utils/helpers"
 import { ICON_PROPS_ITEM_ICON } from "@/config/constants"
 import type { Item } from "@/types"
-import styles from "./JotItemIcon.module.scss"
+import "./JotItemIcon.scss"
 
 function FaviconIcon({ url }: { url: string }) {
     const [hasFailed, setHasFailed] = useState(false)
@@ -19,7 +19,7 @@ function FaviconIcon({ url }: { url: string }) {
         <img
             src={url}
             onError={() => setHasFailed(true)}
-            className={styles.JotItemIcon__Favicon}
+            className="JotItemIcon__Favicon"
             alt=""
         />
     )
@@ -51,7 +51,7 @@ export function JotItemIcon({
     if (isValidHexColourCode(lastSevenChars)) {
         return (
             <span
-                className={styles.JotItemIcon__ColourBlock}
+                className="JotItemIcon__ColourBlock"
                 style={{ backgroundColor: lastSevenChars }}
             />
         )

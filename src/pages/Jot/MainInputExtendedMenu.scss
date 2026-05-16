@@ -1,11 +1,12 @@
+@use "styles/global" as *;
+
 .MainInputExtendedMenu {
     &__Trigger {
-        composes: Dropdown__Trigger from global;
-        composes: Btn Btn--Clear from global;
+        @extend .Dropdown__Trigger, .Btn, .Btn--Clear;
     }
 
     &__Content {
-        composes: Dropdown__Content from global;
+        @extend .Dropdown__Content;
     }
 
     &__GroupLabel {
@@ -15,10 +16,10 @@
     }
 
     &__Item {
-        composes: Dropdown__Item from global;
+        @extend .Dropdown__Item;
     }
 
     &__Separator {
-        composes: Dropdown__Separator from global;
+        @extend .Dropdown__Separator;
     }
 }

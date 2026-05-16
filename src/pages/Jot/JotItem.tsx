@@ -19,7 +19,7 @@ import { JotItemTextContent } from "./JotItemTextContent"
 import { JotItemExpandedContent } from "./JotItemExpandedContent"
 import JotItemContextMenu from "./JotItemContextMenu"
 import type { Item } from "@/types"
-import styles from "./JotItem.module.scss"
+import "./JotItem.scss"
 
 function getAccessibleLabel(item: Item) {
     const isPrimaryTextTitle = item.type !== "todo" && item.title !== undefined
@@ -75,17 +75,13 @@ export default memo(function JotItem({
         is24HourClock,
     )
 
-    const rootClassName = `
-        ${styles.JotItem}
-        ${isSelected ? styles["JotItem--Selected"] : ""}
-        ${isExpandedInfoMode ? styles["JotItem--Expanded"] : ""}
-    `
+    const rootClassName = `JotItem${isSelected ? " JotItem--Selected" : ""}${isExpandedInfoMode ? " JotItem--Expanded" : ""}`
 
     const itemIndicators = (
-        <div className={styles.JotItem__StatusWrapper}>
+        <div className="JotItem__StatusWrapper">
             {item.shouldCopyOnClick && (
                 <span
-                    className={styles.JotItem__StatusIcon}
+                    className="JotItem__StatusIcon"
                     aria-label="Auto-copy on click"
                 >
                     <IconClipboard {...ICON_PROPS_ITEM_STATUS} />
@@ -93,10 +89,7 @@ export default memo(function JotItem({
             )}
             {item.isPinned && (
                 <span
-                    className={`
-                        ${styles.JotItem__StatusIcon}
-                        ${styles["JotItem__StatusIcon--Pin"]}
-                    `}
+                    className="JotItem__StatusIcon JotItem__StatusIcon--Pin"
                     aria-label="Pinned"
                 >
                     <IconPinFilled {...ICON_PROPS_ITEM_STATUS} />
@@ -118,7 +111,7 @@ export default memo(function JotItem({
     )
 
     const itemIcon = (
-        <span className={styles.JotItem__Icon}>
+        <span className="JotItem__Icon">
             <JotItemIcon
                 item={item}
                 fetchingItemIds={fetchingLinkMetaItemIds}
@@ -127,17 +120,17 @@ export default memo(function JotItem({
     )
 
     const tagsEl = (
-        <span className={styles.JotItem__Tags}>
+        <span className="JotItem__Tags">
             {item.tags.length > 0 ? item.tags.join(" ") : "[untagged]"}
         </span>
     )
 
     const compactDatetimeEl = (
-        <span className={styles.JotItem__Datetime}>{datetime}</span>
+        <span className="JotItem__Datetime">{datetime}</span>
     )
 
     const expandedDatetimeEl = (
-        <span className={styles.JotItem__Datetime}>{detailedDatetime}</span>
+        <span className="JotItem__Datetime">{detailedDatetime}</span>
     )
 
     const compactContent = (

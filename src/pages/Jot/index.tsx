@@ -28,7 +28,7 @@ import { openMassTagEditDialog } from "@/utils/openMassTagEditDialog"
 import MainInput from "@/pages/Jot/MainInput"
 import CollectionNotice from "@/pages/Jot/CollectionNotice"
 import JotItem from "@/pages/Jot/JotItem"
-import styles from "./index.module.scss"
+import "./index.scss"
 import type { Collection, MainInputSearchData, Item } from "@/types"
 
 const DEFAULT_SEARCH_DATA: MainInputSearchData = {
@@ -223,7 +223,7 @@ export default function Jot() {
     ))
 
     return (
-        <div className={styles.Jot}>
+        <div className="Jot">
             <CollectionNotice
                 shouldShowDemoDataBanner={shouldShowDemoDataBanner}
                 isTrash={isTrash}
@@ -244,7 +244,7 @@ export default function Jot() {
             />
             <div
                 id={listboxId}
-                className={`${styles.Jot__List} ${isShowingJotItemExtraInfo ? styles["Jot__List--Expanded"] : ""}`}
+                className={`Jot__List${isShowingJotItemExtraInfo ? " Jot__List--Expanded" : ""}`}
                 role="listbox"
                 aria-orientation="vertical"
             >

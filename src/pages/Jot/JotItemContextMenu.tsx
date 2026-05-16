@@ -14,7 +14,7 @@ import {
 } from "@tabler/icons-react"
 import { useItemActions } from "@/hooks/useItemActions"
 import { ICON_PROPS_NORMAL } from "@/config/constants"
-import styles from "./JotItemContextMenu.module.scss"
+import "./JotItemContextMenu.scss"
 import type { Item } from "@/types"
 
 interface Props {
@@ -41,7 +41,7 @@ export default function JotItemContextMenu({ item }: Props) {
         <>
             {item.isPinned ? (
                 <ContextMenu.Item
-                    className={styles.JotItemContextMenu__Item}
+                    className="JotItemContextMenu__Item"
                     onClick={() => {
                         unpinItem(item)
                     }}
@@ -51,7 +51,7 @@ export default function JotItemContextMenu({ item }: Props) {
                 </ContextMenu.Item>
             ) : (
                 <ContextMenu.Item
-                    className={styles.JotItemContextMenu__Item}
+                    className="JotItemContextMenu__Item"
                     onClick={() => {
                         pinItem(item)
                     }}
@@ -62,7 +62,7 @@ export default function JotItemContextMenu({ item }: Props) {
             )}
             {item.type === "text" && (
                 <ContextMenu.Item
-                    className={styles.JotItemContextMenu__Item}
+                    className="JotItemContextMenu__Item"
                     onClick={() => {
                         convertToTodo(item)
                     }}
@@ -72,7 +72,7 @@ export default function JotItemContextMenu({ item }: Props) {
                 </ContextMenu.Item>
             )}
             <ContextMenu.Item
-                className={styles.JotItemContextMenu__Item}
+                className="JotItemContextMenu__Item"
                 onClick={() => toggleCopyOnClick(item)}
             >
                 {item.shouldCopyOnClick ? (
@@ -84,7 +84,7 @@ export default function JotItemContextMenu({ item }: Props) {
             </ContextMenu.Item>
             {item.type === "link" && (
                 <ContextMenu.Item
-                    className={styles.JotItemContextMenu__Item}
+                    className="JotItemContextMenu__Item"
                     onClick={() => {
                         refetchLinkMeta(item)
                     }}
@@ -99,7 +99,7 @@ export default function JotItemContextMenu({ item }: Props) {
     const destructiveItems = isInTrash ? (
         <>
             <ContextMenu.Item
-                className={styles.JotItemContextMenu__Item}
+                className="JotItemContextMenu__Item"
                 onClick={() => {
                     restoreItem(item)
                 }}
@@ -108,7 +108,7 @@ export default function JotItemContextMenu({ item }: Props) {
                 Restore
             </ContextMenu.Item>
             <ContextMenu.Item
-                className={`${styles.JotItemContextMenu__Item} ${styles["JotItemContextMenu__Item--Destructive"]}`}
+                className="JotItemContextMenu__Item JotItemContextMenu__Item--Destructive"
                 onClick={() => {
                     softDeleteItem(item)
                 }}
@@ -119,7 +119,7 @@ export default function JotItemContextMenu({ item }: Props) {
         </>
     ) : (
         <ContextMenu.Item
-            className={`${styles.JotItemContextMenu__Item} ${styles["JotItemContextMenu__Item--Destructive"]}`}
+            className="JotItemContextMenu__Item JotItemContextMenu__Item--Destructive"
             onClick={() => {
                 trashItem(item)
             }}
@@ -131,9 +131,9 @@ export default function JotItemContextMenu({ item }: Props) {
 
     return (
         <ContextMenu.Portal>
-            <ContextMenu.Content className={styles.JotItemContextMenu}>
+            <ContextMenu.Content className="JotItemContextMenu">
                 <ContextMenu.Item
-                    className={styles.JotItemContextMenu__Item}
+                    className="JotItemContextMenu__Item"
                     onClick={() => {
                         copyContent(item)
                     }}
@@ -142,7 +142,7 @@ export default function JotItemContextMenu({ item }: Props) {
                     Copy
                 </ContextMenu.Item>
                 <ContextMenu.Item
-                    className={styles.JotItemContextMenu__Item}
+                    className="JotItemContextMenu__Item"
                     onClick={() => {
                         editItem(item)
                     }}
@@ -150,13 +150,9 @@ export default function JotItemContextMenu({ item }: Props) {
                     <IconEdit {...ICON_PROPS_NORMAL} />
                     Edit
                 </ContextMenu.Item>
-                <ContextMenu.Separator
-                    className={styles.JotItemContextMenu__Separator}
-                />
+                <ContextMenu.Separator className="JotItemContextMenu__Separator" />
                 {secondaryItems}
-                <ContextMenu.Separator
-                    className={styles.JotItemContextMenu__Separator}
-                />
+                <ContextMenu.Separator className="JotItemContextMenu__Separator" />
                 {destructiveItems}
             </ContextMenu.Content>
         </ContextMenu.Portal>

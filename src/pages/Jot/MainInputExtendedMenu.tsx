@@ -20,7 +20,7 @@ import {
     SYNTAX_PREFIX_LONG_TEXT,
     ICON_PROPS_ITEM_DROPDOWN,
 } from "@/config/constants"
-import styles from "./MainInputExtendedMenu.module.scss"
+import "./MainInputExtendedMenu.scss"
 
 interface Props {
     inputValue: string
@@ -82,7 +82,7 @@ export default function MainInputExtendedMenu({
     return (
         <DropdownMenu.Root>
             <DropdownMenu.Trigger
-                className={styles.MainInputExtendedMenu__Trigger}
+                className="MainInputExtendedMenu__Trigger"
                 aria-label="Main input options"
                 onPointerDown={triggerPointerDown}
                 onKeyDown={triggerKeyDown}
@@ -91,20 +91,18 @@ export default function MainInputExtendedMenu({
             </DropdownMenu.Trigger>
             <DropdownMenu.Portal>
                 <DropdownMenu.Content
-                    className={styles.MainInputExtendedMenu__Content}
+                    className="MainInputExtendedMenu__Content"
                     align="end"
                     alignOffset={-10}
                     sideOffset={16}
                     onCloseAutoFocus={contentCloseAutoFocus}
                 >
-                    <DropdownMenu.Label
-                        className={styles.MainInputExtendedMenu__GroupLabel}
-                    >
+                    <DropdownMenu.Label className="MainInputExtendedMenu__GroupLabel">
                         New item
                     </DropdownMenu.Label>
 
                     <DropdownMenu.Item
-                        className={styles.MainInputExtendedMenu__Item}
+                        className="MainInputExtendedMenu__Item"
                         onSelect={() =>
                             prependSyntax(SYNTAX_PREFIX_LONG_TEXT, true)
                         }
@@ -114,7 +112,7 @@ export default function MainInputExtendedMenu({
                     </DropdownMenu.Item>
 
                     <DropdownMenu.Item
-                        className={styles.MainInputExtendedMenu__Item}
+                        className="MainInputExtendedMenu__Item"
                         onSelect={() => prependSyntax(SYNTAX_PREFIX_TODO, true)}
                     >
                         <IconCheckbox {...ICON_PROPS_ITEM_DROPDOWN} />
@@ -122,25 +120,21 @@ export default function MainInputExtendedMenu({
                     </DropdownMenu.Item>
 
                     <DropdownMenu.Item
-                        className={styles.MainInputExtendedMenu__Item}
+                        className="MainInputExtendedMenu__Item"
                         onSelect={handleFromClipboard}
                     >
                         <IconClipboardPlus {...ICON_PROPS_ITEM_DROPDOWN} />
                         from clipboard
                     </DropdownMenu.Item>
 
-                    <DropdownMenu.Separator
-                        className={styles.MainInputExtendedMenu__Separator}
-                    />
+                    <DropdownMenu.Separator className="MainInputExtendedMenu__Separator" />
 
-                    <DropdownMenu.Label
-                        className={styles.MainInputExtendedMenu__GroupLabel}
-                    >
+                    <DropdownMenu.Label className="MainInputExtendedMenu__GroupLabel">
                         Misc
                     </DropdownMenu.Label>
 
                     <DropdownMenu.Item
-                        className={styles.MainInputExtendedMenu__Item}
+                        className="MainInputExtendedMenu__Item"
                         onSelect={handleClearInput}
                     >
                         <IconX {...ICON_PROPS_ITEM_DROPDOWN} />
@@ -148,7 +142,7 @@ export default function MainInputExtendedMenu({
                     </DropdownMenu.Item>
 
                     <DropdownMenu.Item
-                        className={styles.MainInputExtendedMenu__Item}
+                        className="MainInputExtendedMenu__Item"
                         onSelect={handleToggleExpandedMode}
                     >
                         {isShowingJotItemExtraInfo ? (
@@ -161,7 +155,7 @@ export default function MainInputExtendedMenu({
 
                     {visibleItems.length > 0 && (
                         <DropdownMenu.Item
-                            className={styles.MainInputExtendedMenu__Item}
+                            className="MainInputExtendedMenu__Item"
                             onSelect={() =>
                                 openMassTagEditDialog({
                                     items: visibleItems,
@@ -180,7 +174,7 @@ export default function MainInputExtendedMenu({
                     )}
 
                     <DropdownMenu.Item
-                        className={styles.MainInputExtendedMenu__Item}
+                        className="MainInputExtendedMenu__Item"
                         onSelect={() =>
                             useCommandPaletteStore.getState().open("main")
                         }

@@ -1,3 +1,5 @@
+@use "styles/global" as *;
+
 .DemoDataBanner {
     display: flex;
     align-items: center;
@@ -11,11 +13,11 @@
     }
 
     &__BtnDismiss {
-        composes: Btn Btn--Tert from global;
+        @extend .Btn, .Btn--Tert;
     }
 
     &__BtnLoad {
-        composes: Btn Btn--Pri from global;
+        @extend .Btn, .Btn--Pri;
         flex-shrink: 1;
         padding: 0.25rem !important;
     }

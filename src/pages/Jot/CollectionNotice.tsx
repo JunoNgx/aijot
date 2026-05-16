@@ -2,7 +2,7 @@ import DemoDataBanner from "./DemoDataBanner"
 import SyncButton from "@/components/SyncButton"
 import { TRASH_PURGE_DURATION_DAY } from "@/config/constants"
 import type { Collection } from "@/types"
-import styles from "./CollectionNotice.module.scss"
+import "./CollectionNotice.scss"
 
 interface CollectionNoticeProps {
     shouldShowDemoDataBanner: boolean
@@ -22,23 +22,23 @@ export default function CollectionNotice({
         : [""]
 
     return (
-        <div className={styles.CollectionNotice}>
-            <div className={styles.CollectionNotice__SyncWrapper}>
+        <div className="CollectionNotice">
+            <div className="CollectionNotice__SyncWrapper">
                 <SyncButton />
             </div>
             {shouldShowDemoDataBanner && <DemoDataBanner />}
             {isTrash && (
-                <p className={styles.CollectionNotice__Text}>
+                <p className="CollectionNotice__Text">
                     Items in trash are automatically deleted after{" "}
                     {TRASH_PURGE_DURATION_DAY} days
                 </p>
             )}
             {collection && displayTags.length > 0 && (
-                <div className={styles.CollectionNotice__TagsWrapper}>
-                    <span className={styles.CollectionNotice__TagsLabel}>
+                <div className="CollectionNotice__TagsWrapper">
+                    <span className="CollectionNotice__TagsLabel">
                         Showing tags:
                     </span>{" "}
-                    <span className={styles.CollectionNotice__TagsContent}>
+                    <span className="CollectionNotice__TagsContent">
                         {displayTags.join(" ")}
                     </span>
                 </div>

@@ -1,7 +1,8 @@
 @use "styles/mixins" as *;
+@use "styles/global" as *;
 
 .JotItemContextMenu {
-    composes: Dropdown__Content from global;
+    @extend .Dropdown__Content;
 
     @keyframes contextMenuScaleIn {
         from {
@@ -24,7 +25,7 @@
     }
 
     &__Item {
-        composes: Dropdown__Item from global;
+        @extend .Dropdown__Item;
 
         &--Destructive {
             color: var(--colDanger) !important;
@@ -36,6 +37,6 @@
     }
 
     &__Separator {
-        composes: Dropdown__Separator from global;
+        @extend .Dropdown__Separator;
     }
 }

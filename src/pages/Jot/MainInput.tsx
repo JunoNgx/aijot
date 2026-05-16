@@ -19,7 +19,7 @@ import {
     SHORTCUT_ITEM_REFETCH,
     SHORTCUT_ITEM_CONVERT_TO_TODO,
 } from "@/config/constants"
-import styles from "./MainInput.module.scss"
+import "./MainInput.scss"
 import type { MainInputSearchData, Item } from "@/types"
 
 interface Props {
@@ -170,10 +170,10 @@ export default function MainInput({
     ])
 
     return (
-        <div className={styles.MainInput}>
+        <div className="MainInput">
             <input
                 ref={inputRef}
-                className={styles.MainInput__Input}
+                className="MainInput__Input"
                 value={inputValue}
                 onChange={handleInputChange}
                 onKeyDown={hotkeyHandler}

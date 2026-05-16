@@ -1,4 +1,4 @@
-import styles from "./JotItemTextContent.module.scss"
+import "./JotItemTextContent.scss"
 
 export function JotItemTextContent({
     primaryText,
@@ -14,30 +14,21 @@ export function JotItemTextContent({
     isPrimaryTextTitle: boolean
 }) {
     const secondaryTextEl = secondaryText && (
-        <span className={styles.JotItemTextContent__SecondaryText}>
+        <span className="JotItemTextContent__SecondaryText">
             {secondaryText}
         </span>
     )
 
     const primaryTextEl = (
         <span
-            className={`
-                ${styles.JotItemTextContent__PrimaryText}
-                ${isDone ? styles["JotItemTextContent__PrimaryText--TodoDone"] : ""}
-                ${isPrimaryTextTitle ? styles["JotItemTextContent__PrimaryText--Title"] : ""}
-            `}
+            className={`JotItemTextContent__PrimaryText${isDone ? " JotItemTextContent__PrimaryText--TodoDone" : ""}${isPrimaryTextTitle ? " JotItemTextContent__PrimaryText--Title" : ""}`}
         >
             {primaryText}
         </span>
     )
 
     const copiedContent = (
-        <span
-            className={`
-                ${styles.JotItemTextContent__PrimaryText}
-                ${styles.JotItemTextContent__CopiedText}
-            `}
-        >
+        <span className="JotItemTextContent__PrimaryText JotItemTextContent__CopiedText">
             Copied
         </span>
     )
@@ -51,7 +42,7 @@ export function JotItemTextContent({
 
     return (
         <div
-            className={styles.JotItemTextContent}
+            className="JotItemTextContent"
             key={isCopied ? "copied" : "normal"}
         >
             {isCopied ? copiedContent : regularContent}

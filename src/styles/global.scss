@@ -158,32 +158,87 @@ a {
 // ============================================================
 
 .Btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: normal;
+    cursor: pointer;
+    border-width: var(--lineWidth);
+    border-color: transparent;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    transition: all ease-in-out var(--transTime);
+
     &--Pri {
-        @include BtnPri;
+        color: var(--colBg);
+        background-color: var(--colMain);
+
+        &:hover {
+            color: var(--colBg);
+            background-color: var(--colText);
+        }
     }
 
     &--Sec {
-        @include BtnSec;
+        border: none;
+        color: var(--colText);
+        background-color: var(--colBgAlt);
+
+        &:hover {
+            color: var(--colBg);
+            background-color: var(--colText);
+        }
     }
 
     &--Outline {
-        @include BtnOutline;
+        @include StandardBorder;
+        color: var(--colText);
+        background-color: transparent;
+
+        &:hover {
+            color: var(--colBg);
+            background-color: var(--colText);
+        }
     }
 
     &--Tert {
-        @include BtnTert;
+        background-color: transparent;
+        color: var(--colText);
+        text-decoration: underline;
+        padding: 0;
+
+        &:hover {
+            background-color: var(--colBgAlt);
+        }
     }
 
     &--Quart {
-        @include BtnQuart;
+        background-color: transparent;
+        color: var(--colTextAlt);
+        text-decoration: none;
     }
 
     &--Danger {
-        @include BtnDanger;
+        color: var(--colDanger);
+        background-color: var(--colDangerAlt);
+
+        &:hover {
+            color: var(--colBg);
+            background-color: var(--colText);
+        }
     }
 
     &--Icon {
-        @include BtnIcon;
+        @include ClearBtn;
+        padding: 0.25rem;
+        color: var(--colText);
+
+        &:hover {
+            background-color: var(--colBgAlt);
+        }
     }
 
     &:disabled {
@@ -568,7 +623,8 @@ a {
     }
 
     &__ActionBtn {
-        @include BtnSec;
+        @extend .Btn;
+        @extend .Btn--Sec;
         flex-shrink: 0;
     }
 }

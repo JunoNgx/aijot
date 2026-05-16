@@ -475,6 +475,10 @@ a {
             color: var(--colBg);
             background-color: var(--colMain);
         }
+
+        &:focus-visible {
+            outline: none;
+        }
     }
 
     &__Separator {

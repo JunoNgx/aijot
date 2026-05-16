@@ -162,6 +162,14 @@ export default memo(function JotItem({
         </span>
     )
 
+    const copiedTextEl = (
+        <span
+            className={`${styles.JotItem__PrimaryText} ${styles.JotItem__Copied}`}
+        >
+            Copied
+        </span>
+    )
+
     const rootClassName = [
         styles.JotItem,
         isSelected ? styles["JotItem--Selected"] : "",
@@ -299,8 +307,10 @@ export default memo(function JotItem({
                 >
                     {isExpandedInfoMode ? (
                         <JotItemExpandedContent
-                            primaryTextEl={primaryTextEl}
-                            secondaryTextEl={secondaryTextEl}
+                            primaryTextEl={
+                                isCopied ? copiedTextEl : primaryTextEl
+                            }
+                            secondaryTextEl={isCopied ? null : secondaryTextEl}
                             itemIcon={itemIcon}
                             itemIndicators={itemIndicators}
                             tagsEl={tagsEl}

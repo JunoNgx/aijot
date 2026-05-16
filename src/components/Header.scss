@@ -1,5 +1,6 @@
 @use "styles/vars" as *;
 @use "styles/mixins" as *;
+@use "styles/global" as *;
 
 .Header {
     position: fixed;
@@ -57,7 +58,7 @@
     }
 
     &__BtnTheme {
-        composes: Btn Btn--Icon from global;
+        @extend .Btn, .Btn--Icon;
         padding: 0.5rem !important;
     }
 

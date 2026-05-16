@@ -13,7 +13,7 @@ import { openMassTagEditDialog } from "@/utils/openMassTagEditDialog"
 import { themes } from "@/config/themes"
 import type { ThemeName } from "@/config/themes"
 import type { ReactNode } from "react"
-import styles from "./CommandPalette.module.scss"
+import "./CommandPalette.scss"
 import { ICON_PROPS_NORMAL, ROUTE_JOT } from "@/config/constants"
 
 interface CommandPaletteItemProps {
@@ -34,16 +34,14 @@ function CommandPaletteItem({
     return (
         <Command.Item
             value={value}
-            className={styles.CommandPaletteItem__Item}
+            className="CommandPaletteItem__Item"
             onSelect={onSelect}
         >
             {icon}
-            <div className={styles.CommandPaletteItem__ItemContent}>
-                <span className={styles.CommandPaletteItem__LabelLine}>
-                    {label}
-                </span>
+            <div className="CommandPaletteItem__ItemContent">
+                <span className="CommandPaletteItem__LabelLine">{label}</span>
                 {subLabel && (
-                    <span className={styles.CommandPaletteItem__SubLabel}>
+                    <span className="CommandPaletteItem__SubLabel">
                         {subLabel}
                     </span>
                 )}
@@ -187,11 +185,11 @@ export default function CommandPalette({
     const collectionsGroup = (
         <Command.Group
             heading={
-                <span className={styles.CommandPaletteGroup__Heading}>
+                <span className="CommandPaletteGroup__Heading">
                     Collections
                 </span>
             }
-            className={styles.CommandPaletteGroup__Group}
+            className="CommandPaletteGroup__Group"
         >
             {collections.map((collection) => (
                 <CommandPaletteItem
@@ -242,11 +240,11 @@ export default function CommandPalette({
     const collectionActionsGroup = (
         <Command.Group
             heading={
-                <span className={styles.CommandPaletteGroup__Heading}>
+                <span className="CommandPaletteGroup__Heading">
                     Collection Actions
                 </span>
             }
-            className={styles.CommandPaletteGroup__Group}
+            className="CommandPaletteGroup__Group"
         >
             {createCollectionItem}
             {setDefaultItem}
@@ -293,11 +291,9 @@ export default function CommandPalette({
     const navigationGroup = (
         <Command.Group
             heading={
-                <span className={styles.CommandPaletteGroup__Heading}>
-                    Navigation
-                </span>
+                <span className="CommandPaletteGroup__Heading">Navigation</span>
             }
-            className={styles.CommandPaletteGroup__Group}
+            className="CommandPaletteGroup__Group"
         >
             {goToJotItem}
             {goToCollectionsItem}
@@ -329,11 +325,9 @@ export default function CommandPalette({
     const actionsGroup = (
         <Command.Group
             heading={
-                <span className={styles.CommandPaletteGroup__Heading}>
-                    Actions
-                </span>
+                <span className="CommandPaletteGroup__Heading">Actions</span>
             }
-            className={styles.CommandPaletteGroup__Group}
+            className="CommandPaletteGroup__Group"
         >
             {massTagEditItem}
             {changeThemeItem}
@@ -346,41 +340,41 @@ export default function CommandPalette({
     }
 
     const themeGroup = (
-        <Command.Group className={styles.CommandPaletteGroup__Group}>
+        <Command.Group className="CommandPaletteGroup__Group">
             {themes.map((theme) => (
                 <Command.Item
                     key={theme.name}
                     value={theme.name}
-                    className={styles.CommandPaletteItem__Item}
+                    className="CommandPaletteItem__Item"
                     onMouseEnter={() =>
                         handleThemePreview(theme.name as ThemeName)
                     }
                     onSelect={() => handleThemeSelect(theme.name as ThemeName)}
                 >
-                    <div className={styles.CommandPaletteItem__ItemContent}>
-                        <span className={styles.CommandPaletteItem__LabelLine}>
+                    <div className="CommandPaletteItem__ItemContent">
+                        <span className="CommandPaletteItem__LabelLine">
                             {theme.name}
                         </span>
                     </div>
                     {theme.name === originalTheme && (
-                        <span className={styles.CommandPaletteItem__Check}>
+                        <span className="CommandPaletteItem__Check">
                             <IconCheck {...ICON_PROPS_NORMAL} />
                         </span>
                     )}
                     <div
-                        className={styles.ThemeColourPreview}
+                        className="ThemeColourPreview"
                         style={{ backgroundColor: theme.colBg }}
                     >
                         <div
-                            className={styles.ThemeColourPreview__Block}
+                            className="ThemeColourPreview__Block"
                             style={{ backgroundColor: theme.colMain }}
                         />
                         <div
-                            className={styles.ThemeColourPreview__Block}
+                            className="ThemeColourPreview__Block"
                             style={{ backgroundColor: theme.colSub }}
                         />
                         <div
-                            className={styles.ThemeColourPreview__Block}
+                            className="ThemeColourPreview__Block"
                             style={{ backgroundColor: theme.colText }}
                         />
                     </div>
@@ -391,7 +385,7 @@ export default function CommandPalette({
 
     return (
         <Dialog.Content
-            className={styles.CommandPalette__Content}
+            className="CommandPalette__Content"
             aria-describedby={undefined}
             onInteractOutside={revertThemePreview}
             onOpenAutoFocus={(e) => {
@@ -417,14 +411,14 @@ export default function CommandPalette({
                 }}
             >
                 <Command.Input
-                    className={styles.CommandPalette__Input}
+                    className="CommandPalette__Input"
                     placeholder={searchPlaceholder}
                 />
                 <Command.List
                     ref={listRef}
-                    className={styles.CommandPaletteList__List}
+                    className="CommandPaletteList__List"
                 >
-                    <Command.Empty className={styles.CommandPaletteList__Empty}>
+                    <Command.Empty className="CommandPaletteList__Empty">
                         No results found.
                     </Command.Empty>
 

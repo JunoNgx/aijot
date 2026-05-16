@@ -6,7 +6,7 @@ import { SHORTCUT_SAVE_AND_CLOSE } from "@/config/constants"
 import { useDialogStore } from "@/store/dialogStore"
 import { pluralise } from "@/utils/helpers"
 import type { Item, MassTagEditMode } from "@/types"
-import styles from "./MassTagEditDialog.module.scss"
+import "./MassTagEditDialog.scss"
 
 type MassTagMode = MassTagEditMode
 
@@ -87,12 +87,12 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
 
     const modeRadioOptions = (
         <div
-            className={styles.ModeGroup}
+            className="ModeGroup"
             role="radiogroup"
             aria-label="Tag operation mode"
         >
             {(Object.keys(MODE_DETAILS) as MassTagMode[]).map((m) => (
-                <label key={m} className={styles.ModeGroup__Label}>
+                <label key={m} className="ModeGroup__Label">
                     <input
                         type="radio"
                         name="mass-tag-mode"
@@ -108,20 +108,18 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
 
     const tagSummaryItems =
         totalUniqueTags > 0 ? (
-            <div className={styles.MassTagEditDialog__Field}>
-                <span className={styles.TagSummary}>
+            <div className="MassTagEditDialog__Field">
+                <span className="TagSummary">
                     {topTagCounts.map(([tag, count]) => (
-                        <span key={tag} className={styles.TagSummary__Tag}>
-                            <span className={styles.TagSummary__TagName}>
-                                {tag}
-                            </span>
-                            <span className={styles.TagSummary__TagCount}>
+                        <span key={tag} className="TagSummary__Tag">
+                            <span className="TagSummary__TagName">{tag}</span>
+                            <span className="TagSummary__TagCount">
                                 ({count})
                             </span>
                         </span>
                     ))}
                     {totalUniqueTags > MAX_SHOWN_TAGS && (
-                        <span className={styles.TagSummary__TagMore}>
+                        <span className="TagSummary__TagMore">
                             +{totalUniqueTags - MAX_SHOWN_TAGS} more
                         </span>
                     )}
@@ -130,29 +128,27 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
         ) : null
 
     return (
-        <div className={styles.MassTagEditDialog}>
+        <div className="MassTagEditDialog">
             <button
-                className={styles.MassTagEditDialog__CloseBtn}
+                className="MassTagEditDialog__CloseBtn"
                 onClick={closeAllDialogs}
                 aria-label="Close"
             >
                 <IconX {...ICON_PROPS_ACTION} />
             </button>
-            <div className={styles.MassTagEditDialog__Field}>
-                <span className={styles.MassTagEditDialog__Count}>
-                    {countText}
-                </span>
+            <div className="MassTagEditDialog__Field">
+                <span className="MassTagEditDialog__Count">{countText}</span>
             </div>
             {tagSummaryItems}
-            <div className={styles.MassTagEditDialog__Field}>
+            <div className="MassTagEditDialog__Field">
                 {modeRadioOptions}
-                <span className={styles.ModeGroup__Description}>
+                <span className="ModeGroup__Description">
                     {selectedModeDetail.description}
                 </span>
             </div>
-            <div className={styles.MassTagEditDialog__Field}>
-                <label className={styles.MassTagEditDialog__Label}>Tags</label>
-                <span className={styles.MassTagEditDialog__Description}>
+            <div className="MassTagEditDialog__Field">
+                <label className="MassTagEditDialog__Label">Tags</label>
+                <span className="MassTagEditDialog__Description">
                     Separated by spaces
                 </span>
                 <input
@@ -165,16 +161,16 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
                     autoCapitalize="none"
                 />
             </div>
-            <div className={styles.MassTagEditDialog__Footer}>
+            <div className="MassTagEditDialog__Footer">
                 <button
-                    className={styles.MassTagEditDialog__BtnCancel}
+                    className="MassTagEditDialog__BtnCancel"
                     onClick={closeAllDialogs}
                 >
                     Cancel
                 </button>
-                <div className={styles.MassTagEditDialog__FooterRight}>
+                <div className="MassTagEditDialog__FooterRight">
                     <button
-                        className={styles.MassTagEditDialog__BtnSave}
+                        className="MassTagEditDialog__BtnSave"
                         disabled={isSaveDisabled}
                         onClick={handleSave}
                     >

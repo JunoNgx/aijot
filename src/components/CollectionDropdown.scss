@@ -1,12 +1,12 @@
 @use "styles/vars" as *;
 @use "styles/mixins" as *;
+@use "styles/global" as *;
 
 .CollectionDropdown {
     min-width: 0;
 
     &__Trigger {
-        composes: Dropdown__Trigger from global;
-        composes: Btn Btn--Clear from global;
+        @extend .Dropdown__Trigger, .Btn, .Btn--Clear;
         padding: 0.5rem !important;
         box-sizing: border-box;
         max-width: 100%;
@@ -17,23 +17,23 @@
     }
 
     &__TriggerChevron {
-        composes: Dropdown__Chevron from global;
+        @extend .Dropdown__Chevron;
     }
 
     &__Content {
-        composes: Dropdown__Content from global;
+        @extend .Dropdown__Content;
         min-width: 200px;
         max-height: 60vh;
         overflow-y: auto;
     }
 
     &__Separator {
-        composes: Dropdown__Separator from global;
+        @extend .Dropdown__Separator;
     }
 }
 
 .CollectionItem {
-    composes: Dropdown__Item from global;
+    @extend .Dropdown__Item;
 
     &--Collection {
         padding: 0.5rem !important;

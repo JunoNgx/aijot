@@ -1,13 +1,14 @@
 @use "styles/mixins" as *;
+@use "styles/global" as *;
 
 .CommandPalette {
     &__Overlay {
-        composes: DialogWrapper__Overlay from global;
+        @extend .DialogWrapper__Overlay;
         z-index: var(--zIndexCommandPaletteOverlay);
     }
 
     &__Content {
-        composes: DialogWrapper__Content from global;
+        @extend .DialogWrapper__Content;
         z-index: var(--zIndexCommandPaletteContent);
         overflow-y: hidden !important;
     }

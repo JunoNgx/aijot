@@ -1,5 +1,7 @@
+@use "styles/global" as *;
+
 .SyncButton {
-    composes: Btn Btn--Icon from global;
+    @extend .Btn, .Btn--Icon;
     display: flex;
     align-items: center;
     gap: 0.25rem;

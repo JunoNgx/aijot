@@ -1,12 +1,12 @@
 @use "styles/vars" as *;
 @use "styles/mixins" as *;
+@use "styles/global" as *;
 
 .UserDropdown {
     min-width: 0;
 
     &__Trigger {
-        composes: Dropdown__Trigger from global;
-        composes: Btn Btn--Clear from global;
+        @extend .Dropdown__Trigger, .Btn, .Btn--Clear;
         max-width: 100%;
     }
 
@@ -15,18 +15,18 @@
     }
 
     &__Chevron {
-        composes: Dropdown__Chevron from global;
+        @extend .Dropdown__Chevron;
     }
 
     &__Content {
-        composes: Dropdown__Content from global;
+        @extend .Dropdown__Content;
     }
 
     &__Item {
-        composes: Dropdown__Item from global;
+        @extend .Dropdown__Item;
     }
 
     &__Separator {
-        composes: Dropdown__Separator from global;
+        @extend .Dropdown__Separator;
     }
 }

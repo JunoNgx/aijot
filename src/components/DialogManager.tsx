@@ -1,7 +1,7 @@
 import * as Dialog from "@radix-ui/react-dialog"
 import { toast } from "sonner"
 import { useDialogStore } from "@/store/dialogStore"
-import styles from "./DialogManager.module.scss"
+import "./DialogManager.scss"
 import { useHotkeys } from "react-hotkeys-hook"
 import { openShortcutDialog } from "@/utils/openShortcutDialog"
 import {
@@ -52,12 +52,12 @@ export default function DialogManager() {
     return (
         <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
             <Dialog.Portal>
-                <Dialog.Overlay className={styles.DialogManager__Overlay} />
+                <Dialog.Overlay className="DialogManager__Overlay" />
                 <Dialog.Content
                     aria-describedby={undefined}
-                    className={styles.DialogManager__Content}
+                    className="DialogManager__Content"
                 >
-                    <Dialog.Title className={styles.DialogManager__Title}>
+                    <Dialog.Title className="DialogManager__Title">
                         Dialog
                     </Dialog.Title>
                     {children}

@@ -21,7 +21,7 @@ import { SHORTCUT_SAVE_AND_CLOSE } from "@/config/constants"
 import { formatDatetime } from "@/utils/helpers"
 import { openPreviousVersionDialog } from "@/utils/openPreviousVersionDialog"
 import { useLocalUserSettings } from "@/store/localUserSettings"
-import styles from "./ItemDialog.module.scss"
+import "./ItemDialog.scss"
 import type { Item } from "@/types"
 
 const AUTOSAVE_DEBOUNCE_MS = 5000
@@ -52,25 +52,20 @@ function MoreOptionsAccordion({
     item,
 }: MoreOptionsAccordionProps) {
     return (
-        <Accordion.Item
-            value="advanced"
-            className={styles.MoreOptionsAccordion__Item}
-        >
-            <Accordion.Header className={styles.MoreOptionsAccordion__Header}>
-                <Accordion.Trigger
-                    className={styles.MoreOptionsAccordion__Trigger}
-                >
+        <Accordion.Item value="advanced" className="MoreOptionsAccordion__Item">
+            <Accordion.Header className="MoreOptionsAccordion__Header">
+                <Accordion.Trigger className="MoreOptionsAccordion__Trigger">
                     <span>More options</span>
                     <IconChevronDown
                         {...ICON_PROPS_ACTION}
-                        className={styles.MoreOptionsAccordion__Chevron}
+                        className="MoreOptionsAccordion__Chevron"
                     />
                 </Accordion.Trigger>
             </Accordion.Header>
-            <Accordion.Content className={styles.MoreOptionsAccordion__Content}>
-                <div className={styles.MoreOptionsAccordion__ContentInner}>
-                    <div className={styles.ItemDialog__Field}>
-                        <label className={styles.ItemDialog__Checkbox}>
+            <Accordion.Content className="MoreOptionsAccordion__Content">
+                <div className="MoreOptionsAccordion__ContentInner">
+                    <div className="ItemDialog__Field">
+                        <label className="ItemDialog__Checkbox">
                             <input
                                 type="checkbox"
                                 checked={shouldCopyOnClickVal}
@@ -79,8 +74,8 @@ function MoreOptionsAccordion({
                             Copy content on click as primary action
                         </label>
                     </div>
-                    <div className={styles.ItemDialog__Field}>
-                        <label className={styles.ItemDialog__Checkbox}>
+                    <div className="ItemDialog__Field">
+                        <label className="ItemDialog__Checkbox">
                             <input
                                 type="checkbox"
                                 checked={isPinnedVal}
@@ -89,10 +84,8 @@ function MoreOptionsAccordion({
                             Pin this item
                         </label>
                     </div>
-                    <div className={styles.ItemDialog__Field}>
-                        <label className={styles.ItemDialog__Label}>
-                            Jotted at
-                        </label>
+                    <div className="ItemDialog__Field">
+                        <label className="ItemDialog__Label">Jotted at</label>
                         <input
                             className="Dialog__Input HalfInput"
                             type="datetime-local"
@@ -101,10 +94,8 @@ function MoreOptionsAccordion({
                         />
                     </div>
                     {isLinkItem && (
-                        <div className={styles.ItemDialog__Field}>
-                            <label className={styles.ItemDialog__Label}>
-                                Favicon
-                            </label>
+                        <div className="ItemDialog__Field">
+                            <label className="ItemDialog__Label">Favicon</label>
                             <input
                                 className="Dialog__Input HalfInput"
                                 value={faviconUrlVal}
@@ -115,10 +106,7 @@ function MoreOptionsAccordion({
                     )}
                     {item.previousContent && (
                         <button
-                            className={`
-                                ${styles.ItemDialog__BtnAction}
-                                ${styles.ItemDialog__BtnPrevVersion}
-                            `}
+                            className="ItemDialog__BtnAction ItemDialog__BtnPrevVersion"
                             onClick={() => openPreviousVersionDialog(item)}
                         >
                             View previous version
@@ -199,7 +187,7 @@ function MoreOptionsAccordion({
 //         // eslint-disable-next-line react-hooks/exhaustive-deps
 //     }, [])
 
-//     return <div ref={containerRef} className={styles.CodeMirror} />
+//     return <div ref={containerRef} className="CodeMirror" />
 // }
 
 interface Props {
@@ -410,7 +398,7 @@ export default function ItemDialog({ item, onClose }: Props) {
     const contentEditor = (
         <textarea
             ref={contentTextareaRef}
-            className={`Dialog__Input ${styles.ItemDialog__Textarea}`}
+            className="Dialog__Input ItemDialog__Textarea"
             rows={isTextItem ? 24 : 4}
             value={contentVal}
             onChange={handleContentChange}
@@ -419,7 +407,7 @@ export default function ItemDialog({ item, onClose }: Props) {
 
     const deleteButton = (
         <button
-            className={styles.ItemDialog__BtnDelete}
+            className="ItemDialog__BtnDelete"
             disabled={isDeleting}
             onClick={handleDeleteClick}
         >
@@ -429,7 +417,7 @@ export default function ItemDialog({ item, onClose }: Props) {
 
     const refetchButton = isLinkItem && (
         <button
-            className={styles.ItemDialog__BtnAction}
+            className="ItemDialog__BtnAction"
             disabled={isRefetching}
             onClick={handleRefetchMeta}
         >
@@ -439,7 +427,7 @@ export default function ItemDialog({ item, onClose }: Props) {
 
     const saveButton = (
         <button
-            className={styles.ItemDialog__BtnSave}
+            className="ItemDialog__BtnSave"
             disabled={isSaving}
             onClick={handleSaveAndClose}
         >
@@ -448,17 +436,17 @@ export default function ItemDialog({ item, onClose }: Props) {
     )
 
     return (
-        <div className={styles.ItemDialog}>
+        <div className="ItemDialog">
             <button
-                className={styles.ItemDialog__CloseBtn}
+                className="ItemDialog__CloseBtn"
                 onClick={closeAllDialogs}
                 aria-label="Close"
             >
                 <IconX {...ICON_PROPS_ACTION} />
             </button>
             {!isTodoItem && (
-                <div className={styles.ItemDialog__Field}>
-                    <label className={styles.ItemDialog__Label}>Title</label>
+                <div className="ItemDialog__Field">
+                    <label className="ItemDialog__Label">Title</label>
                     <input
                         className="Dialog__Input"
                         value={titleVal}
@@ -466,20 +454,18 @@ export default function ItemDialog({ item, onClose }: Props) {
                     />
                 </div>
             )}
-            <div className={styles.ItemDialog__Field}>
+            <div className="ItemDialog__Field">
                 {isTodoItem && (
-                    <label className={styles.ItemDialog__Label}>Item</label>
+                    <label className="ItemDialog__Label">Item</label>
                 )}
                 {contentEditor}
             </div>
-            <div className={styles.ItemDialog__SaveStatusWrapper}>
-                <span className={styles.ItemDialog__SaveStatus}>
-                    {saveStatusText}
-                </span>
+            <div className="ItemDialog__SaveStatusWrapper">
+                <span className="ItemDialog__SaveStatus">{saveStatusText}</span>
             </div>
-            <div className={styles.ItemDialog__Field}>
-                <label className={styles.ItemDialog__Label}>Tags</label>
-                <span className={styles.ItemDialog__Description}>
+            <div className="ItemDialog__Field">
+                <label className="ItemDialog__Label">Tags</label>
+                <span className="ItemDialog__Description">
                     Separated by spaces
                 </span>
                 <input
@@ -492,10 +478,7 @@ export default function ItemDialog({ item, onClose }: Props) {
                     autoCapitalize="none"
                 />
             </div>
-            <Accordion.Root
-                type="multiple"
-                className={styles.MoreOptionsAccordion}
-            >
+            <Accordion.Root type="multiple" className="MoreOptionsAccordion">
                 <MoreOptionsAccordion
                     shouldCopyOnClickVal={shouldCopyOnClickVal}
                     handleCopyOnClickChange={handleCopyOnClickChange}
@@ -509,9 +492,9 @@ export default function ItemDialog({ item, onClose }: Props) {
                     item={item}
                 />
             </Accordion.Root>
-            <div className={styles.ItemDialog__Footer}>
+            <div className="ItemDialog__Footer">
                 {deleteButton}
-                <div className={styles.ItemDialog__FooterRight}>
+                <div className="ItemDialog__FooterRight">
                     {refetchButton}
                     {saveButton}
                 </div>

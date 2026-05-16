@@ -17,7 +17,7 @@ import {
     ICON_PROPS_CURR_COLLECTION,
     ICON_PROPS_ITEM_DROPDOWN,
 } from "@/config/constants"
-import styles from "./CollectionDropdown.module.scss"
+import "./CollectionDropdown.scss"
 
 const HOTKEYS = Array.from(
     { length: COLLECTION_HOTKEY_COUNT },
@@ -43,7 +43,7 @@ export default function CollectionDropdown() {
     const trigger = currCollection ? (
         <>
             <span>{currCollection.icon}</span>
-            <span className={styles.CollectionDropdown__TriggerLabel}>
+            <span className="CollectionDropdown__TriggerLabel">
                 {currCollection.name}
             </span>
         </>
@@ -53,22 +53,16 @@ export default function CollectionDropdown() {
         const hotkeyNum = index < COLLECTION_HOTKEY_COUNT ? index + 1 : null
         const isActive = collection.slug === currSlug
 
-        const itemClassName = [
-            styles.CollectionItem,
-            styles["CollectionItem--Collection"],
-            isActive ? styles["CollectionItem--Active"] : "",
-        ].join(" ")
+        const itemClassName = `CollectionItem CollectionItem--Collection${isActive ? " CollectionItem--Active" : ""}`
 
         const currCollectionCheckmark = (
             <IconCheck {...ICON_PROPS_CURR_COLLECTION} />
         )
         const hotkeyNumberUi = hotkeyNum !== null && (
-            <kbd className={styles.CollectionItem__RightContent}>
-                {hotkeyNum}
-            </kbd>
+            <kbd className="CollectionItem__RightContent">{hotkeyNum}</kbd>
         )
         const rightContent = (
-            <span className={styles.CollectionItem__RightContent}>
+            <span className="CollectionItem__RightContent">
                 {isActive ? currCollectionCheckmark : hotkeyNumberUi}
             </span>
         )
@@ -80,7 +74,7 @@ export default function CollectionDropdown() {
                     onSelect={() => navigateToCollection(collection.slug)}
                 >
                     <span>{collection.icon}</span>
-                    <span className={styles.CollectionItem__Label}>
+                    <span className="CollectionItem__Label">
                         {collection.name}
                     </span>
                     {rightContent}
@@ -90,49 +84,47 @@ export default function CollectionDropdown() {
     })
 
     return (
-        <div className={styles.CollectionDropdown}>
+        <div className="CollectionDropdown">
             <DropdownMenu.Root>
                 <DropdownMenu.Trigger
-                    className={styles.CollectionDropdown__Trigger}
+                    className="CollectionDropdown__Trigger"
                     onPointerDown={triggerPointerDown}
                     onKeyDown={triggerKeyDown}
                 >
                     {trigger}
                     <IconChevronDown
                         {...ICON_PROPS_ITEM_DROPDOWN}
-                        className={styles.CollectionDropdown__TriggerChevron}
+                        className="CollectionDropdown__TriggerChevron"
                     />
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Portal>
                     <DropdownMenu.Content
-                        className={styles.CollectionDropdown__Content}
+                        className="CollectionDropdown__Content"
                         align="start"
                         sideOffset={DROPDOWN_OFFSET}
                         onCloseAutoFocus={contentCloseAutoFocus}
                     >
                         {menuItems}
-                        <DropdownMenu.Separator
-                            className={styles.CollectionDropdown__Separator}
-                        />
+                        <DropdownMenu.Separator className="CollectionDropdown__Separator" />
                         {currCollection && (
                             <DropdownMenu.Item
-                                className={`${styles.CollectionItem} ${styles["CollectionItem--Action"]}`}
+                                className="CollectionItem CollectionItem--Action"
                                 onSelect={() =>
                                     openCollectionDialog(currCollection)
                                 }
                             >
                                 <IconPencil {...ICON_PROPS_ITEM_DROPDOWN} />
-                                <span className={styles.CollectionItem__Label}>
+                                <span className="CollectionItem__Label">
                                     Edit this collection
                                 </span>
                             </DropdownMenu.Item>
                         )}
                         <DropdownMenu.Item
-                            className={`${styles.CollectionItem} ${styles["CollectionItem--Action"]}`}
+                            className="CollectionItem CollectionItem--Action"
                             onSelect={() => openCollectionDialog()}
                         >
                             <IconPlus {...ICON_PROPS_ITEM_DROPDOWN} />
-                            <span className={styles.CollectionItem__Label}>
+                            <span className="CollectionItem__Label">
                                 New collection
                             </span>
                         </DropdownMenu.Item>

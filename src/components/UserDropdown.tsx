@@ -18,7 +18,7 @@ import {
     ROUTE_COLLECTION,
     ROUTE_JOT,
 } from "@/config/constants"
-import styles from "./UserDropdown.module.scss"
+import "./UserDropdown.scss"
 import { useMatch } from "react-router-dom"
 
 export default function UserDropdown() {
@@ -38,24 +38,24 @@ export default function UserDropdown() {
     const shouldShowJotNav = !isJotRoute && !isJotCollectionRoute
 
     return (
-        <div className={styles.UserDropdown}>
+        <div className="UserDropdown">
             <DropdownMenu.Root>
                 <DropdownMenu.Trigger
-                    className={styles.UserDropdown__Trigger}
+                    className="UserDropdown__Trigger"
                     onPointerDown={triggerPointerDown}
                     onKeyDown={triggerKeyDown}
                 >
-                    <span className={styles.UserDropdown__TriggerLabel}>
+                    <span className="UserDropdown__TriggerLabel">
                         {userDisplayName}
                     </span>
                     <IconChevronDown
                         {...ICON_PROPS_ITEM_DROPDOWN}
-                        className={styles.UserDropdown__Chevron}
+                        className="UserDropdown__Chevron"
                     />
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Portal>
                     <DropdownMenu.Content
-                        className={styles.UserDropdown__Content}
+                        className="UserDropdown__Content"
                         align="end"
                         sideOffset={DROPDOWN_OFFSET}
                         onCloseAutoFocus={contentCloseAutoFocus}
@@ -63,7 +63,7 @@ export default function UserDropdown() {
                         {shouldShowJotNav && (
                             <>
                                 <DropdownMenu.Item
-                                    className={styles.UserDropdown__Item}
+                                    className="UserDropdown__Item"
                                     onSelect={navigateToJot}
                                 >
                                     <IconWritingSign
@@ -71,37 +71,33 @@ export default function UserDropdown() {
                                     />
                                     Jot
                                 </DropdownMenu.Item>
-                                <DropdownMenu.Separator
-                                    className={styles.UserDropdown__Separator}
-                                />
+                                <DropdownMenu.Separator className="UserDropdown__Separator" />
                             </>
                         )}
                         <DropdownMenu.Item
-                            className={styles.UserDropdown__Item}
+                            className="UserDropdown__Item"
                             onSelect={navigateToSettings}
                         >
                             <IconSettings {...ICON_PROPS_ITEM_DROPDOWN} />
                             Settings
                         </DropdownMenu.Item>
                         <DropdownMenu.Item
-                            className={styles.UserDropdown__Item}
+                            className="UserDropdown__Item"
                             onSelect={navigateToCollections}
                         >
                             <IconStack2 {...ICON_PROPS_ITEM_DROPDOWN} />
                             Collections
                         </DropdownMenu.Item>
-                        <DropdownMenu.Separator
-                            className={styles.UserDropdown__Separator}
-                        />
+                        <DropdownMenu.Separator className="UserDropdown__Separator" />
                         <DropdownMenu.Item
-                            className={styles.UserDropdown__Item}
+                            className="UserDropdown__Item"
                             onSelect={openShortcutDialog}
                         >
                             <IconKeyboard {...ICON_PROPS_ITEM_DROPDOWN} />
                             Shortcuts
                         </DropdownMenu.Item>
                         <DropdownMenu.Item
-                            className={styles.UserDropdown__Item}
+                            className="UserDropdown__Item"
                             onSelect={navigateToHelp}
                         >
                             <IconHelp {...ICON_PROPS_ITEM_DROPDOWN} />

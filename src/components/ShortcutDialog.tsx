@@ -30,7 +30,7 @@ import {
     SHORTCUT_MASS_TAG_EDIT,
     SHORTCUT_DISMISS_ALL_NOTIFICATIONS,
 } from "@/config/constants"
-import styles from "./ShortcutDialog.module.scss"
+import "./ShortcutDialog.scss"
 
 interface ShortcutItemProps {
     shortcut: string
@@ -41,12 +41,12 @@ interface ShortcutItemProps {
 function ShortcutCombo({ shortcut }: { shortcut: string }) {
     const keys = parseShortcut(shortcut)
     return (
-        <span className={styles.ShortcutCombo}>
+        <span className="ShortcutCombo">
             {keys.map((key, index) => (
-                <span key={index} className={styles.ShortcutCombo__KeyWrapper}>
+                <span key={index} className="ShortcutCombo__KeyWrapper">
                     <kbd>{key}</kbd>
                     {index < keys.length - 1 && (
-                        <span className={styles.ShortcutCombo__Plus}>+</span>
+                        <span className="ShortcutCombo__Plus">+</span>
                     )}
                 </span>
             ))}
@@ -60,17 +60,17 @@ function ShortcutItem({
     shortcutAlt,
 }: ShortcutItemProps) {
     return (
-        <div className={styles.ShortcutItem}>
-            <div className={styles.ShortcutItem__Keys}>
+        <div className="ShortcutItem">
+            <div className="ShortcutItem__Keys">
                 <ShortcutCombo shortcut={shortcut} />
                 {shortcutAlt && (
                     <>
-                        <span className={styles.ShortcutItem__Or}>or</span>
+                        <span className="ShortcutItem__Or">or</span>
                         <ShortcutCombo shortcut={shortcutAlt} />
                     </>
                 )}
             </div>
-            <span className={styles.ShortcutItem__Desc}>{description}</span>
+            <span className="ShortcutItem__Desc">{description}</span>
         </div>
     )
 }
@@ -83,10 +83,10 @@ interface ShortcutSectionProps {
 
 function ShortcutSection({ title, note, children }: ShortcutSectionProps) {
     return (
-        <section className={styles.ShortcutSection}>
-            <h3 className={styles.ShortcutSection__Title}>{title}</h3>
-            {note && <p className={styles.ShortcutSection__Note}>{note}</p>}
-            <div className={styles.ShortcutSection__Grid}>{children}</div>
+        <section className="ShortcutSection">
+            <h3 className="ShortcutSection__Title">{title}</h3>
+            {note && <p className="ShortcutSection__Note">{note}</p>}
+            <div className="ShortcutSection__Grid">{children}</div>
         </section>
     )
 }
@@ -95,13 +95,11 @@ export default function ShortcutDialog() {
     const closeAllDialogs = useDialogStore((s) => s.closeAllDialogs)
 
     return (
-        <div className={styles.ShortcutDialog}>
-            <div className={styles.ShortcutDialog__Header}>
-                <h2 className={styles.ShortcutDialog__Title}>
-                    Hotkey shortcuts
-                </h2>
+        <div className="ShortcutDialog">
+            <div className="ShortcutDialog__Header">
+                <h2 className="ShortcutDialog__Title">Hotkey shortcuts</h2>
                 <button
-                    className={styles.ShortcutDialog__CloseBtn}
+                    className="ShortcutDialog__CloseBtn"
                     onClick={closeAllDialogs}
                     type="button"
                     aria-label="Close"
@@ -110,7 +108,7 @@ export default function ShortcutDialog() {
                 </button>
             </div>
 
-            <div className={styles.ShortcutDialog__Sections}>
+            <div className="ShortcutDialog__Sections">
                 <ShortcutSection title="Navigation">
                     <ShortcutItem
                         shortcut={SHORTCUT_NAV_UP}

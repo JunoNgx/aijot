@@ -1,23 +1,24 @@
 @use "styles/mixins" as *;
+@use "styles/global" as *;
 
 .CollectionDialog {
-    composes: Dialog from global;
+    @extend .Dialog;
 
     &__Field {
-        composes: Dialog__Field from global;
+        @extend .Dialog__Field;
         flex: 1;
     }
 
     &__FieldAuto {
-        composes: Dialog__Field from global;
+        @extend .Dialog__Field;
     }
 
     &__Label {
-        composes: Dialog__Label from global;
+        @extend .Dialog__Label;
     }
 
     &__Description {
-        composes: Dialog__Description from global;
+        @extend .Dialog__Description;
     }
 
     &__EmojiField {
@@ -25,7 +26,7 @@
     }
 
     &__EmojiBtn {
-        composes: Btn Btn--Outline from global;
+        @extend .Btn, .Btn--Outline;
         font-size: var(--fontSizeLg);
         padding: 0.25rem 0.5rem;
     }
@@ -48,24 +49,24 @@
     }
 
     &__BtnSetDefault {
-        composes: Btn Btn--Sec from global;
+        @extend .Btn, .Btn--Sec;
         width: fit-content;
     }
 
     &__Footer {
-        composes: Dialog__Footer from global;
+        @extend .Dialog__Footer;
     }
 
     &__Actions {
-        composes: FlexRow from global;
+        @extend .FlexRow;
     }
 
     &__BtnSave {
-        composes: Btn Btn--Pri from global;
+        @extend .Btn, .Btn--Pri;
     }
 
     &__BtnDelete {
-        composes: Btn Btn--Danger from global;
+        @extend .Btn, .Btn--Danger;
     }
 
     &__Error {
@@ -74,8 +75,7 @@
     }
 
     &__CloseBtn {
-        composes: Btn Btn--Icon from global;
-        composes: Dialog__CloseBtn from global;
+        @extend .Btn, .Btn--Icon, .Dialog__CloseBtn;
     }
 }
 

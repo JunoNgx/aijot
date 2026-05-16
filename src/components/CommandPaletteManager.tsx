@@ -7,7 +7,6 @@ import {
     SHORTCUT_CMD_PAL_THEME,
 } from "@/config/constants"
 import CommandPalette from "./CommandPalette"
-import styles from "./CommandPalette.module.scss"
 
 export default function CommandPaletteManager() {
     const isOpen = useCommandPaletteStore((s) => s.isOpen)
@@ -40,7 +39,7 @@ export default function CommandPaletteManager() {
     return (
         <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
             <Dialog.Portal>
-                <Dialog.Overlay className={styles.CommandPalette__Overlay} />
+                <Dialog.Overlay className="CommandPalette__Overlay" />
                 <CommandPalette
                     mode={mode}
                     onModeChange={handleModeChange}

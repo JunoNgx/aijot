@@ -1,5 +1,6 @@
 @use "styles/mixins" as *;
 @use "styles/vars" as vars;
+@use "styles/global" as *;
 
 .ShortcutDialog {
     &__Header {
@@ -17,7 +18,7 @@
     }
 
     &__CloseBtn {
-        composes: Btn Btn--Icon from global;
+        @extend .Btn, .Btn--Icon;
     }
 
     &__Sections {

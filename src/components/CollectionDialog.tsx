@@ -9,7 +9,6 @@ import { useCollectionsMutations } from "@/hooks/useCollectionsMutations"
 import { useDialogStore } from "@/store/dialogStore"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
 import { generateSlug } from "@/utils/helpers"
-import styles from "./CollectionDialog.module.scss"
 import type { Collection, ItemType } from "@/types"
 import { ICON_PROPS_ACTION, SHORTCUT_SAVE_AND_CLOSE } from "@/config/constants"
 
@@ -219,7 +218,7 @@ export default function CollectionDialog({ collection }: Props) {
     })
 
     const typeCheckboxes = ALL_TYPES.map((type) => (
-        <label key={type} className={styles.CollectionDialog__TypeLabel}>
+        <label key={type} className="CollectionDialog__TypeLabel">
             <input
                 type="checkbox"
                 checked={typesVal.includes(type)}
@@ -230,7 +229,7 @@ export default function CollectionDialog({ collection }: Props) {
     ))
 
     const emojiPickerPortal = isEmojiPickerOpen && (
-        <div className={styles.EmojiPicker}>
+        <div className="EmojiPicker">
             <EmojiPicker.Root onEmojiSelect={handleEmojiSelect} columns={6}>
                 <EmojiPicker.Search />
                 <EmojiPicker.Viewport>
@@ -243,14 +242,14 @@ export default function CollectionDialog({ collection }: Props) {
     )
 
     const defaultSection = isEditing && (
-        <div className={styles.CollectionDialog__Field}>
+        <div className="CollectionDialog__Field">
             {isDefault ? (
-                <span className={styles.CollectionDialog__DefaultIndicator}>
+                <span className="CollectionDialog__DefaultIndicator">
                     This is currently your default collection
                 </span>
             ) : (
                 <button
-                    className={styles.CollectionDialog__BtnSetDefault}
+                    className="CollectionDialog__BtnSetDefault"
                     type="button"
                     onClick={() => setDefaultCollectionSlug(collection.slug)}
                 >
@@ -262,7 +261,7 @@ export default function CollectionDialog({ collection }: Props) {
 
     const deleteButton = isEditing && !collection.coreType && (
         <button
-            className={styles.CollectionDialog__BtnDelete}
+            className="CollectionDialog__BtnDelete"
             disabled={isDeleting}
             onClick={handleDelete}
         >
@@ -272,7 +271,7 @@ export default function CollectionDialog({ collection }: Props) {
 
     const saveButton = (
         <button
-            className={styles.CollectionDialog__BtnSave}
+            className="CollectionDialog__BtnSave"
             disabled={isSaving}
             onClick={handleSave}
         >
@@ -281,19 +280,17 @@ export default function CollectionDialog({ collection }: Props) {
     )
 
     return (
-        <div className={styles.CollectionDialog}>
+        <div className="CollectionDialog">
             <button
-                className={styles.CollectionDialog__CloseBtn}
+                className="CollectionDialog__CloseBtn"
                 onClick={closeAllDialogs}
                 aria-label="Close"
             >
                 <IconX {...ICON_PROPS_ACTION} />
             </button>
             <div className="FlexRow">
-                <div className={styles.CollectionDialog__Field}>
-                    <label className={styles.CollectionDialog__Label}>
-                        Name
-                    </label>
+                <div className="CollectionDialog__Field">
+                    <label className="CollectionDialog__Label">Name</label>
                     <input
                         className="Dialog__Input"
                         autoFocus
@@ -301,18 +298,16 @@ export default function CollectionDialog({ collection }: Props) {
                         onChange={handleNameChange}
                     />
                 </div>
-                <div className={styles.CollectionDialog__FieldAuto}>
-                    <label className={styles.CollectionDialog__Label}>
-                        Icon
-                    </label>
+                <div className="CollectionDialog__FieldAuto">
+                    <label className="CollectionDialog__Label">Icon</label>
                     <div
                         ref={emojiFieldRef}
-                        className={styles.CollectionDialog__EmojiField}
+                        className="CollectionDialog__EmojiField"
                     >
                         <button
                             ref={emojiBtnRef}
                             type="button"
-                            className={styles.CollectionDialog__EmojiBtn}
+                            className="CollectionDialog__EmojiBtn"
                             onClick={handleEmojiBtnClick}
                         >
                             {iconVal || "..."}
@@ -321,9 +316,9 @@ export default function CollectionDialog({ collection }: Props) {
                     </div>
                 </div>
             </div>
-            <div className={styles.CollectionDialog__Field}>
-                <label className={styles.CollectionDialog__Label}>Slug</label>
-                <span className={styles.CollectionDialog__Description}>
+            <div className="CollectionDialog__Field">
+                <label className="CollectionDialog__Label">Slug</label>
+                <span className="CollectionDialog__Description">
                     For url route and searching from cmdPalette
                 </span>
                 <input
@@ -336,22 +331,20 @@ export default function CollectionDialog({ collection }: Props) {
             </div>
             <div className="FlexRow">
                 {!collection?.coreType && (
-                    <div className={styles.CollectionDialog__Field}>
-                        <label className={styles.CollectionDialog__Label}>
-                            Types
-                        </label>
-                        <span className={styles.CollectionDialog__Description}>
+                    <div className="CollectionDialog__Field">
+                        <label className="CollectionDialog__Label">Types</label>
+                        <span className="CollectionDialog__Description">
                             Items of selected types appear in this collection
                         </span>
-                        <div className={styles.CollectionDialog__TypesRow}>
+                        <div className="CollectionDialog__TypesRow">
                             {typeCheckboxes}
                         </div>
                     </div>
                 )}
             </div>
-            <div className={styles.CollectionDialog__Field}>
-                <label className={styles.CollectionDialog__Label}>Tags</label>
-                <span className={styles.CollectionDialog__Description}>
+            <div className="CollectionDialog__Field">
+                <label className="CollectionDialog__Label">Tags</label>
+                <span className="CollectionDialog__Description">
                     Collection will shows item with the following tags
                     (separated by spaces)
                 </span>
@@ -366,13 +359,11 @@ export default function CollectionDialog({ collection }: Props) {
             </div>
             {defaultSection}
             {saveError && (
-                <p className={styles.CollectionDialog__Error}>{saveError}</p>
+                <p className="CollectionDialog__Error">{saveError}</p>
             )}
-            <div className={styles.CollectionDialog__Footer}>
+            <div className="CollectionDialog__Footer">
                 <div>{deleteButton}</div>
-                <div className={styles.CollectionDialog__Actions}>
-                    {saveButton}
-                </div>
+                <div className="CollectionDialog__Actions">{saveButton}</div>
             </div>
         </div>
     )

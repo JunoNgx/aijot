@@ -6,7 +6,7 @@ import { useSyncFn } from "@/hooks/useSync"
 import { useLocalSyncData } from "@/store/localSyncData"
 import { useLocalUserSettings } from "@/store/localUserSettings"
 import { formatDatetime } from "@/utils/helpers"
-import styles from "./SyncButton.module.scss"
+import "./SyncButton.scss"
 
 export default function SyncButton() {
     const { sync } = useSyncFn()
@@ -42,7 +42,7 @@ export default function SyncButton() {
 
     return (
         <button
-            className={styles.SyncButton}
+            className="SyncButton"
             type="button"
             onClick={() => {
                 sync()
@@ -54,11 +54,11 @@ export default function SyncButton() {
                 {...ICON_PROPS_NORMAL}
                 className={
                     isSyncing
-                        ? `${styles.SyncButton__Icon} ${styles["SyncButton__Icon--Spinning"]}`
-                        : styles.SyncButton__Icon
+                        ? "SyncButton__Icon SyncButton__Icon--Spinning"
+                        : "SyncButton__Icon"
                 }
             />
-            <span className={styles.SyncButton__Label}>{syncLabel}</span>
+            <span className="SyncButton__Label">{syncLabel}</span>
         </button>
     )
 }

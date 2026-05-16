@@ -1,0 +1,16 @@
+@use "styles/mixins" as *;
+@use "styles/global" as *;
+
+.DialogManager {
+    &__Overlay {
+        @extend .DialogWrapper__Overlay;
+    }
+
+    &__Content {
+        @extend .DialogWrapper__Content;
+    }
+
+    &__Title {
+        @extend .VisuallyHidden;
+    }
+}

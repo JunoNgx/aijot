@@ -6,7 +6,7 @@ import { useDialogStore } from "@/store/dialogStore"
 import { useLocalUserSettings } from "@/store/localUserSettings"
 import { formatDetailedDatetime } from "@/utils/helpers"
 import { openItemDialog } from "@/utils/openItemDialog"
-import styles from "./PreviousVersionDialog.module.scss"
+import "./PreviousVersionDialog.scss"
 import type { Item } from "@/types"
 
 interface Props {
@@ -39,7 +39,7 @@ export default function PreviousVersionDialog({ item }: Props) {
     }
 
     const timestampDisplay = item.previousContentRecordedAt && (
-        <span className={styles.PreviousVersionDialog__Timestamp}>
+        <span className="PreviousVersionDialog__Timestamp">
             Recorded{" "}
             {formatDetailedDatetime(
                 item.previousContentRecordedAt,
@@ -49,36 +49,34 @@ export default function PreviousVersionDialog({ item }: Props) {
     )
 
     return (
-        <div className={styles.PreviousVersionDialog}>
+        <div className="PreviousVersionDialog">
             <button
-                className={styles.PreviousVersionDialog__CloseBtn}
+                className="PreviousVersionDialog__CloseBtn"
                 onClick={handleBack}
                 aria-label="Close"
             >
                 <IconX {...ICON_PROPS_ACTION} />
             </button>
-            <h2 className={styles.PreviousVersionDialog__Title}>
-                Previous Version
-            </h2>
+            <h2 className="PreviousVersionDialog__Title">Previous Version</h2>
 
             {timestampDisplay}
 
             <textarea
-                className={`Dialog__Input ${styles.PreviousVersionDialog__Textarea}`}
+                className="Dialog__Input PreviousVersionDialog__Textarea"
                 rows={isTextItem ? 24 : 4}
                 value={item.previousContent}
                 readOnly
             />
 
-            <div className={styles.PreviousVersionDialog__Footer}>
+            <div className="PreviousVersionDialog__Footer">
                 <button
-                    className={styles.PreviousVersionDialog__BtnBack}
+                    className="PreviousVersionDialog__BtnBack"
                     onClick={handleBack}
                 >
                     Back
                 </button>
                 <button
-                    className={styles.PreviousVersionDialog__BtnRestore}
+                    className="PreviousVersionDialog__BtnRestore"
                     disabled={isRestoring}
                     onClick={handleRestore}
                 >

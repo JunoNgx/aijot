@@ -29,6 +29,25 @@ import JotItemContextMenu from "./JotItemContextMenu"
 import type { Item } from "@/types"
 import styles from "./JotItem.module.scss"
 
+function getAccessibleLabel(item: Item) {
+    const isPrimaryTextTitle = item.type !== "todo" && item.title !== undefined
+    const typeLabel =
+        item.type === "todo"
+            ? item.isDone
+                ? "Completed todo"
+                : "Todo"
+            : item.type === "link"
+              ? "Link"
+              : "Text"
+
+    return [
+        typeLabel,
+        truncateText(isPrimaryTextTitle ? item.title! : item.content, 100),
+    ]
+        .filter(Boolean)
+        .join(": ")
+}
+
 interface Props {
     item: Item
     isSelected: boolean
@@ -204,24 +223,6 @@ export default memo(function JotItem({
         ${isExpandedInfoMode ? styles["JotItem--Expanded"] : ""}
     `
 
-    const getAccessibleLabel = () => {
-        const typeLabel =
-            item.type === "todo"
-                ? item.isDone
-                    ? "Completed todo"
-                    : "Todo"
-                : item.type === "link"
-                  ? "Link"
-                  : "Text"
-
-        return [
-            typeLabel,
-            truncateText(isPrimaryTextTitle ? item.title! : item.content, 100),
-        ]
-            .filter(Boolean)
-            .join(": ")
-    }
-
     const itemIndicators = (
         <div className={styles.JotItem__StatusWrapper}>
             {item.shouldCopyOnClick && (
@@ -309,7 +310,7 @@ export default memo(function JotItem({
                     id={id}
                     role="option"
                     aria-selected={isSelected}
-                    aria-label={getAccessibleLabel()}
+                    aria-label={getAccessibleLabel(item)}
                     tabIndex={-1}
                     onClick={handleClick}
                     {...rest}

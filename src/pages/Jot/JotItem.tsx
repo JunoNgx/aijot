@@ -85,23 +85,19 @@ function ItemIcon({
 }
 
 interface JotItemExpandedContentProps {
-    displayPrimaryText: string
-    isPrimaryTextTitle: boolean
-    itemIsDone: boolean | undefined
+    primaryTextEl: ReactNode
+    secondaryTextEl: ReactNode
     itemIcon: ReactNode
     itemIndicators: ReactNode
-    secondaryTextEl: ReactNode
     tagsEl: ReactNode
     expandedDatetimeEl: ReactNode
 }
 
 function JotItemExpandedContent({
-    displayPrimaryText,
-    isPrimaryTextTitle,
-    itemIsDone,
+    primaryTextEl,
+    secondaryTextEl,
     itemIcon,
     itemIndicators,
-    secondaryTextEl,
     tagsEl,
     expandedDatetimeEl,
 }: JotItemExpandedContentProps) {
@@ -109,19 +105,7 @@ function JotItemExpandedContent({
         <div className={styles.JotItemExpandedContent}>
             <div className={styles.JotItemExpandedContent__Row1}>
                 {itemIcon}
-                <span
-                    className={[
-                        styles.JotItem__PrimaryText,
-                        itemIsDone
-                            ? styles["JotItem__PrimaryText--TodoDone"]
-                            : "",
-                        isPrimaryTextTitle
-                            ? styles["JotItem__PrimaryText--Title"]
-                            : "",
-                    ].join(" ")}
-                >
-                    {displayPrimaryText}
-                </span>
+                {primaryTextEl}
                 {secondaryTextEl}
                 {itemIndicators}
             </div>
@@ -149,14 +133,12 @@ export default memo(function JotItem({
         (s) => s.fetchingLinkMetaItemIds,
     )
     const isPrimaryTextTitle = item.type !== "todo" && item.title !== undefined
-    const primaryText = isPrimaryTextTitle ? item.title! : item.content
-    const secondaryText = isPrimaryTextTitle ? item.content : null
-    const displayPrimaryText = truncateText(
-        primaryText,
+    const primaryText = truncateText(
+        isPrimaryTextTitle ? item.title! : item.content,
         JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
     )
-    const displaySecondaryText = secondaryText
-        ? truncateText(secondaryText, JOT_ITEM_SECONDARY_TEXT_DISPLAY_LIMIT)
+    const secondaryText = isPrimaryTextTitle
+        ? truncateText(item.content, JOT_ITEM_SECONDARY_TEXT_DISPLAY_LIMIT)
         : null
     const datetime = formatDatetime(item.jottedAt, is24HourClock)
     const detailedDatetime = formatDetailedDatetime(
@@ -164,9 +146,19 @@ export default memo(function JotItem({
         is24HourClock,
     )
 
-    const secondaryTextEl = displaySecondaryText && (
-        <span className={styles.JotItem__SecondaryText}>
-            {displaySecondaryText}
+    const secondaryTextEl = secondaryText && (
+        <span className={styles.JotItem__SecondaryText}>{secondaryText}</span>
+    )
+
+    const primaryTextEl = (
+        <span
+            className={[
+                styles.JotItem__PrimaryText,
+                item.isDone ? styles["JotItem__PrimaryText--TodoDone"] : "",
+                isPrimaryTextTitle ? styles["JotItem__PrimaryText--Title"] : "",
+            ].join(" ")}
+        >
+            {primaryText}
         </span>
     )
 
@@ -186,7 +178,10 @@ export default memo(function JotItem({
                   ? "Link"
                   : "Text"
 
-        return [typeLabel, truncateText(primaryText, 100)]
+        return [
+            typeLabel,
+            truncateText(isPrimaryTextTitle ? item.title! : item.content, 100),
+        ]
             .filter(Boolean)
             .join(": ")
     }
@@ -235,7 +230,7 @@ export default memo(function JotItem({
                         : "",
                 ].join(" ")}
             >
-                {displayPrimaryText}
+                {primaryText}
             </span>
             {secondaryTextEl}
         </div>
@@ -304,12 +299,10 @@ export default memo(function JotItem({
                 >
                     {isExpandedInfoMode ? (
                         <JotItemExpandedContent
-                            displayPrimaryText={displayPrimaryText}
-                            isPrimaryTextTitle={isPrimaryTextTitle}
-                            itemIsDone={item.isDone}
+                            primaryTextEl={primaryTextEl}
+                            secondaryTextEl={secondaryTextEl}
                             itemIcon={itemIcon}
                             itemIndicators={itemIndicators}
-                            secondaryTextEl={secondaryTextEl}
                             tagsEl={tagsEl}
                             expandedDatetimeEl={expandedDatetimeEl}
                         />

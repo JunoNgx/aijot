@@ -1,3 +1,5 @@
+@use "styles/global" as *;
+
 .SyncSection {
     &__InfoWrapper {
         display: flex;
@@ -27,10 +29,10 @@
     }
 
     &__BtnAction {
-        composes: Btn Btn--Sec from global;
+        @extend .Btn, .Btn--Sec;
     }
 
     &__BtnConnect {
-        composes: Btn Btn--Pri from global;
+        @extend .Btn, .Btn--Pri;
     }
 }

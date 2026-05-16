@@ -4,7 +4,7 @@ import { useLocalSyncData } from "@/store/localSyncData"
 import { useLocalUserSettings } from "@/store/localUserSettings"
 import { formatFullDatetime } from "@/utils/helpers"
 import SettingsSection from "./SettingsSection"
-import styles from "./SyncSection.module.scss"
+import "./SyncSection.scss"
 
 export default function SyncSection() {
     const is24HourClock = useLocalUserSettings((s) => s.is24HourClock)
@@ -31,24 +31,24 @@ export default function SyncSection() {
             description="Back up your data to Google Drive"
         >
             {isConnected && authToken && (
-                <div className={styles.SyncSection__InfoWrapper}>
-                    <span className={styles.SyncSection__Email}>
+                <div className="SyncSection__InfoWrapper">
+                    <span className="SyncSection__Email">
                         Connected as {authToken.email}
                     </span>
-                    <span className={styles.SyncSection__Status}>
+                    <span className="SyncSection__Status">
                         {syncStatus === "syncing"
                             ? "Syncing..."
                             : lastSyncTimeUiText}
                     </span>
                     {syncStatus === "error" && syncError && (
-                        <span className={styles.SyncSection__Error}>
+                        <span className="SyncSection__Error">
                             Error: {syncError}
                         </span>
                     )}
                 </div>
             )}
             {connectError && (
-                <div className={styles["SyncSection__Status--Error"]}>
+                <div className="SyncSection__Status SyncSection__Status--Error">
                     {connectError}
                 </div>
             )}
@@ -56,7 +56,7 @@ export default function SyncSection() {
                 {isConnected ? (
                     <>
                         <button
-                            className={styles.SyncSection__BtnAction}
+                            className="SyncSection__BtnAction"
                             type="button"
                             disabled={syncStatus === "syncing"}
                             onClick={() => sync()}
@@ -64,7 +64,7 @@ export default function SyncSection() {
                             Sync now
                         </button>
                         <button
-                            className={styles.SyncSection__BtnAction}
+                            className="SyncSection__BtnAction"
                             type="button"
                             onClick={disconnect}
                         >
@@ -73,7 +73,7 @@ export default function SyncSection() {
                     </>
                 ) : (
                     <button
-                        className={styles.SyncSection__BtnConnect}
+                        className="SyncSection__BtnConnect"
                         type="button"
                         disabled={isConnecting}
                         onClick={connect}

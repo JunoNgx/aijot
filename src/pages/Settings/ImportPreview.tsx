@@ -1,4 +1,4 @@
-import styles from "./ImportPreview.module.scss"
+import "./ImportPreview.scss"
 
 interface Props {
     newItems: number
@@ -18,23 +18,23 @@ export default function ImportPreview({
     onCancel,
 }: Props) {
     return (
-        <div className={styles.ImportPreview}>
+        <div className="ImportPreview">
             <span>
                 {newItems} new, {updatedItems} updated items
             </span>
             <span>
                 {newCollections} new, {updatedCollections} updated collections
             </span>
-            <div className={styles.ImportPreview__Actions}>
+            <div className="ImportPreview__Actions">
                 <button
-                    className={styles.ImportPreview__BtnAction}
+                    className="ImportPreview__BtnAction"
                     type="button"
                     onClick={onConfirm}
                 >
                     Confirm
                 </button>
                 <button
-                    className={styles.ImportPreview__BtnAction}
+                    className="ImportPreview__BtnAction"
                     type="button"
                     onClick={onCancel}
                 >

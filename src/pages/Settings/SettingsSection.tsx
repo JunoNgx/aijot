@@ -1,5 +1,5 @@
 import type { ReactNode, KeyboardEvent } from "react"
-import styles from "./SettingsSection.module.scss"
+import "./SettingsSection.scss"
 
 interface Props {
     title: string
@@ -22,14 +22,18 @@ export default function SettingsSection({
 }: Props) {
     return (
         <section
-            className={[styles.SettingsSection, sectionClassName]
-                .filter(Boolean)
-                .join(" ")}
+            className={
+                sectionClassName
+                    ? `SettingsSection ${sectionClassName}`
+                    : "SettingsSection"
+            }
         >
             <h3
-                className={[styles.SettingsSection__Title, titleClassName]
-                    .filter(Boolean)
-                    .join(" ")}
+                className={
+                    titleClassName
+                        ? `SettingsSection__Title ${titleClassName}`
+                        : "SettingsSection__Title"
+                }
                 onClick={onTitleClick}
                 onKeyDown={onTitleKeyDown}
                 tabIndex={onTitleClick ? 0 : undefined}
@@ -38,9 +42,7 @@ export default function SettingsSection({
                 {title}
             </h3>
             {description && (
-                <p className={styles.SettingsSection__Description}>
-                    {description}
-                </p>
+                <p className="SettingsSection__Description">{description}</p>
             )}
             {children}
         </section>

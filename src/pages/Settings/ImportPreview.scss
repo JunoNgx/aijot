@@ -1,4 +1,5 @@
 @use "styles/mixins" as *;
+@use "styles/global" as *;
 
 .ImportPreview {
     display: inline-flex;
@@ -16,6 +17,6 @@
     }
 
     &__BtnAction {
-        composes: Btn Btn--Sec from global;
+        @extend .Btn, .Btn--Sec;
     }
 }

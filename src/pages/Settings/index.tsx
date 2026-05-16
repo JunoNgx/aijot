@@ -28,8 +28,7 @@ import { useThemeActions } from "@/hooks/useThemeActions"
 import type { ExportData, ImportSummary } from "@/types"
 import type { JustJotExportData } from "@/services/justjotImport"
 import { queryKeys } from "@/db/queryKeys"
-import styles from "./index.module.scss"
-import sectionStyles from "./SettingsSection.module.scss"
+import "./index.scss"
 import BackBtn from "@/components/BackBtn"
 import SettingsSection from "./SettingsSection"
 import SyncSection from "./SyncSection"
@@ -223,19 +222,19 @@ export default function Settings() {
         useDialogStore.getState().openDialog({
             children: (
                 <>
-                    <p className={styles.Settings__DialogWarning}>
+                    <p className="Settings__DialogWarning">
                         This cannot be undone.
                     </p>
-                    <div className={styles.Settings__DialogFooter}>
+                    <div className="Settings__DialogFooter">
                         <button
-                            className={styles.Settings__BtnAction}
+                            className="Settings__BtnAction"
                             type="button"
                             onClick={closeAllDialogs}
                         >
                             Cancel
                         </button>
                         <button
-                            className={styles.Settings__BtnDanger}
+                            className="Settings__BtnDanger"
                             type="button"
                             disabled={isClearingData}
                             onClick={handleClearData}
@@ -252,19 +251,19 @@ export default function Settings() {
         useDialogStore.getState().openDialog({
             children: (
                 <>
-                    <p className={styles.Settings__DialogWarning}>
+                    <p className="Settings__DialogWarning">
                         This cannot be undone.
                     </p>
-                    <div className={styles.Settings__DialogFooter}>
+                    <div className="Settings__DialogFooter">
                         <button
-                            className={styles.Settings__BtnAction}
+                            className="Settings__BtnAction"
                             type="button"
                             onClick={closeAllDialogs}
                         >
                             Cancel
                         </button>
                         <button
-                            className={styles.Settings__BtnDanger}
+                            className="Settings__BtnDanger"
                             type="button"
                             disabled={isResettingApp}
                             onClick={handleResetApp}
@@ -306,35 +305,32 @@ export default function Settings() {
     const autoApplyTagsDescId = "SettingDesAutoApplyTag"
 
     return (
-        <div className={styles.Settings}>
+        <div className="Settings">
             <BackBtn />
-            <h2 className={styles.Settings__Title}>Settings</h2>
+            <h2 className="Settings__Title">Settings</h2>
 
             <SyncSection />
 
             <SettingsSection title="Preferences">
-                <div className={`${styles.Field} ${styles["Field--FlexRow"]}`}>
-                    <label
-                        className={styles.Field__Label}
-                        htmlFor="displayName"
-                    >
+                <div className="Field Field--FlexRow">
+                    <label className="Field__Label" htmlFor="displayName">
                         Display name
                     </label>
                     <input
                         id="displayName"
                         type="text"
-                        className={styles.Field__Input}
+                        className="Field__Input"
                         value={userDisplayName}
                         onChange={(e) => setUserDisplayName(e.target.value)}
                     />
                 </div>
 
-                <div className={`${styles.Field} ${styles["Field--FlexRow"]}`}>
-                    <label className={styles.Field__Label}>
+                <div className="Field Field--FlexRow">
+                    <label className="Field__Label">
                         Collection sort order:
                     </label>
-                    <div className={styles.Field__RadioGroup}>
-                        <label className={styles.Field__Radio}>
+                    <div className="Field__RadioGroup">
+                        <label className="Field__Radio">
                             <input
                                 type="radio"
                                 name="collectionSortOrder"
@@ -345,7 +341,7 @@ export default function Settings() {
                             />
                             Custom
                         </label>
-                        <label className={styles.Field__Radio}>
+                        <label className="Field__Radio">
                             <input
                                 type="radio"
                                 name="collectionSortOrder"
@@ -359,8 +355,8 @@ export default function Settings() {
                     </div>
                 </div>
 
-                <div className={styles.Field}>
-                    <label className={styles.Field__Checkbox}>
+                <div className="Field">
+                    <label className="Field__Checkbox">
                         <input
                             aria-describedby={autoApplyTagsDescId}
                             type="checkbox"
@@ -375,15 +371,15 @@ export default function Settings() {
                     </label>
                     <small
                         id={autoApplyTagsDescId}
-                        className={styles.Field__Description}
+                        className="Field__Description"
                     >
                         The tags of the current collection will also be applied,
                         in addition to syntax specification.
                     </small>
                 </div>
 
-                <div className={styles.Field}>
-                    <label className={styles.Field__Checkbox}>
+                <div className="Field">
+                    <label className="Field__Checkbox">
                         <input
                             aria-describedby={itemDisplayDescId}
                             type="checkbox"
@@ -396,7 +392,7 @@ export default function Settings() {
                     </label>
                     <small
                         id={itemDisplayDescId}
-                        className={styles.Field__Description}
+                        className="Field__Description"
                     >
                         Default initial state for item display mode. Can be
                         toggled mid-session.
@@ -408,8 +404,8 @@ export default function Settings() {
                 title="Local device config"
                 description="The following settings are not synchronised to your cloud data"
             >
-                <div className={styles.Field}>
-                    <label className={styles.Field__Checkbox}>
+                <div className="Field">
+                    <label className="Field__Checkbox">
                         <input
                             aria-describedby={hourModeDescId}
                             type="checkbox"
@@ -418,25 +414,18 @@ export default function Settings() {
                         />
                         Use 24-hour clock
                     </label>
-                    <small
-                        id={hourModeDescId}
-                        className={styles.Field__Description}
-                    >
+                    <small id={hourModeDescId} className="Field__Description">
                         16:35 vs 04:35 pm
                     </small>
                 </div>
 
-                <div className={`${styles.Field} ${styles["Field--FlexRow"]}`}>
-                    <label className={styles.Field__Label}>
-                        Current theme:
-                    </label>
-                    <span className={styles.Settings__CurrentTheme}>
-                        {theme}
-                    </span>
-                    <div className={styles.Settings__ThemeBtnWrapper}>
+                <div className="Field Field--FlexRow">
+                    <label className="Field__Label">Current theme:</label>
+                    <span className="Settings__CurrentTheme">{theme}</span>
+                    <div className="Settings__ThemeBtnWrapper">
                         <button
                             type="button"
-                            className={styles.Settings__BtnAction}
+                            className="Settings__BtnAction"
                             onClick={() =>
                                 useCommandPaletteStore.getState().open("theme")
                             }
@@ -445,7 +434,7 @@ export default function Settings() {
                         </button>
                         <button
                             type="button"
-                            className={styles.Settings__BtnAction}
+                            className="Settings__BtnAction"
                             onClick={randomiseTheme}
                         >
                             Randomise
@@ -453,16 +442,13 @@ export default function Settings() {
                     </div>
                 </div>
 
-                <div className={`${styles.Field} ${styles["Field--FlexRow"]}`}>
-                    <label
-                        className={styles.Field__Label}
-                        htmlFor="uiFontSelect"
-                    >
+                <div className="Field Field--FlexRow">
+                    <label className="Field__Label" htmlFor="uiFontSelect">
                         Primary UI font:
                     </label>
                     <select
                         id="uiFontSelect"
-                        className={styles.Field__Input}
+                        className="Field__Input"
                         value={fontFamily}
                         onChange={(e) => setFontFamily(e.target.value)}
                     >
@@ -474,16 +460,13 @@ export default function Settings() {
                     </select>
                 </div>
 
-                <div className={`${styles.Field} ${styles["Field--FlexRow"]}`}>
-                    <label
-                        className={styles.Field__Label}
-                        htmlFor="codeFontSelect"
-                    >
+                <div className="Field Field--FlexRow">
+                    <label className="Field__Label" htmlFor="codeFontSelect">
                         Input mono font:
                     </label>
                     <select
                         id="codeFontSelect"
-                        className={styles.Field__Input}
+                        className="Field__Input"
                         value={fontFamilyMono}
                         onChange={(e) => setFontFamilyMono(e.target.value)}
                     >
@@ -502,14 +485,14 @@ export default function Settings() {
             >
                 <div className="FlexRow">
                     <button
-                        className={styles.Settings__BtnAction}
+                        className="Settings__BtnAction"
                         type="button"
                         onClick={handleExport}
                     >
                         Export
                     </button>
                     <button
-                        className={styles.Settings__BtnAction}
+                        className="Settings__BtnAction"
                         type="button"
                         onClick={() => importInputRef.current?.click()}
                     >
@@ -525,7 +508,7 @@ export default function Settings() {
                 </div>
                 <div className="FlexRow">
                     <button
-                        className={styles.Settings__BtnAction}
+                        className="Settings__BtnAction"
                         type="button"
                         onClick={() => justjotImportInputRef.current?.click()}
                     >
@@ -565,7 +548,7 @@ export default function Settings() {
 
             <SettingsSection title="Help">
                 <button
-                    className={styles.Settings__BtnAction}
+                    className="Settings__BtnAction"
                     type="button"
                     onClick={navigateToHelp}
                 >
@@ -578,13 +561,13 @@ export default function Settings() {
                 onTitleClick={handleDebugEnableClick}
                 onTitleKeyDown={handleAboutKeyDown}
             >
-                <p className={styles.Settings__Version}>
+                <p className="Settings__Version">
                     Version {APP_VERSION} ({COMMIT_SHA})
                 </p>
-                <p className={styles.Settings__Version}>
+                <p className="Settings__Version">
                     Made by{" "}
                     <a
-                        className={styles.Settings__Link}
+                        className="Settings__Link"
                         href="https://JunoNgx.com"
                         target="_blank"
                         rel="noreferrer"
@@ -592,9 +575,9 @@ export default function Settings() {
                         Juno Nguyen
                     </a>
                 </p>
-                <p className={styles.Settings__Version}>
+                <p className="Settings__Version">
                     <a
-                        className={styles.Settings__Link}
+                        className="Settings__Link"
                         href="https://github.com/JunoNgx/aijot-frontend"
                         target="_blank"
                         rel="noreferrer"
@@ -603,23 +586,23 @@ export default function Settings() {
                     </a>{" "}
                     (MIT License)
                 </p>
-                <p className={styles.Settings__Version}>
+                <p className="Settings__Version">
                     <strong>Third party licenses</strong>
                 </p>
-                <ul className={styles.Settings__Licenses}>
+                <ul className="Settings__Licenses">
                     <li>Monkey Type theme definitions (GPLv3)</li>
                     <li>Standard Book font by Bryce Wilner (SIL OFL v1.1)</li>
                 </ul>
                 <div className="FlexRow">
                     <button
-                        className={styles.Settings__BtnAction}
+                        className="Settings__BtnAction"
                         type="button"
                         onClick={navigateToPrivacy}
                     >
                         Privacy policy
                     </button>
                     <button
-                        className={styles.Settings__BtnAction}
+                        className="Settings__BtnAction"
                         type="button"
                         onClick={navigateToTerms}
                     >
@@ -631,11 +614,11 @@ export default function Settings() {
             <SettingsSection
                 title="Danger Zone"
                 description="Removes all items and collections. Your data on Google Drive will remain intact."
-                sectionClassName={sectionStyles["SettingsSection--Spaced"]}
-                titleClassName={sectionStyles["SettingsSection__Title--Danger"]}
+                sectionClassName="SettingsSection--Spaced"
+                titleClassName="SettingsSection__Title--Danger"
             >
                 <button
-                    className={styles.Settings__BtnDanger}
+                    className="Settings__BtnDanger"
                     type="button"
                     onClick={openClearDataDialog}
                 >
@@ -646,18 +629,18 @@ export default function Settings() {
             {isDebugMode && (
                 <SettingsSection title="Debug">
                     <button
-                        className={styles.Settings__Btn}
+                        className="Settings__Btn"
                         type="button"
                         onClick={handleTriggerTestToast}
                     >
                         Trigger test toast
                     </button>
-                    <p className={sectionStyles.SettingsSection__Description}>
+                    <p className="SettingsSection__Description">
                         Wipes local database and all local app data. Cannot be
                         undone.
                     </p>
                     <button
-                        className={styles.Settings__BtnDanger}
+                        className="Settings__BtnDanger"
                         type="button"
                         onClick={openResetAppDialog}
                     >

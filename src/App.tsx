@@ -24,7 +24,7 @@ import {
     ROUTE_PRIVACY,
     ROUTE_TERMS,
 } from "@/config/constants"
-import layoutStyles from "./App.module.scss"
+import "./App.scss"
 
 function JotRedirect() {
     const defaultCollectionSlug = useSyncedUserSettings(
@@ -36,9 +36,9 @@ function JotRedirect() {
 function LayoutShell() {
     return (
         <>
-            <div className={layoutStyles.AppLayout}>
+            <div className="AppLayout">
                 <Header />
-                <div className={layoutStyles.AppLayout__OutletWrapper}>
+                <div className="AppLayout__OutletWrapper">
                     <Outlet />
                 </div>
             </div>

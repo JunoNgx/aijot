@@ -1,15 +1,15 @@
 import { useDocumentTitle } from "@/hooks/useDocumentTitle"
-import styles from "./index.module.scss"
+import "./index.scss"
 import BackBtn from "@/components/BackBtn"
 
 export default function Help() {
     useDocumentTitle("Help")
     return (
-        <div className={styles.Help}>
+        <div className="Help">
             <BackBtn />
-            <h2 className={styles.Help__Title}>Help</h2>
+            <h2 className="Help__Title">Help</h2>
 
-            <section className={styles.Help__Section}>
+            <section className="Help__Section">
                 <h3>Creating items</h3>
                 <p>
                     Type into the main input and press Enter to create an item.
@@ -34,7 +34,7 @@ export default function Help() {
                 </ul>
             </section>
 
-            <section className={styles.Help__Section}>
+            <section className="Help__Section">
                 <h3>Tags and collections</h3>
                 <p>
                     Append flags when creating an item to assign tags or
@@ -51,7 +51,7 @@ export default function Help() {
                 </ul>
             </section>
 
-            <section className={styles.Help__Section}>
+            <section className="Help__Section">
                 <h3>Searching</h3>
                 <p>
                     Type in the main input without pressing Enter to filter
@@ -75,7 +75,7 @@ export default function Help() {
                 </ul>
             </section>
 
-            <section className={styles.Help__Section}>
+            <section className="Help__Section">
                 <h3>Keyboard shortcuts</h3>
                 <p>
                     Press <kbd>Ctrl/Cmd + /</kbd> to see the full list of
@@ -84,7 +84,7 @@ export default function Help() {
                 </p>
             </section>
 
-            <section className={styles.Help__Section}>
+            <section className="Help__Section">
                 <h3>Collections</h3>
                 <p>
                     Collections group items by tag. The sidebar shows the core
@@ -104,7 +104,7 @@ export default function Help() {
                 </ul>
             </section>
 
-            <section className={styles.Help__Section}>
+            <section className="Help__Section">
                 <h3>Deletion and trash</h3>
                 <p>
                     Trashing an item moves it to the Trash collection, where it
@@ -118,7 +118,7 @@ export default function Help() {
                 </p>
             </section>
 
-            <section className={styles.Help__Section}>
+            <section className="Help__Section">
                 <h3>Sync and backup</h3>
                 <p>
                     Connect Google Drive in Settings to back up your data. You

@@ -1,16 +1,16 @@
 import { useDocumentTitle } from "@/hooks/useDocumentTitle"
-import styles from "./index.module.scss"
+import "./index.scss"
 import BackBtn from "@/components/BackBtn"
 
 export default function Terms() {
     useDocumentTitle("Terms of Service")
     return (
-        <div className={styles.Terms}>
+        <div className="Terms">
             <BackBtn />
-            <h2 className={styles.Terms__Title}>Terms of Service</h2>
-            <p className={styles.Terms__Date}>Effective April 23, 2026</p>
+            <h2 className="Terms__Title">Terms of Service</h2>
+            <p className="Terms__Date">Effective April 23, 2026</p>
 
-            <section className={styles.Terms__Section}>
+            <section className="Terms__Section">
                 <h3>Acceptance of terms</h3>
                 <p>
                     By using aijot, you agree to these terms. If you do not
@@ -18,7 +18,7 @@ export default function Terms() {
                 </p>
             </section>
 
-            <section className={styles.Terms__Section}>
+            <section className="Terms__Section">
                 <h3>Data and sync</h3>
                 <p>
                     The availability of Google Drive sync is not guaranteed
@@ -29,7 +29,7 @@ export default function Terms() {
                 </p>
             </section>
 
-            <section className={styles.Terms__Section}>
+            <section className="Terms__Section">
                 <h3>Termination</h3>
                 <p>
                     You can stop using aijot and delete your data at any time.
@@ -39,7 +39,7 @@ export default function Terms() {
                 </p>
             </section>
 
-            <section className={styles.Terms__Section}>
+            <section className="Terms__Section">
                 <h3>Disclaimer</h3>
                 <p>
                     Aijot is provided as is, without warranties of any kind. No
@@ -49,7 +49,7 @@ export default function Terms() {
                 </p>
             </section>
 
-            <section className={styles.Terms__Section}>
+            <section className="Terms__Section">
                 <h3>Changes to these terms</h3>
                 <p>
                     These terms may be updated from time to time. Changes will

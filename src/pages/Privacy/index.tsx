@@ -1,16 +1,16 @@
 import { useDocumentTitle } from "@/hooks/useDocumentTitle"
-import styles from "./index.module.scss"
+import "./index.scss"
 import BackBtn from "@/components/BackBtn"
 
 export default function Privacy() {
     useDocumentTitle("Privacy Policy")
     return (
-        <div className={styles.Privacy}>
+        <div className="Privacy">
             <BackBtn />
-            <h2 className={styles.Privacy__Title}>Privacy Policy</h2>
-            <p className={styles.Privacy__Date}>Effective April 23, 2026</p>
+            <h2 className="Privacy__Title">Privacy Policy</h2>
+            <p className="Privacy__Date">Effective April 23, 2026</p>
 
-            <section className={styles.Privacy__Section}>
+            <section className="Privacy__Section">
                 <h3>The short version</h3>
                 <p>
                     Aijot is designed to keep your data in your hands. Your
@@ -22,7 +22,7 @@ export default function Privacy() {
                 </p>
             </section>
 
-            <section className={styles.Privacy__Section}>
+            <section className="Privacy__Section">
                 <h3>What data is collected</h3>
                 <p>
                     Aijot stores the content you create: notes, todos, links,
@@ -34,7 +34,7 @@ export default function Privacy() {
                 </p>
             </section>
 
-            <section className={styles.Privacy__Section}>
+            <section className="Privacy__Section">
                 <h3>Where your data lives</h3>
                 <p>
                     By default, everything stays on your device in your
@@ -43,7 +43,7 @@ export default function Privacy() {
                 </p>
             </section>
 
-            <section className={styles.Privacy__Section}>
+            <section className="Privacy__Section">
                 <h3>Google Drive sync</h3>
                 <p>
                     Syncing to Google Drive is entirely optional. When enabled,
@@ -55,7 +55,7 @@ export default function Privacy() {
                 </p>
             </section>
 
-            <section className={styles.Privacy__Section}>
+            <section className="Privacy__Section">
                 <h3>Security</h3>
                 <p>
                     Data synced to Google Drive is encrypted in transit using
@@ -65,7 +65,7 @@ export default function Privacy() {
                 </p>
             </section>
 
-            <section className={styles.Privacy__Section}>
+            <section className="Privacy__Section">
                 <h3>Your rights</h3>
                 <p>
                     You own your data. Everything can be exported as a JSON file
@@ -76,7 +76,7 @@ export default function Privacy() {
                 </p>
             </section>
 
-            <section className={styles.Privacy__Section}>
+            <section className="Privacy__Section">
                 <h3>Changes to this policy</h3>
                 <p>
                     If this policy is updated, the effective date at the top of
@@ -84,7 +84,7 @@ export default function Privacy() {
                 </p>
             </section>
 
-            <section className={styles.Privacy__Section}>
+            <section className="Privacy__Section">
                 <h3>Contact</h3>
                 <p>
                     If you have questions about this privacy policy, please

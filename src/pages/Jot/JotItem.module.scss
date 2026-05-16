@@ -82,7 +82,7 @@
     &__PrimaryText {
         font-size: var(--fontSizeMd);
         color: var(--colText);
-        flex-shrink: 1;
+        flex-shrink: 0;
 
         &--TodoDone {
             text-decoration: line-through;

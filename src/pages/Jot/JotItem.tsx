@@ -85,17 +85,42 @@ function ItemIcon({
 }
 
 interface JotItemExpandedContentProps {
-    primaryTextEl: ReactNode
-    secondaryTextEl: ReactNode
+    mainContentEl: ReactNode
     itemIcon: ReactNode
     itemIndicators: ReactNode
     tagsEl: ReactNode
     expandedDatetimeEl: ReactNode
 }
 
-function JotItemExpandedContent({
+function JotItemTextContent({
     primaryTextEl,
     secondaryTextEl,
+    isCopied,
+}: {
+    primaryTextEl: ReactNode
+    secondaryTextEl: ReactNode
+    isCopied: boolean
+}) {
+    if (isCopied) {
+        return (
+            <span
+                className={`${styles.JotItemTextContent__PrimaryText} ${styles.JotItemTextContent__Copied}`}
+            >
+                Copied
+            </span>
+        )
+    }
+
+    return (
+        <>
+            {primaryTextEl}
+            {secondaryTextEl}
+        </>
+    )
+}
+
+function JotItemExpandedContent({
+    mainContentEl,
     itemIcon,
     itemIndicators,
     tagsEl,
@@ -105,8 +130,7 @@ function JotItemExpandedContent({
         <div className={styles.JotItemExpandedContent}>
             <div className={styles.JotItemExpandedContent__Row1}>
                 {itemIcon}
-                {primaryTextEl}
-                {secondaryTextEl}
+                {mainContentEl}
                 {itemIndicators}
             </div>
             <div className={styles.JotItemExpandedContent__Row2}>
@@ -147,26 +171,24 @@ export default memo(function JotItem({
     )
 
     const secondaryTextEl = secondaryText && (
-        <span className={styles.JotItem__SecondaryText}>{secondaryText}</span>
+        <span className={styles.JotItemTextContent__SecondaryText}>
+            {secondaryText}
+        </span>
     )
 
     const primaryTextEl = (
         <span
             className={[
-                styles.JotItem__PrimaryText,
-                item.isDone ? styles["JotItem__PrimaryText--TodoDone"] : "",
-                isPrimaryTextTitle ? styles["JotItem__PrimaryText--Title"] : "",
+                styles.JotItemTextContent__PrimaryText,
+                item.isDone
+                    ? styles["JotItemTextContent__PrimaryText--TodoDone"]
+                    : "",
+                isPrimaryTextTitle
+                    ? styles["JotItemTextContent__PrimaryText--Title"]
+                    : "",
             ].join(" ")}
         >
             {primaryText}
-        </span>
-    )
-
-    const copiedTextEl = (
-        <span
-            className={`${styles.JotItem__PrimaryText} ${styles.JotItem__Copied}`}
-        >
-            Copied
         </span>
     )
 
@@ -219,28 +241,16 @@ export default memo(function JotItem({
     )
 
     const isCopied = copiedItemIds.includes(item.id)
-    const itemBody = isCopied ? (
-        <div className={styles.JotItem__Body} key="copied">
-            <span
-                className={`${styles.JotItem__PrimaryText} ${styles.JotItem__Copied}`}
-            >
-                Copied
-            </span>
-        </div>
-    ) : (
-        <div className={styles.JotItem__Body}>
-            <span
-                className={[
-                    styles.JotItem__PrimaryText,
-                    item.isDone ? styles["JotItem__PrimaryText--TodoDone"] : "",
-                    isPrimaryTextTitle
-                        ? styles["JotItem__PrimaryText--Title"]
-                        : "",
-                ].join(" ")}
-            >
-                {primaryText}
-            </span>
-            {secondaryTextEl}
+    const itemBody = (
+        <div
+            className={styles.JotItem__Body}
+            key={isCopied ? "copied" : "normal"}
+        >
+            <JotItemTextContent
+                primaryTextEl={primaryTextEl}
+                secondaryTextEl={secondaryTextEl}
+                isCopied={isCopied}
+            />
         </div>
     )
 
@@ -292,6 +302,14 @@ export default memo(function JotItem({
               }
     const { as: Tag, ...rest } = wrapperProps
 
+    const mainContentEl = (
+        <JotItemTextContent
+            primaryTextEl={primaryTextEl}
+            secondaryTextEl={secondaryTextEl}
+            isCopied={isCopied}
+        />
+    )
+
     return (
         <ContextMenu.Root>
             <ContextMenu.Trigger asChild>
@@ -307,10 +325,7 @@ export default memo(function JotItem({
                 >
                     {isExpandedInfoMode ? (
                         <JotItemExpandedContent
-                            primaryTextEl={
-                                isCopied ? copiedTextEl : primaryTextEl
-                            }
-                            secondaryTextEl={isCopied ? null : secondaryTextEl}
+                            mainContentEl={mainContentEl}
                             itemIcon={itemIcon}
                             itemIndicators={itemIndicators}
                             tagsEl={tagsEl}

@@ -1,3 +1,5 @@
+@use "styles/global" as *;
+
 .Landing {
     display: flex;
     flex-direction: column;
@@ -39,7 +41,7 @@
     }
 
     &__Btn {
-        composes: Btn Btn--Pri from global;
+        @extend .Btn, .Btn--Pri;
         margin-top: 1.5rem;
 
         &:visited {
@@ -72,7 +74,7 @@
     }
 
     &__InlineAction {
-        composes: Btn Btn--Tert from global;
+        @extend .Btn, .Btn--Tert;
         display: inline;
         padding: 0;
         vertical-align: baseline;

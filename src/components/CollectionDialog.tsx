@@ -9,6 +9,7 @@ import { useCollectionsMutations } from "@/hooks/useCollectionsMutations"
 import { useDialogStore } from "@/store/dialogStore"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
 import { generateSlug } from "@/utils/helpers"
+import "./CollectionDialog.scss"
 import type { Collection, ItemType } from "@/types"
 import { ICON_PROPS_ACTION, SHORTCUT_SAVE_AND_CLOSE } from "@/config/constants"
 

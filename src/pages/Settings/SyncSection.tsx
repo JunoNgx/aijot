@@ -1,7 +1,9 @@
+import { IconRefresh } from "@tabler/icons-react"
 import { useGoogleAuth } from "@/hooks/useGoogleAuth"
 import { useSyncFn } from "@/hooks/useSync"
 import { useLocalSyncData } from "@/store/localSyncData"
 import { useLocalUserSettings } from "@/store/localUserSettings"
+import { ICON_PROPS_NORMAL } from "@/config/constants"
 import { formatFullDatetime } from "@/utils/helpers"
 import SettingsSection from "./SettingsSection"
 import "./SyncSection.scss"
@@ -59,6 +61,14 @@ export default function SyncSection() {
                             disabled={syncStatus === "syncing"}
                             onClick={() => sync()}
                         >
+                            <IconRefresh
+                                {...ICON_PROPS_NORMAL}
+                                className={
+                                    syncStatus === "syncing"
+                                        ? "SyncSection__BtnIcon SyncSection__BtnIcon--Spinning"
+                                        : "SyncSection__BtnIcon"
+                                }
+                            />
                             {syncStatus === "syncing"
                                 ? "Syncing..."
                                 : "Sync now"}

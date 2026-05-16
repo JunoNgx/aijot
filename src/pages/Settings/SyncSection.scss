@@ -32,6 +32,15 @@
         @extend .Btn, .Btn--Sec;
     }
 
+    &__BtnIcon {
+        flex-shrink: 0;
+        color: var(--colMain);
+
+        &--Spinning {
+            animation: spin 1s linear infinite;
+        }
+    }
+
     &__BtnConnect {
         @extend .Btn, .Btn--Pri;
     }

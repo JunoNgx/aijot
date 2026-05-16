@@ -10,6 +10,7 @@ import {
     IconFocus,
     IconTags,
 } from "@tabler/icons-react"
+import { useDropdownFocusCleanup } from "@/hooks/useDropdownFocusCleanup"
 import { useCommandPaletteStore } from "@/store/commandPaletteStore"
 import { useTransientUiState } from "@/store/transientUiState"
 import { useItemsMutations } from "@/hooks/useItemsMutations"
@@ -34,6 +35,8 @@ export default function MainInputExtendedMenu({
     inputRef,
     onSubmit,
 }: Props) {
+    const { triggerPointerDown, triggerKeyDown, contentCloseAutoFocus } =
+        useDropdownFocusCleanup()
     const visibleItems = useTransientUiState((s) => s.mainListVisibleItems)
     const isShowingJotItemExtraInfo = useTransientUiState(
         (s) => s.isShowingJotItemExtraInfo,
@@ -81,6 +84,8 @@ export default function MainInputExtendedMenu({
             <DropdownMenu.Trigger
                 className={styles.MainInputExtendedMenu__Trigger}
                 aria-label="Main input options"
+                onPointerDown={triggerPointerDown}
+                onKeyDown={triggerKeyDown}
             >
                 <IconChevronDown {...ICON_PROPS_ITEM_DROPDOWN} />
             </DropdownMenu.Trigger>
@@ -90,6 +95,7 @@ export default function MainInputExtendedMenu({
                     align="end"
                     alignOffset={-10}
                     sideOffset={16}
+                    onCloseAutoFocus={contentCloseAutoFocus}
                 >
                     <DropdownMenu.Label
                         className={styles.MainInputExtendedMenu__GroupLabel}

@@ -7,6 +7,7 @@ import {
     IconWritingSign,
     IconKeyboard,
 } from "@tabler/icons-react"
+import { useDropdownFocusCleanup } from "@/hooks/useDropdownFocusCleanup"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
 import { useNavigateRoutes } from "@/hooks/useNavigateRoutes"
 import { openShortcutDialog } from "@/utils/openShortcutDialog"
@@ -30,6 +31,8 @@ export default function UserDropdown() {
         navigateToHelp,
     } = useNavigateRoutes()
 
+    const { triggerPointerDown, triggerKeyDown, contentCloseAutoFocus } =
+        useDropdownFocusCleanup()
     const isJotRoute = useMatch(ROUTE_JOT)
     const isJotCollectionRoute = useMatch(ROUTE_COLLECTION)
     const shouldShowJotNav = !isJotRoute && !isJotCollectionRoute
@@ -37,7 +40,11 @@ export default function UserDropdown() {
     return (
         <div className={styles.UserDropdown}>
             <DropdownMenu.Root>
-                <DropdownMenu.Trigger className={styles.UserDropdown__Trigger}>
+                <DropdownMenu.Trigger
+                    className={styles.UserDropdown__Trigger}
+                    onPointerDown={triggerPointerDown}
+                    onKeyDown={triggerKeyDown}
+                >
                     <span className={styles.UserDropdown__TriggerLabel}>
                         {userDisplayName}
                     </span>
@@ -51,6 +58,7 @@ export default function UserDropdown() {
                         className={styles.UserDropdown__Content}
                         align="end"
                         sideOffset={DROPDOWN_OFFSET}
+                        onCloseAutoFocus={contentCloseAutoFocus}
                     >
                         {shouldShowJotNav && (
                             <>

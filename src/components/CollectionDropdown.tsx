@@ -6,6 +6,7 @@ import {
     IconPencil,
     IconPlus,
 } from "@tabler/icons-react"
+import { useDropdownFocusCleanup } from "@/hooks/useDropdownFocusCleanup"
 import { useCollectionsQuery } from "@/hooks/useCollectionsQuery"
 import { useNavigateRoutes } from "@/hooks/useNavigateRoutes"
 import { useCurrentCollection } from "@/hooks/useCurrentCollection"
@@ -24,6 +25,8 @@ const HOTKEYS = Array.from(
 )
 
 export default function CollectionDropdown() {
+    const { triggerPointerDown, triggerKeyDown, contentCloseAutoFocus } =
+        useDropdownFocusCleanup()
     const { collectionsQuery } = useCollectionsQuery()
     const { navigateToCollection } = useNavigateRoutes()
     const { currCollection, currSlug } = useCurrentCollection()
@@ -91,6 +94,8 @@ export default function CollectionDropdown() {
             <DropdownMenu.Root>
                 <DropdownMenu.Trigger
                     className={styles.CollectionDropdown__Trigger}
+                    onPointerDown={triggerPointerDown}
+                    onKeyDown={triggerKeyDown}
                 >
                     {trigger}
                     <IconChevronDown
@@ -103,6 +108,7 @@ export default function CollectionDropdown() {
                         className={styles.CollectionDropdown__Content}
                         align="start"
                         sideOffset={DROPDOWN_OFFSET}
+                        onCloseAutoFocus={contentCloseAutoFocus}
                     >
                         {menuItems}
                         <DropdownMenu.Separator

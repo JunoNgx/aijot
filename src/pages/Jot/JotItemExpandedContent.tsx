@@ -5,6 +5,21 @@ import { useLocalUserSettings } from "@/store/localUserSettings"
 import type { Item } from "@/types"
 import "./JotItemExpandedContent.scss"
 
+function computePrimaryRowClasses(
+    item: Item,
+    shouldUseContentAsPrimary: boolean,
+): string {
+    if (shouldUseContentAsPrimary) {
+        return "JotItemExpandedContent__SecondaryText"
+    }
+
+    if (item.isDone && item.type === "todo") {
+        return "JotItemExpandedContent__PrimaryText JotItemExpandedContent__PrimaryText--TodoDone"
+    }
+
+    return "JotItemExpandedContent__PrimaryText"
+}
+
 interface Props {
     item: Item
     isCopied: boolean
@@ -33,24 +48,17 @@ export function JotItemExpandedContent({
         JOT_ITEM_EXPANDED_TEXT_DISPLAY_LIMIT,
     )
 
-    const isNonTodoTitleLess = item.type !== "todo" && !item.title
-    const primaryRowText = isNonTodoTitleLess
+    const shouldUseContentAsPrimary = item.type !== "todo" && !item.title
+    const primaryRowText = shouldUseContentAsPrimary
         ? expandedSecondaryText
         : expandedPrimaryText
     const shouldShowExtraContentRow =
-        !isNonTodoTitleLess && expandedSecondaryText !== null
+        !shouldUseContentAsPrimary && expandedSecondaryText !== null
 
-    const primaryRowClassName = [
-        isNonTodoTitleLess
-            ? "JotItemExpandedContent__SecondaryText"
-            : "JotItemExpandedContent__PrimaryText",
-        !isNonTodoTitleLess &&
-            item.isDone &&
-            item.type === "todo" &&
-            "JotItemExpandedContent__PrimaryText--TodoDone",
-    ]
-        .filter(Boolean)
-        .join(" ")
+    const primaryRowClassName = computePrimaryRowClasses(
+        item,
+        shouldUseContentAsPrimary,
+    )
 
     const primaryRowTextEl = isCopied ? (
         <span className="JotItemExpandedContent__CopiedText">Copied</span>

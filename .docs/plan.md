@@ -623,10 +623,10 @@ Replace CSS Modules (`.module.scss` + `styles` object imports + `composes`) with
 
 ### Commit sequence
 
-- [ ] Phase 1 — `src/components/` (13 scss + 13 tsx = 26 files)
-- [ ] Phase 2 — `src/pages/Jot/` (10 scss + 9 tsx = 19 files)
-- [ ] Phase 3 — `src/pages/Settings/` (4 scss + 4 tsx = 8 files)
-- [ ] Phase 4 — `src/pages/Collections/` (1 scss + 1 tsx = 2 files)
-- [ ] Phase 5 — `src/pages/Landing/` (1 scss + 1 tsx = 2 files)
-- [ ] Phase 6 — `src/pages/{Help,Privacy,Terms}/` (3 scss + 3 tsx = 6 files)
-- [ ] Phase 7 — `src/` (App) (1 scss + 1 tsx = 2 files)
+- [x] Phase 1 — `src/components/` (13 scss + 13 tsx = 26 files)
+- [x] Phase 2 — `src/pages/Jot/` (10 scss + 9 tsx = 19 files)
+- [x] Phase 3 — `src/pages/Settings/` (4 scss + 4 tsx = 8 files)
+- [x] Phase 4 — `src/pages/Collections/` (1 scss + 1 tsx = 2 files)
+- [x] Phase 5 — `src/pages/Landing/` (1 scss + 1 tsx = 2 files)
+- [x] Phase 6 — `src/pages/{Help,Privacy,Terms}/` (3 scss + 3 tsx = 6 files)
+- [x] Phase 7 — `src/` (App) (1 scss + 1 tsx = 2 files)

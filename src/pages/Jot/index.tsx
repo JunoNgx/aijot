@@ -51,6 +51,12 @@ function filterByCollection(items: Item[], collection: Collection): Item[] {
     )
 }
 
+function doesItemMatchAllSearchTags(item: Item, searchTags: string[]): boolean {
+    return searchTags.every((searchTag) =>
+        item.tags.some((itemTag) => itemTag.includes(searchTag)),
+    )
+}
+
 function filterItems(items: Item[], searchData: MainInputSearchData): Item[] {
     let result = items
 
@@ -64,7 +70,7 @@ function filterItems(items: Item[], searchData: MainInputSearchData): Item[] {
 
     if (searchData.tags.length > 0) {
         result = result.filter((item) =>
-            searchData.tags.every((tag) => item.tags.includes(tag)),
+            doesItemMatchAllSearchTags(item, searchData.tags),
         )
     }
 

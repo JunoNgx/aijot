@@ -140,23 +140,9 @@ export default memo(function JotItem({
         </span>
     )
 
-    const tagsEl = (
-        <span className="JotItemExpandedContent__TagList">
-            {item.tags.length > 0 ? item.tags.join(" ") : "[untagged]"}
-        </span>
-    )
-
     const compactDatetimeEl = (
-        <span className="JotItem__Datetime"
-            title={detailedDatetime}
-        >
+        <span className="JotItem__Datetime" title={detailedDatetime}>
             {datetime}
-        </span>
-    )
-
-    const expandedDatetimeEl = (
-        <span className="JotItemExpandedContent__Datetime">
-            {detailedDatetime}
         </span>
     )
 
@@ -200,11 +186,10 @@ export default memo(function JotItem({
                 >
                     {isExpandedInfoMode ? (
                         <JotItemExpandedContent
+                            item={item}
                             mainContentEl={textContentEl}
                             itemIcon={itemIcon}
                             itemIndicators={itemIndicators}
-                            tagsEl={tagsEl}
-                            expandedDatetimeEl={expandedDatetimeEl}
                         />
                     ) : (
                         compactContent

@@ -188,7 +188,9 @@ export default memo(function JotItem({
                     {isExpandedInfoMode ? (
                         <JotItemExpandedContent
                             item={item}
-                            mainContentEl={textContentEl}
+                            primaryText={primaryText}
+                            secondaryText={secondaryText}
+                            isCopied={isCopied}
                             itemIcon={itemIcon}
                             itemIndicators={itemIndicators}
                         />

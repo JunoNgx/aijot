@@ -1,3 +1,5 @@
+@use "styles/vars" as *;
+
 @mixin StandardBorder {
     border: var(--lineWidth) solid var(--colText);
 }
@@ -11,4 +13,50 @@
 @mixin GlassBlur {
     background-color: color-mix(in srgb, var(--colBg), transparent 90%);
     backdrop-filter: blur(0.75rem);
+}
+
+@mixin PrimaryTextStyle {
+    @include Ellipsified;
+    font-size: var(--fontSizeMd);
+    color: var(--colText);
+
+    &--TodoDone {
+        text-decoration: line-through;
+        color: var(--colTextAlt);
+    }
+
+    @media (width <= $breakpointMobile) {
+        font-size: var(--fontSizeSm);
+    }
+}
+
+@mixin SecondaryTextStyle {
+    @include Ellipsified;
+    font-size: var(--fontSizeSm);
+    color: var(--colTextAlt);
+
+    @media (width <= $breakpointMobile) {
+        font-size: var(--fontSizeXs);
+    }
+}
+
+@mixin CopiedTextStyle {
+    color: var(--colMain);
+    font-size: var(--fontSizeMd);
+    animation: copiedFadeIn var(--transTime) ease-in-out forwards;
+
+    @media (width <= $breakpointMobile) {
+        font-size: var(--fontSizeSm);
+    }
+
+    @keyframes copiedFadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
 }

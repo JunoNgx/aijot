@@ -22,47 +22,15 @@
         }
     }
 
-    &__PrimaryText,
-    &__SecondaryText {
-        @include Ellipsified;
-    }
-
     &__PrimaryText {
-        font-size: var(--fontSizeMd);
-        color: var(--colText);
-
-        &--TodoDone {
-            text-decoration: line-through;
-            color: var(--colTextAlt);
-        }
-
-        @media (width <= $breakpointMobile) {
-            font-size: var(--fontSizeSm);
-        }
+        @include PrimaryTextStyle;
     }
 
     &__SecondaryText {
-        font-size: var(--fontSizeSm);
-        color: var(--colTextAlt);
-
-        @media (width <= $breakpointMobile) {
-            font-size: var(--fontSizeXs);
-        }
+        @include SecondaryTextStyle;
     }
 
     &__CopiedText {
-        color: var(--colMain);
-        animation: copiedFadeIn var(--transTime) ease-in-out forwards;
-
-        @keyframes copiedFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+        @include CopiedTextStyle;
     }
 }

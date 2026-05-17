@@ -102,7 +102,8 @@ export default memo(function JotItem({
             {item.shouldCopyOnClick && (
                 <span
                     className="JotItem__StatusIcon"
-                    aria-label="Auto-copy on click"
+                    aria-label="Item is set to copy content on click"
+                    title="Item is set to copy content on click"
                 >
                     <IconClipboard {...ICON_PROPS_ITEM_STATUS} />
                 </span>
@@ -110,7 +111,8 @@ export default memo(function JotItem({
             {item.isPinned && (
                 <span
                     className="JotItem__StatusIcon JotItem__StatusIcon--Pin"
-                    aria-label="Pinned"
+                    aria-label="Item is pinned"
+                    title="Item is pinned"
                 >
                     <IconPinFilled {...ICON_PROPS_ITEM_STATUS} />
                 </span>

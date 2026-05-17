@@ -1,3 +1,6 @@
+@use "styles/mixins" as *;
+@use "styles/vars" as *;
+
 .JotItemExpandedContent {
     display: flex;
     flex-direction: column;
@@ -13,13 +16,27 @@
 
     &__Row2 {
         display: flex;
+        justify-content: space-between;
         align-items: center;
         gap: 0.25rem;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         width: 100%;
+        min-width: 0;
     }
 
-    &__Row2Right {
-        margin-left: auto;
+    &__TagList {
+        @include Ellipsified;
+        font-size: var(--fontSizeSm);
+        color: var(--colSub);
+
+        @media (width <= $breakpointMobile) {
+            font-size: var(--fontSizeSm);
+        }
+    }
+
+    &__Datetime {
+        flex-shrink: 0;
+        font-size: var(--fontSizeSm);
+        color: var(--colTextAlt);
     }
 }

@@ -25,9 +25,7 @@ export function JotItemExpandedContent({
             </div>
             <div className="JotItemExpandedContent__Row2">
                 {tagsEl}
-                <span className="JotItemExpandedContent__Row2Right">
-                    {expandedDatetimeEl}
-                </span>
+                {expandedDatetimeEl}
             </div>
         </div>
     )

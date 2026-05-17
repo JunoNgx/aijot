@@ -110,7 +110,7 @@ export default memo(function JotItem({
             )}
             {item.isPinned && (
                 <span
-                    className="JotItem__StatusIcon JotItem__StatusIcon--Pin"
+                    className="JotItem__StatusIcon"
                     aria-label="Item is pinned"
                     title="Item is pinned"
                 >
@@ -141,7 +141,7 @@ export default memo(function JotItem({
     )
 
     const tagsEl = (
-        <span className="JotItem__Tags">
+        <span className="JotItemExpandedContent__TagList">
             {item.tags.length > 0 ? item.tags.join(" ") : "[untagged]"}
         </span>
     )
@@ -155,7 +155,7 @@ export default memo(function JotItem({
     )
 
     const expandedDatetimeEl = (
-        <span className="JotItem__Datetime JotItem__Datetime--ExpandedMode">
+        <span className="JotItemExpandedContent__Datetime">
             {detailedDatetime}
         </span>
     )

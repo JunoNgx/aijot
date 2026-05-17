@@ -51,20 +51,12 @@
         display: grid;
         place-items: center;
         color: var(--colSub);
-
-        &--Pin {
-            color: var(--colMain);
-        }
     }
 
     &__Datetime {
         font-size: var(--fontSizeMd);
         color: var(--colText);
         flex-shrink: 0;
-
-        &--ExpandedMode {
-            font-size: var(--fontSizeSm);
-        }
 
         @media (width <= $breakpointMobile) {
             font-size: var(--fontSizeSm);
@@ -79,22 +71,8 @@
         border-left: var(--itemBorderWidth) solid var(--colTextAlt);
         border-bottom: var(--itemBorderWidth) solid var(--colTextAlt);
 
-        .JotItem__Datetime {
-            color: var(--colTextAlt);
-        }
-
         &.JotItem--Selected {
             border: var(--itemBorderWidth) solid var(--colMain);
-        }
-    }
-
-    &__Tags {
-        @include Ellipsified;
-        font-size: var(--fontSizeSm);
-        color: var(--colSub);
-
-        @media (width <= $breakpointMobile) {
-            font-size: var(--fontSizeSm);
         }
     }
 }

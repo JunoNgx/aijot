@@ -8,8 +8,7 @@ import {
 } from "@/utils/helpers"
 import {
     ICON_PROPS_ITEM_STATUS,
-    JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
-    JOT_ITEM_SECONDARY_TEXT_DISPLAY_LIMIT,
+    JOT_ITEM_COMPACT_TEXT_DISPLAY_LIMIT,
 } from "@/config/constants"
 import { useLocalUserSettings } from "@/store/localUserSettings"
 import { useTransientUiState } from "@/store/transientUiState"
@@ -29,7 +28,7 @@ function computeItemContent(item: Item): {
         return {
             primaryText: truncateText(
                 item.content,
-                JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
+                JOT_ITEM_COMPACT_TEXT_DISPLAY_LIMIT,
             ),
             secondaryText: null,
         }
@@ -38,11 +37,11 @@ function computeItemContent(item: Item): {
     return {
         primaryText: truncateText(
             item.title,
-            JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
+            JOT_ITEM_COMPACT_TEXT_DISPLAY_LIMIT,
         ),
         secondaryText: truncateText(
             item.content,
-            JOT_ITEM_SECONDARY_TEXT_DISPLAY_LIMIT,
+            JOT_ITEM_COMPACT_TEXT_DISPLAY_LIMIT,
         ),
     }
 }

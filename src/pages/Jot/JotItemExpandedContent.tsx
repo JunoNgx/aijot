@@ -40,38 +40,45 @@ export function JotItemExpandedContent({
     const shouldShowRow2Secondary =
         !isNonTodoTitleLess && expandedSecondaryText !== null
 
-    const row1ClassName = isNonTodoTitleLess
-        ? "JotItemExpandedContent__SecondaryText"
-        : `JotItemExpandedContent__PrimaryText${item.isDone && item.type === "todo" ? " JotItemExpandedContent__PrimaryText--TodoDone" : ""}`
+    const row1ClassName = [
+        isNonTodoTitleLess
+            ? "JotItemExpandedContent__SecondaryText"
+            : "JotItemExpandedContent__PrimaryText",
+        !isNonTodoTitleLess &&
+            item.isDone &&
+            item.type === "todo" &&
+            "JotItemExpandedContent__PrimaryText--TodoDone",
+    ]
+        .filter(Boolean)
+        .join(" ")
+
+    const row1TextEl = isCopied ? (
+        <span className="JotItemExpandedContent__CopiedText">Copied</span>
+    ) : (
+        <span className={row1ClassName} title={row1Text ?? undefined}>
+            {row1Text}
+        </span>
+    )
+
+    const row2TextEl = shouldShowRow2Secondary && (
+        <div className="JotItemExpandedContent__Row2">
+            <span
+                className="JotItemExpandedContent__SecondaryText"
+                title={expandedSecondaryText}
+            >
+                {expandedSecondaryText}
+            </span>
+        </div>
+    )
 
     return (
         <div className="JotItemExpandedContent">
             <div className="JotItemExpandedContent__Row1">
                 {itemIcon}
-                {isCopied ? (
-                    <span className="JotItemExpandedContent__CopiedText">
-                        Copied
-                    </span>
-                ) : (
-                    <span
-                        className={row1ClassName}
-                        title={row1Text ?? undefined}
-                    >
-                        {row1Text}
-                    </span>
-                )}
+                {row1TextEl}
                 {itemIndicators}
             </div>
-            {shouldShowRow2Secondary && (
-                <div className="JotItemExpandedContent__Row2">
-                    <span
-                        className="JotItemExpandedContent__SecondaryText"
-                        title={expandedSecondaryText}
-                    >
-                        {expandedSecondaryText}
-                    </span>
-                </div>
-            )}
+            {row2TextEl}
             <div className="JotItemExpandedContent__Row3">
                 <span className="JotItemExpandedContent__TagList">
                     {item.tags.length > 0 ? item.tags.join(" ") : "[untagged]"}

@@ -5,13 +5,11 @@ export function JotItemTextContent({
     secondaryText,
     isCopied,
     isDone,
-    isPrimaryTextTitle,
 }: {
     primaryText: string
     secondaryText: string | null
     isCopied: boolean
     isDone?: boolean
-    isPrimaryTextTitle: boolean
 }) {
     const secondaryTextEl = secondaryText && (
         <span
@@ -24,7 +22,7 @@ export function JotItemTextContent({
 
     const primaryTextEl = primaryText && (
         <span
-            className={`JotItemTextContent__PrimaryText${isDone ? " JotItemTextContent__PrimaryText--TodoDone" : ""}${isPrimaryTextTitle ? " JotItemTextContent__PrimaryText--Title" : ""}`}
+            className={`JotItemTextContent__PrimaryText${isDone ? " JotItemTextContent__PrimaryText--TodoDone" : ""}`}
             title={primaryText}
         >
             {primaryText}

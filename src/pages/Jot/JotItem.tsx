@@ -24,7 +24,6 @@ import "./JotItem.scss"
 function computeItemContent(item: Item): {
     primaryText: string
     secondaryText: string | null
-    hasTitle: boolean
 } {
     const hasTitle = item.type !== "todo" && !!item.title
     if (hasTitle) {
@@ -37,7 +36,6 @@ function computeItemContent(item: Item): {
                 item.content,
                 JOT_ITEM_SECONDARY_TEXT_DISPLAY_LIMIT,
             ),
-            hasTitle,
         }
     }
 
@@ -49,7 +47,6 @@ function computeItemContent(item: Item): {
                 item.content,
                 JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
             ),
-            hasTitle,
         }
     }
 
@@ -59,7 +56,6 @@ function computeItemContent(item: Item): {
             JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
         ),
         secondaryText: null,
-        hasTitle,
     }
 }
 
@@ -103,7 +99,7 @@ export default memo(function JotItem({
     const fetchingLinkMetaItemIds = useTransientUiState(
         (s) => s.fetchingLinkMetaItemIds,
     )
-    const { primaryText, secondaryText, hasTitle } = computeItemContent(item)
+    const { primaryText, secondaryText } = computeItemContent(item)
 
     const datetime = formatDatetime(item.jottedAt, is24HourClock)
     const detailedDatetime = formatDetailedDatetime(
@@ -142,7 +138,6 @@ export default memo(function JotItem({
             secondaryText={secondaryText}
             isCopied={isCopied}
             isDone={item.isDone}
-            isPrimaryTextTitle={hasTitle}
         />
     )
 

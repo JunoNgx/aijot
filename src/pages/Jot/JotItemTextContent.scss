@@ -2,8 +2,9 @@
 @use "styles/vars" as *;
 
 .JotItemTextContent {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: minmax(0, max-content) minmax(0, auto);
+    align-items: baseline;
     min-width: 0;
     gap: 0.5rem;
     flex-grow: 10;
@@ -28,7 +29,6 @@
     &__PrimaryText {
         font-size: var(--fontSizeMd);
         color: var(--colText);
-        flex-shrink: 1;
 
         &--TodoDone {
             text-decoration: line-through;
@@ -43,7 +43,6 @@
     &__SecondaryText {
         font-size: var(--fontSizeSm);
         color: var(--colTextAlt);
-        flex-shrink: 20;
 
         @media (width <= $breakpointMobile) {
             font-size: var(--fontSizeXs);

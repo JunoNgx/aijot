@@ -97,7 +97,7 @@ export default memo(function JotItem({
     const rootClassName = `JotItem${isSelected ? " JotItem--Selected" : ""}${isExpandedInfoMode ? " JotItem--Expanded" : ""}`
 
     const hasStatusIndicator = item.shouldCopyOnClick || item.isPinned
-    const itemIndicators = hasStatusIndicator && (
+    const itemStatusIndicators = hasStatusIndicator && (
         <div className="JotItem__StatusWrapper">
             {item.shouldCopyOnClick && (
                 <span
@@ -150,7 +150,7 @@ export default memo(function JotItem({
         <>
             {itemIcon}
             {textContentEl}
-            {itemIndicators}
+            {itemStatusIndicators}
             {compactDatetimeEl}
         </>
     )
@@ -189,7 +189,7 @@ export default memo(function JotItem({
                             item={item}
                             isCopied={isCopied}
                             itemIcon={itemIcon}
-                            itemIndicators={itemIndicators}
+                            itemStatusIndicators={itemStatusIndicators}
                         />
                     ) : (
                         compactContent

@@ -24,14 +24,14 @@ interface Props {
     item: Item
     isCopied: boolean
     itemIcon: ReactNode
-    itemIndicators: ReactNode
+    itemStatusIndicators: ReactNode
 }
 
 export function JotItemExpandedContent({
     item,
     isCopied,
     itemIcon,
-    itemIndicators,
+    itemStatusIndicators,
 }: Props) {
     const is24HourClock = useLocalUserSettings((s) => s.is24HourClock)
     const detailedDatetime = formatDetailedDatetime(
@@ -87,7 +87,7 @@ export function JotItemExpandedContent({
             <div className="JotItemExpandedContent__PrimaryRow">
                 {itemIcon}
                 {primaryRowTextEl}
-                {itemIndicators}
+                {itemStatusIndicators}
             </div>
             {extraContentRowTextEl}
             <div className="JotItemExpandedContent__InfoRow">

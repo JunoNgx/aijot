@@ -163,7 +163,8 @@ export function pluralise(
     return count === 1 ? singular : `${singular}s`
 }
 
-export function truncateText(text: string, maxLength: number): string {
-    if (!text || text.length <= maxLength) return text
+export function truncateText(text: string | undefined, maxLength: number): string {
+    if (!text) return ""
+    if (text.length <= maxLength) return text
     return text.slice(0, maxLength).trim() + "..."
 }

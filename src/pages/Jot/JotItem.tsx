@@ -25,37 +25,25 @@ function computeItemContent(item: Item): {
     primaryText: string
     secondaryText: string | null
 } {
-    const hasTitle = item.type !== "todo" && !!item.title
-    if (hasTitle) {
+    if (item.type === "todo") {
         return {
             primaryText: truncateText(
-                item.title!,
-                JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
-            ),
-            secondaryText: truncateText(
-                item.content,
-                JOT_ITEM_SECONDARY_TEXT_DISPLAY_LIMIT,
-            ),
-        }
-    }
-
-    const isTitlelessItem = item.type === "text" || item.type === "link"
-    if (isTitlelessItem) {
-        return {
-            primaryText: "",
-            secondaryText: truncateText(
                 item.content,
                 JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
             ),
+            secondaryText: null,
         }
     }
 
     return {
         primaryText: truncateText(
-            item.content,
+            item.title,
             JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
         ),
-        secondaryText: null,
+        secondaryText: truncateText(
+            item.content,
+            JOT_ITEM_SECONDARY_TEXT_DISPLAY_LIMIT,
+        ),
     }
 }
 

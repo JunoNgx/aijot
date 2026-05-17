@@ -34,13 +34,13 @@ export function JotItemExpandedContent({
     )
 
     const isNonTodoTitleLess = item.type !== "todo" && !item.title
-    const row1Text = isNonTodoTitleLess
+    const primaryRowText = isNonTodoTitleLess
         ? expandedSecondaryText
         : expandedPrimaryText
-    const shouldShowRow2Secondary =
+    const shouldShowExtraContentRow =
         !isNonTodoTitleLess && expandedSecondaryText !== null
 
-    const row1ClassName = [
+    const primaryRowClassName = [
         isNonTodoTitleLess
             ? "JotItemExpandedContent__SecondaryText"
             : "JotItemExpandedContent__PrimaryText",
@@ -52,16 +52,19 @@ export function JotItemExpandedContent({
         .filter(Boolean)
         .join(" ")
 
-    const row1TextEl = isCopied ? (
+    const primaryRowTextEl = isCopied ? (
         <span className="JotItemExpandedContent__CopiedText">Copied</span>
     ) : (
-        <span className={row1ClassName} title={row1Text ?? undefined}>
-            {row1Text}
+        <span
+            className={primaryRowClassName}
+            title={primaryRowText ?? undefined}
+        >
+            {primaryRowText}
         </span>
     )
 
-    const row2TextEl = shouldShowRow2Secondary && (
-        <div className="JotItemExpandedContent__Row2">
+    const extraContentRowTextEl = shouldShowExtraContentRow && (
+        <div className="JotItemExpandedContent__ExtraContentRow">
             <span
                 className="JotItemExpandedContent__SecondaryText"
                 title={expandedSecondaryText}
@@ -73,13 +76,13 @@ export function JotItemExpandedContent({
 
     return (
         <div className="JotItemExpandedContent">
-            <div className="JotItemExpandedContent__Row1">
+            <div className="JotItemExpandedContent__PrimaryRow">
                 {itemIcon}
-                {row1TextEl}
+                {primaryRowTextEl}
                 {itemIndicators}
             </div>
-            {row2TextEl}
-            <div className="JotItemExpandedContent__Row3">
+            {extraContentRowTextEl}
+            <div className="JotItemExpandedContent__InfoRow">
                 <span className="JotItemExpandedContent__TagList">
                     {item.tags.length > 0 ? item.tags.join(" ") : "[untagged]"}
                 </span>

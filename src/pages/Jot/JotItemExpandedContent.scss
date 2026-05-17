@@ -7,19 +7,19 @@
     gap: 0.25rem;
     width: 100%;
 
-    &__Row1 {
+    &__PrimaryRow {
         display: flex;
         align-items: center;
         gap: 0.5rem;
         width: 100%;
     }
 
-    &__Row2 {
+    &__ExtraContentRow {
         width: 100%;
         text-align: left;
     }
 
-    &__Row3 {
+    &__InfoRow {
         display: flex;
         justify-content: space-between;
         align-items: center;

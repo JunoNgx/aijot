@@ -14,7 +14,10 @@ export function JotItemTextContent({
     isPrimaryTextTitle: boolean
 }) {
     const secondaryTextEl = secondaryText && (
-        <span className="JotItemTextContent__SecondaryText">
+        <span
+            className="JotItemTextContent__SecondaryText"
+            title={secondaryText}
+        >
             {secondaryText}
         </span>
     )
@@ -22,6 +25,7 @@ export function JotItemTextContent({
     const primaryTextEl = (
         <span
             className={`JotItemTextContent__PrimaryText${isDone ? " JotItemTextContent__PrimaryText--TodoDone" : ""}${isPrimaryTextTitle ? " JotItemTextContent__PrimaryText--Title" : ""}`}
+            title={primaryText}
         >
             {primaryText}
         </span>

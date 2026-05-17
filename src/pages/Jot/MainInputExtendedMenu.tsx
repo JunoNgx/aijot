@@ -14,6 +14,7 @@ import { useDropdownFocusCleanup } from "@/hooks/useDropdownFocusCleanup"
 import { useCommandPaletteStore } from "@/store/commandPaletteStore"
 import { useTransientUiState } from "@/store/transientUiState"
 import { useItemsMutations } from "@/hooks/useItemsMutations"
+import { useItemActions } from "@/hooks/useItemActions"
 import { openMassTagEditDialog } from "@/utils/openMassTagEditDialog"
 import {
     SYNTAX_PREFIX_TODO,
@@ -26,14 +27,14 @@ interface Props {
     inputValue: string
     setInputValue: (val: string) => void
     inputRef: React.RefObject<HTMLInputElement | null>
-    onSubmit: () => void
+    currCollectionTags: string[]
 }
 
 export default function MainInputExtendedMenu({
     inputValue,
     setInputValue,
     inputRef,
-    onSubmit,
+    currCollectionTags,
 }: Props) {
     const { triggerPointerDown, triggerKeyDown, contentCloseAutoFocus } =
         useDropdownFocusCleanup()
@@ -42,6 +43,7 @@ export default function MainInputExtendedMenu({
         (s) => s.isShowingJotItemExtraInfo,
     )
     const { massTagEditMutation } = useItemsMutations()
+    const { createItem } = useItemActions()
     const prependSyntax = (syntax: string, shouldAddSpace = false) => {
         const newValue = shouldAddSpace
             ? `${syntax} ${inputValue}`
@@ -58,9 +60,12 @@ export default function MainInputExtendedMenu({
 
         try {
             const clipboardContent = await navigator.clipboard.readText()
-            onSubmit()
-            setInputValue(clipboardContent)
-            inputRef.current?.focus()
+            if (!clipboardContent.trim()) {
+                toast.error("Clipboard is empty")
+                return
+            }
+            // Quirk: this bypasses search mode guards in main input's submit
+            createItem(clipboardContent, currCollectionTags)
         } catch {
             toast.error("Failed to read clipboard. Check permissions.")
         }

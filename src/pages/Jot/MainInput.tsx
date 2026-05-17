@@ -188,7 +188,7 @@ export default function MainInput({
                 inputValue={inputValue}
                 setInputValue={setInputValue}
                 inputRef={inputRef}
-                onSubmit={handleSubmit}
+                currCollectionTags={currCollectionTags}
             />
         </div>
     )

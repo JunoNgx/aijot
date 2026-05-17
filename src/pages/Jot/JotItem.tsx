@@ -39,8 +39,8 @@ function computeItemContent(item: Item): {
         }
     }
 
-    const isTitlelessTextNote = item.type === "text"
-    if (isTitlelessTextNote) {
+    const isTitlelessItem = item.type === "text" || item.type === "link"
+    if (isTitlelessItem) {
         return {
             primaryText: "",
             secondaryText: truncateText(

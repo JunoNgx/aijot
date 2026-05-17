@@ -75,6 +75,7 @@ export const DROPDOWN_OFFSET = 10
 
 export const JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT = 80
 export const JOT_ITEM_SECONDARY_TEXT_DISPLAY_LIMIT = 80
+export const JOT_ITEM_EXPANDED_TEXT_DISPLAY_LIMIT = 120
 
 // ============================================================
 // Routes

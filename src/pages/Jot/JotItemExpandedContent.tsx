@@ -1,13 +1,12 @@
 import { type ReactNode } from "react"
-import { formatDetailedDatetime } from "@/utils/helpers"
+import { formatDetailedDatetime, truncateText } from "@/utils/helpers"
+import { JOT_ITEM_EXPANDED_TEXT_DISPLAY_LIMIT } from "@/config/constants"
 import { useLocalUserSettings } from "@/store/localUserSettings"
 import type { Item } from "@/types"
 import "./JotItemExpandedContent.scss"
 
 interface Props {
     item: Item
-    primaryText: string
-    secondaryText: string | null
     isCopied: boolean
     itemIcon: ReactNode
     itemIndicators: ReactNode
@@ -15,8 +14,6 @@ interface Props {
 
 export function JotItemExpandedContent({
     item,
-    primaryText,
-    secondaryText,
     isCopied,
     itemIcon,
     itemIndicators,
@@ -27,10 +24,21 @@ export function JotItemExpandedContent({
         is24HourClock,
     )
 
+    const expandedPrimaryText = truncateText(
+        item.type === "todo" ? item.content : item.title,
+        JOT_ITEM_EXPANDED_TEXT_DISPLAY_LIMIT,
+    )
+    const expandedSecondaryText = truncateText(
+        item.content,
+        JOT_ITEM_EXPANDED_TEXT_DISPLAY_LIMIT,
+    )
+
     const isNonTodoTitleLess = item.type !== "todo" && !item.title
-    const row1Text = isNonTodoTitleLess ? secondaryText : primaryText
+    const row1Text = isNonTodoTitleLess
+        ? expandedSecondaryText
+        : expandedPrimaryText
     const shouldShowRow2Secondary =
-        !isNonTodoTitleLess && secondaryText !== null
+        !isNonTodoTitleLess && expandedSecondaryText !== null
 
     const row1ClassName = isNonTodoTitleLess
         ? "JotItemExpandedContent__SecondaryText"
@@ -58,9 +66,9 @@ export function JotItemExpandedContent({
                 <div className="JotItemExpandedContent__Row2">
                     <span
                         className="JotItemExpandedContent__SecondaryText"
-                        title={secondaryText}
+                        title={expandedSecondaryText}
                     >
-                        {secondaryText}
+                        {expandedSecondaryText}
                     </span>
                 </div>
             )}

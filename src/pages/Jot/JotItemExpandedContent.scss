@@ -31,10 +31,12 @@
 
     &__PrimaryText {
         @include PrimaryTextStyle;
+        @include ContentSlideUp;
     }
 
     &__SecondaryText {
         @include SecondaryTextStyle;
+        @include ContentSlideUp;
         display: block;
     }
 

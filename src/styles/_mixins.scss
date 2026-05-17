@@ -60,3 +60,18 @@
         }
     }
 }
+
+@mixin ContentSlideUp {
+    animation: bodySlideUp var(--transTime) ease-in-out forwards;
+
+    @keyframes bodySlideUp {
+        from {
+            opacity: 0;
+            transform: translateY(0.5rem);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}

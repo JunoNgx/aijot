@@ -22,7 +22,7 @@ export function JotItemTextContent({
         </span>
     )
 
-    const primaryTextEl = (
+    const primaryTextEl = primaryText && (
         <span
             className={`JotItemTextContent__PrimaryText${isDone ? " JotItemTextContent__PrimaryText--TodoDone" : ""}${isPrimaryTextTitle ? " JotItemTextContent__PrimaryText--Title" : ""}`}
             title={primaryText}

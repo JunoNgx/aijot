@@ -21,6 +21,48 @@ import JotItemContextMenu from "./JotItemContextMenu"
 import type { Item } from "@/types"
 import "./JotItem.scss"
 
+function computeItemContent(item: Item): {
+    primaryText: string
+    secondaryText: string | null
+    hasTitle: boolean
+} {
+    const hasTitle = item.type !== "todo" && !!item.title
+    if (hasTitle) {
+        return {
+            primaryText: truncateText(
+                item.title!,
+                JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
+            ),
+            secondaryText: truncateText(
+                item.content,
+                JOT_ITEM_SECONDARY_TEXT_DISPLAY_LIMIT,
+            ),
+            hasTitle,
+        }
+    }
+
+    const isTitlelessTextNote = item.type === "text"
+    if (isTitlelessTextNote) {
+        return {
+            primaryText: "",
+            secondaryText: truncateText(
+                item.content,
+                JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
+            ),
+            hasTitle,
+        }
+    }
+
+    return {
+        primaryText: truncateText(
+            item.content,
+            JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
+        ),
+        secondaryText: null,
+        hasTitle,
+    }
+}
+
 function getAccessibleLabel(item: Item) {
     const isPrimaryTextTitle = item.type !== "todo" && item.title !== undefined
     const typeLabel =
@@ -61,14 +103,8 @@ export default memo(function JotItem({
     const fetchingLinkMetaItemIds = useTransientUiState(
         (s) => s.fetchingLinkMetaItemIds,
     )
-    const isPrimaryTextTitle = item.type !== "todo" && item.title !== undefined
-    const primaryText = truncateText(
-        isPrimaryTextTitle ? item.title! : item.content,
-        JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT,
-    )
-    const secondaryText = isPrimaryTextTitle
-        ? truncateText(item.content, JOT_ITEM_SECONDARY_TEXT_DISPLAY_LIMIT)
-        : null
+    const { primaryText, secondaryText, hasTitle } = computeItemContent(item)
+
     const datetime = formatDatetime(item.jottedAt, is24HourClock)
     const detailedDatetime = formatDetailedDatetime(
         item.jottedAt,
@@ -106,7 +142,7 @@ export default memo(function JotItem({
             secondaryText={secondaryText}
             isCopied={isCopied}
             isDone={item.isDone}
-            isPrimaryTextTitle={isPrimaryTextTitle}
+            isPrimaryTextTitle={hasTitle}
         />
     )
 

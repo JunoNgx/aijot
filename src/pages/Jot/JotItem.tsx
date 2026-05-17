@@ -97,7 +97,7 @@ export default memo(function JotItem({
 
     const rootClassName = `JotItem${isSelected ? " JotItem--Selected" : ""}${isExpandedInfoMode ? " JotItem--Expanded" : ""}`
 
-    const itemIndicators = (
+    const itemIndicators = item.shouldCopyOnClick || item.isPinned && (
         <div className="JotItem__StatusWrapper">
             {item.shouldCopyOnClick && (
                 <span

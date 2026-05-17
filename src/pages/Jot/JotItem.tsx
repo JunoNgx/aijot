@@ -130,7 +130,9 @@ export default memo(function JotItem({
     )
 
     const expandedDatetimeEl = (
-        <span className="JotItem__Datetime">{detailedDatetime}</span>
+        <span className="JotItem__Datetime JotItem__Datetime--ExpandedMode">
+            {detailedDatetime}
+        </span>
     )
 
     const compactContent = (

@@ -34,12 +34,20 @@
             text-decoration: line-through;
             color: var(--colTextAlt);
         }
+
+        @media (width <= $breakpointMobile) {
+            font-size: var(--fontSizeSm);
+        }
     }
 
     &__SecondaryText {
         font-size: var(--fontSizeSm);
         color: var(--colTextAlt);
         flex-shrink: 20;
+
+        @media (width <= $breakpointMobile) {
+            font-size: var(--fontSizeXs);
+        }
     }
 
     &__CopiedText {

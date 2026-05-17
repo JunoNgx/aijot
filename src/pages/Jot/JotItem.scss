@@ -61,6 +61,14 @@
         font-size: var(--fontSizeMd);
         color: var(--colText);
         flex-shrink: 0;
+
+        &--ExpandedMode {
+            font-size: var(--fontSizeSm);
+        }
+
+        @media (width <= $breakpointMobile) {
+            font-size: var(--fontSizeSm);
+        }
     }
 
     &--Expanded {
@@ -84,5 +92,9 @@
         @include Ellipsified;
         font-size: var(--fontSizeSm);
         color: var(--colSub);
+
+        @media (width <= $breakpointMobile) {
+            font-size: var(--fontSizeSm);
+        }
     }
 }

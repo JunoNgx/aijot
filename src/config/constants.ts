@@ -73,7 +73,7 @@ export const DROPDOWN_OFFSET = 10
 // Display limits
 // ============================================================
 
-export const JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT = 50
+export const JOT_ITEM_PRIMARY_TEXT_DISPLAY_LIMIT = 80
 export const JOT_ITEM_SECONDARY_TEXT_DISPLAY_LIMIT = 80
 
 // ============================================================

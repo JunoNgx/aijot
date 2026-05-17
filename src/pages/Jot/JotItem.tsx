@@ -14,8 +14,8 @@ import { useLocalUserSettings } from "@/store/localUserSettings"
 import { useTransientUiState } from "@/store/transientUiState"
 import { useItemActions } from "@/hooks/useItemActions"
 import { JotItemIcon } from "./JotItemIcon"
-import { JotItemTextContent } from "./JotItemTextContent"
-import { JotItemExpandedContent } from "./JotItemExpandedContent"
+import { JotItemCompactBody } from "./JotItemCompactBody"
+import { JotItemExpandedLayout } from "./JotItemExpandedLayout"
 import JotItemContextMenu from "./JotItemContextMenu"
 import type { Item } from "@/types"
 import "./JotItem.scss"
@@ -123,7 +123,7 @@ export default memo(function JotItem({
     const isCopied = copiedItemIds.includes(item.id)
 
     const textContentEl = (
-        <JotItemTextContent
+        <JotItemCompactBody
             primaryText={primaryText}
             secondaryText={secondaryText}
             isCopied={isCopied}
@@ -185,7 +185,7 @@ export default memo(function JotItem({
                     {...rest}
                 >
                     {isExpandedInfoMode ? (
-                        <JotItemExpandedContent
+                        <JotItemExpandedLayout
                             item={item}
                             isCopied={isCopied}
                             itemIcon={itemIcon}

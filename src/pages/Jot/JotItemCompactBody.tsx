@@ -1,6 +1,6 @@
-import "./JotItemTextContent.scss"
+import "./JotItemCompactBody.scss"
 
-export function JotItemTextContent({
+export function JotItemCompactBody({
     primaryText,
     secondaryText,
     isCopied,
@@ -13,7 +13,7 @@ export function JotItemTextContent({
 }) {
     const secondaryTextEl = secondaryText && (
         <span
-            className="JotItemTextContent__SecondaryText"
+            className="JotItemCompactBody__SecondaryText"
             title={secondaryText}
         >
             {secondaryText}
@@ -22,7 +22,7 @@ export function JotItemTextContent({
 
     const primaryTextEl = primaryText && (
         <span
-            className={`JotItemTextContent__PrimaryText${isDone ? " JotItemTextContent__PrimaryText--TodoDone" : ""}`}
+            className={`JotItemCompactBody__PrimaryText${isDone ? " JotItemCompactBody__PrimaryText--TodoDone" : ""}`}
             title={primaryText}
         >
             {primaryText}
@@ -30,7 +30,7 @@ export function JotItemTextContent({
     )
 
     const copiedContent = (
-        <span className="JotItemTextContent__PrimaryText JotItemTextContent__CopiedText">
+        <span className="JotItemCompactBody__PrimaryText JotItemCompactBody__CopiedText">
             Copied
         </span>
     )
@@ -44,7 +44,7 @@ export function JotItemTextContent({
 
     return (
         <div
-            className="JotItemTextContent"
+            className="JotItemCompactBody"
             key={isCopied ? "copied" : "normal"}
         >
             {isCopied ? copiedContent : regularContent}

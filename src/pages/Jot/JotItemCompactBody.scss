@@ -1,7 +1,7 @@
 @use "styles/mixins" as *;
 @use "styles/vars" as *;
 
-.JotItemTextContent {
+.JotItemCompactBody {
     display: grid;
     grid-template-columns: minmax(0, max-content) minmax(0, auto);
     justify-content: start;

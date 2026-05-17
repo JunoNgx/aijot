@@ -3,21 +3,21 @@ import { formatDetailedDatetime, truncateText } from "@/utils/helpers"
 import { JOT_ITEM_EXPANDED_TEXT_DISPLAY_LIMIT } from "@/config/constants"
 import { useLocalUserSettings } from "@/store/localUserSettings"
 import type { Item } from "@/types"
-import "./JotItemExpandedContent.scss"
+import "./JotItemExpandedLayout.scss"
 
 function computePrimaryRowClasses(
     item: Item,
     shouldUseContentAsPrimary: boolean,
 ): string {
     if (shouldUseContentAsPrimary) {
-        return "JotItemExpandedContent__SecondaryText"
+        return "JotItemExpandedLayout__SecondaryText"
     }
 
     if (item.isDone && item.type === "todo") {
-        return "JotItemExpandedContent__PrimaryText JotItemExpandedContent__PrimaryText--TodoDone"
+        return "JotItemExpandedLayout__PrimaryText JotItemExpandedLayout__PrimaryText--TodoDone"
     }
 
-    return "JotItemExpandedContent__PrimaryText"
+    return "JotItemExpandedLayout__PrimaryText"
 }
 
 interface Props {
@@ -27,7 +27,7 @@ interface Props {
     itemStatusIndicators: ReactNode
 }
 
-export function JotItemExpandedContent({
+export function JotItemExpandedLayout({
     item,
     isCopied,
     itemIcon,
@@ -61,7 +61,7 @@ export function JotItemExpandedContent({
     )
 
     const primaryRowTextEl = isCopied ? (
-        <span className="JotItemExpandedContent__CopiedText">Copied</span>
+        <span className="JotItemExpandedLayout__CopiedText">Copied</span>
     ) : (
         <span
             className={primaryRowClassName}
@@ -72,9 +72,9 @@ export function JotItemExpandedContent({
     )
 
     const extraContentRowTextEl = shouldShowExtraContentRow && (
-        <div className="JotItemExpandedContent__ExtraContentRow">
+        <div className="JotItemExpandedLayout__ExtraContentRow">
             <span
-                className="JotItemExpandedContent__SecondaryText"
+                className="JotItemExpandedLayout__SecondaryText"
                 title={expandedSecondaryText}
             >
                 {expandedSecondaryText}
@@ -83,18 +83,18 @@ export function JotItemExpandedContent({
     )
 
     return (
-        <div className="JotItemExpandedContent">
-            <div className="JotItemExpandedContent__PrimaryRow">
+        <div className="JotItemExpandedLayout">
+            <div className="JotItemExpandedLayout__PrimaryRow">
                 {itemIcon}
                 {primaryRowTextEl}
                 {itemStatusIndicators}
             </div>
             {extraContentRowTextEl}
-            <div className="JotItemExpandedContent__InfoRow">
-                <span className="JotItemExpandedContent__TagList">
+            <div className="JotItemExpandedLayout__InfoRow">
+                <span className="JotItemExpandedLayout__TagList">
                     {item.tags.length > 0 ? item.tags.join(" ") : "[untagged]"}
                 </span>
-                <span className="JotItemExpandedContent__Datetime">
+                <span className="JotItemExpandedLayout__Datetime">
                     {detailedDatetime}
                 </span>
             </div>

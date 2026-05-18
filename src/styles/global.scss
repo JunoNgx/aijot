@@ -334,7 +334,7 @@ a {
 
     &__Textarea {
         resize: none;
-        font-family: inherit;
+        font-family: var(--fontFamilyMono);
         padding: 0.375rem 0.5rem;
     }
 

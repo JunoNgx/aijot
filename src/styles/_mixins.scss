@@ -78,7 +78,7 @@
     }
 }
 
-@mixin ContentSlideUp {
+@mixin ContentSlideUpAnim {
     animation: bodySlideUp var(--transTime) ease-in-out forwards;
 
     @keyframes bodySlideUp {

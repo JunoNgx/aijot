@@ -9,7 +9,7 @@
     min-width: 0;
     gap: 0.5rem;
     flex-grow: 10;
-    @include ContentSlideUp;
+    @include ContentSlideUpAnim;
 
     &__PrimaryText {
         @include PrimaryTextStyle;

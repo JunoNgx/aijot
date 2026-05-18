@@ -80,11 +80,6 @@ input[type="radio"] {
     }
 }
 
-.HalfInput {
-    border-width: 0 0 var(--lineWidth) 0;
-    padding: 0 0 0.25rem 0;
-}
-
 input[type="checkbox"] {
     appearance: none;
     @include StandardBorder;
@@ -258,25 +253,6 @@ a {
     &:disabled {
         cursor: not-allowed;
         opacity: 0.5;
-    }
-}
-
-// ============================================================
-// Flex row
-// ============================================================
-
-.FlexRow {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.75rem;
-
-    &--FlexEnd {
-        justify-content: flex-end;
-    }
-
-    &--Apart {
-        justify-content: space-between;
     }
 }
 

@@ -22,7 +22,7 @@
     }
 
     &__FieldRow {
-        @extend .FlexRow;
+        @include FlexRow;
     }
 
     &__EmojiField {
@@ -62,7 +62,7 @@
     }
 
     &__Actions {
-        @extend .FlexRow;
+        @include FlexRow;
     }
 
     &__BtnSave {

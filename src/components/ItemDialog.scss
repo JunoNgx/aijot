@@ -25,7 +25,7 @@
     }
 
     &__SaveStatusWrapper {
-        @extend .FlexRow, .FlexRow--FlexEnd;
+        @include FlexRowJustifyEnd;
         margin-top: 0;
         color: var(--colTextAlt);
         font-size: var(--fontSizeSm);
@@ -53,7 +53,7 @@
     }
 
     &__HalfInput {
-        @extend .HalfInput;
+        @include HalfInput;
     }
 
     &__BtnPrevVersion {

@@ -15,6 +15,23 @@
     backdrop-filter: blur(0.75rem);
 }
 
+@mixin FlexRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+@mixin FlexRowJustifyEnd {
+    @include FlexRow;
+    justify-content: flex-end;
+}
+
+@mixin HalfInput {
+    border-width: 0 0 var(--lineWidth) 0;
+    padding: 0 0 0.25rem 0;
+}
+
 @mixin PrimaryTextStyle {
     @include Ellipsified;
     font-size: var(--fontSizeMd);

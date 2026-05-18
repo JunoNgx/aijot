@@ -483,7 +483,7 @@ export default function Settings() {
                 title="Data"
                 description="Export or import your items, collections, and settings"
             >
-                <div className="FlexRow">
+                <div className="Settings__BtnRow">
                     <button
                         className="Settings__BtnAction"
                         type="button"
@@ -506,7 +506,7 @@ export default function Settings() {
                         onChange={handleImportFile}
                     />
                 </div>
-                <div className="FlexRow">
+                <div className="Settings__BtnRow">
                     <button
                         className="Settings__BtnAction"
                         type="button"
@@ -593,7 +593,7 @@ export default function Settings() {
                     <li>Monkey Type theme definitions (GPLv3)</li>
                     <li>Standard Book font by Bryce Wilner (SIL OFL v1.1)</li>
                 </ul>
-                <div className="FlexRow">
+                <div className="Settings__BtnRow">
                     <button
                         className="Settings__BtnAction"
                         type="button"

@@ -52,6 +52,10 @@
         @extend .Btn, .Btn--Pri;
     }
 
+    &__HalfInput {
+        @extend .HalfInput;
+    }
+
     &__BtnPrevVersion {
         align-self: center;
     }

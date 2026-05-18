@@ -44,4 +44,8 @@
     &__BtnConnect {
         @extend .Btn, .Btn--Pri;
     }
+
+    &__BtnRow {
+        @extend .FlexRow;
+    }
 }

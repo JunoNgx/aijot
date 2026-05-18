@@ -289,7 +289,7 @@ export default function CollectionDialog({ collection }: Props) {
             >
                 <IconX {...ICON_PROPS_ACTION} />
             </button>
-            <div className="FlexRow">
+            <div className="CollectionDialog__FieldRow">
                 <div className="CollectionDialog__Field">
                     <label className="CollectionDialog__Label">Name</label>
                     <input
@@ -330,7 +330,7 @@ export default function CollectionDialog({ collection }: Props) {
                     autoCapitalize="none"
                 />
             </div>
-            <div className="FlexRow">
+            <div className="CollectionDialog__FieldRow">
                 {!collection?.coreType && (
                     <div className="CollectionDialog__Field">
                         <label className="CollectionDialog__Label">Types</label>

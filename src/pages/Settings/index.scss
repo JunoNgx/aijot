@@ -30,6 +30,10 @@
         @extend .Btn, .Btn--Danger;
     }
 
+    &__BtnRow {
+        @extend .FlexRow;
+    }
+
     &__DialogWarning {
         font-size: var(--fontSizeMd);
         color: var(--colDanger);

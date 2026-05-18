@@ -16,6 +16,10 @@
         @extend .Btn, .Btn--Pri;
     }
 
+    &__BtnRow {
+        @extend .FlexRow, .FlexRow--FlexEnd;
+    }
+
     &__SortHint {
         font-size: var(--fontSizeSm);
         color: var(--colTextAlt);

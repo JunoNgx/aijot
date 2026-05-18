@@ -65,7 +65,7 @@ export default function SyncSection() {
                     {connectError}
                 </div>
             )}
-            <div className="FlexRow">
+            <div className="SyncSection__BtnRow">
                 {isConnected ? (
                     <>
                         <button

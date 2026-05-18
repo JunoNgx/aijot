@@ -87,7 +87,7 @@ function MoreOptionsAccordion({
                     <div className="ItemDialog__Field">
                         <label className="ItemDialog__Label">Jotted at</label>
                         <input
-                            className="Dialog__Input HalfInput"
+                            className="ItemDialog__HalfInput"
                             type="datetime-local"
                             value={jottedAtInputVal}
                             onChange={handleJottedAtChange}
@@ -97,7 +97,7 @@ function MoreOptionsAccordion({
                         <div className="ItemDialog__Field">
                             <label className="ItemDialog__Label">Favicon</label>
                             <input
-                                className="Dialog__Input HalfInput"
+                                className="ItemDialog__HalfInput"
                                 value={faviconUrlVal}
                                 onChange={handleFaviconUrlChange}
                                 placeholder="https://..."

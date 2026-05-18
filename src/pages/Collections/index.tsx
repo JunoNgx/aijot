@@ -109,7 +109,7 @@ export default function Collections() {
                 value={shouldCustomSortCollections}
                 onChange={setShouldCustomSortCollections}
             />
-            <div className="FlexRow FlexRow--FlexEnd">
+            <div className="Collections__BtnRow">
                 <button
                     className="Collections__BtnNew"
                     onClick={() => openCollectionDialog()}

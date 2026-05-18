@@ -21,6 +21,10 @@
         @extend .Dialog__Description;
     }
 
+    &__FieldRow {
+        @extend .FlexRow;
+    }
+
     &__EmojiField {
         position: relative;
     }

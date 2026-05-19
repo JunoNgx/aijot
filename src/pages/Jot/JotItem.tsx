@@ -9,6 +9,7 @@ import {
 import {
     ICON_PROPS_ITEM_STATUS,
     JOT_ITEM_COMPACT_TEXT_DISPLAY_LIMIT,
+    REDACTED_PLACEHOLDER,
 } from "@/config/constants"
 import { useLocalUserSettings } from "@/store/localUserSettings"
 import { useTransientUiState } from "@/store/transientUiState"
@@ -34,15 +35,18 @@ function computeItemContent(item: Item): {
         }
     }
 
+    const primaryText = truncateText(
+        item.title,
+        JOT_ITEM_COMPACT_TEXT_DISPLAY_LIMIT,
+    )
+    const secondaryText = truncateText(
+        item.content,
+        JOT_ITEM_COMPACT_TEXT_DISPLAY_LIMIT,
+    )
+
     return {
-        primaryText: truncateText(
-            item.title,
-            JOT_ITEM_COMPACT_TEXT_DISPLAY_LIMIT,
-        ),
-        secondaryText: truncateText(
-            item.content,
-            JOT_ITEM_COMPACT_TEXT_DISPLAY_LIMIT,
-        ),
+        primaryText,
+        secondaryText: item.isRedacted ? REDACTED_PLACEHOLDER : secondaryText,
     }
 }
 

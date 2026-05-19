@@ -31,6 +31,8 @@ interface MoreOptionsAccordionProps {
     handleCopyOnClickChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     isPinnedVal: boolean
     handleIsPinnedChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    isRedactedVal: boolean
+    handleIsRedactedChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     jottedAtInputVal: string
     handleJottedAtChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     isLinkItem: boolean
@@ -44,6 +46,8 @@ function MoreOptionsAccordion({
     handleCopyOnClickChange,
     isPinnedVal,
     handleIsPinnedChange,
+    isRedactedVal,
+    handleIsRedactedChange,
     jottedAtInputVal,
     handleJottedAtChange,
     isLinkItem,
@@ -84,6 +88,18 @@ function MoreOptionsAccordion({
                             Pin this item
                         </label>
                     </div>
+                    {item.type !== "todo" && (
+                        <div className="ItemDialog__Field">
+                            <label className="ItemDialog__Checkbox">
+                                <input
+                                    type="checkbox"
+                                    checked={isRedactedVal}
+                                    onChange={handleIsRedactedChange}
+                                />
+                                Redact content in list
+                            </label>
+                        </div>
+                    )}
                     <div className="ItemDialog__Field">
                         <label className="ItemDialog__Label">Jotted at</label>
                         <input
@@ -214,6 +230,7 @@ export default function ItemDialog({ item, onClose }: Props) {
         item.shouldCopyOnClick ?? false,
     )
     const [isPinnedVal, setIsPinnedVal] = useState(item.isPinned ?? false)
+    const [isRedactedVal, setIsRedactedVal] = useState(item.isRedacted ?? false)
     const [saveStatusText, setSaveStatusText] = useState(
         `Saved ${formatDatetime(item.updatedAt, is24HourClock)}`,
     )
@@ -226,6 +243,7 @@ export default function ItemDialog({ item, onClose }: Props) {
     const faviconUrlRef = useRef(faviconUrlVal)
     const shouldCopyOnClickRef = useRef(shouldCopyOnClickVal)
     const isPinnedRef = useRef(isPinnedVal)
+    const isRedactedRef = useRef(isRedactedVal)
     const hasUnsavedChangesRef = useRef(false)
     const isFirstRender = useRef(true)
     const mutateRef = useRef(updateItemMutation.mutate)
@@ -263,6 +281,9 @@ export default function ItemDialog({ item, onClose }: Props) {
     useEffect(() => {
         isPinnedRef.current = isPinnedVal
     }, [isPinnedVal])
+    useEffect(() => {
+        isRedactedRef.current = isRedactedVal
+    }, [isRedactedVal])
 
     const isLinkItem = item.type === "link"
     const isTextItem = item.type === "text"
@@ -284,6 +305,7 @@ export default function ItemDialog({ item, onClose }: Props) {
                 : undefined,
             shouldCopyOnClick: shouldCopyOnClickRef.current || undefined,
             isPinned: isPinnedRef.current || undefined,
+            isRedacted: isRedactedRef.current || undefined,
             updatedAt: DateTime.now().toISO(),
         }),
         [item, isLinkItem],
@@ -369,6 +391,11 @@ export default function ItemDialog({ item, onClose }: Props) {
 
     const handleIsPinnedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIsPinnedVal(e.target.checked)
+        markChanged()
+    }
+
+    const handleIsRedactedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setIsRedactedVal(e.target.checked)
         markChanged()
     }
 
@@ -484,6 +511,8 @@ export default function ItemDialog({ item, onClose }: Props) {
                     handleCopyOnClickChange={handleCopyOnClickChange}
                     isPinnedVal={isPinnedVal}
                     handleIsPinnedChange={handleIsPinnedChange}
+                    isRedactedVal={isRedactedVal}
+                    handleIsRedactedChange={handleIsRedactedChange}
                     jottedAtInputVal={jottedAtInputVal}
                     handleJottedAtChange={handleJottedAtChange}
                     isLinkItem={isLinkItem}

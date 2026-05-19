@@ -1,6 +1,9 @@
 import { type ReactNode } from "react"
 import { formatDetailedDatetime, truncateText } from "@/utils/helpers"
-import { JOT_ITEM_EXPANDED_TEXT_DISPLAY_LIMIT } from "@/config/constants"
+import {
+    JOT_ITEM_EXPANDED_TEXT_DISPLAY_LIMIT,
+    REDACTED_PLACEHOLDER,
+} from "@/config/constants"
 import { useLocalUserSettings } from "@/store/localUserSettings"
 import type { Item } from "@/types"
 import "./JotItemExpandedLayout.scss"
@@ -43,10 +46,9 @@ export function JotItemExpandedLayout({
         item.type === "todo" ? item.content : item.title,
         JOT_ITEM_EXPANDED_TEXT_DISPLAY_LIMIT,
     )
-    const expandedSecondaryText = truncateText(
-        item.content,
-        JOT_ITEM_EXPANDED_TEXT_DISPLAY_LIMIT,
-    )
+    const expandedSecondaryText = item.isRedacted
+        ? REDACTED_PLACEHOLDER
+        : truncateText(item.content, JOT_ITEM_EXPANDED_TEXT_DISPLAY_LIMIT)
 
     const shouldUseContentAsPrimary = item.type !== "todo" && !item.title
     const primaryRowText = shouldUseContentAsPrimary

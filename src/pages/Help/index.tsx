@@ -73,15 +73,6 @@ export default function Help() {
             </section>
 
             <section className="Help__Section">
-                <h3>Keyboard shortcuts</h3>
-                <p>
-                    Press <kbd>Ctrl/Cmd + /</kbd> to see the full list of
-                    shortcuts. Common ones include navigation with arrow keys,
-                    editing selected items, and opening the command palette.
-                </p>
-            </section>
-
-            <section className="Help__Section">
                 <h3>Collections</h3>
                 <p>
                     Collections group items by tag and/or type. The three{" "}
@@ -110,6 +101,15 @@ export default function Help() {
                     <li>Collection dropdown</li>
                     <li>Collection list menu</li>
                 </ul>
+            </section>
+
+            <section className="Help__Section">
+                <h3>Keyboard shortcuts</h3>
+                <p>
+                    Press <kbd>Ctrl/Cmd + /</kbd> to see the full list of
+                    shortcuts. Common ones include navigation with arrow keys,
+                    editing selected items, and opening the command palette.
+                </p>
             </section>
 
             <section className="Help__Section">

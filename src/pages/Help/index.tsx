@@ -14,14 +14,14 @@ export default function Help() {
                 <p>
                     As a keyboard-focused application, it highly recommended
                     that you familiarise yourself with keyboard shortcuts when
-                    possible when using <em>aijot</em>. Press <kbd>Ctrl/Cmd + /</kbd> to
-                    see the full list.
+                    possible when using <em>aijot</em>. Press{" "}
+                    <kbd>Ctrl/Cmd + /</kbd> to see the full list.
                 </p>
                 <p>
                     In addition to keyboard shortcuts, the Command Palette
                     (activated by <kbd>Ctrl/Cmd + K</kbd> (or{" "}
-                    <kbd>Ctrl/Cmd + P</kbd>) is another versatile tool
-                    to navigate and perform actions quickly.
+                    <kbd>Ctrl/Cmd + P</kbd>) is another versatile tool to
+                    navigate and perform actions quickly.
                 </p>
             </section>
 

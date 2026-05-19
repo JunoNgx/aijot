@@ -10,6 +10,22 @@ export default function Help() {
             <h2 className="Help__Title">Help</h2>
 
             <section className="Help__Section">
+                <h3>Keyboard usage</h3>
+                <p>
+                    As a keyboard-focused application, it highly recommended
+                    that you familiarise yourself with keyboard shortcuts when
+                    possible when using <em>aijot</em>. Press <kbd>Ctrl/Cmd + /</kbd> to
+                    see the full list.
+                </p>
+                <p>
+                    In addition to keyboard shortcuts, the Command Palette
+                    (activated by <kbd>Ctrl/Cmd + K</kbd> (or{" "}
+                    <kbd>Ctrl/Cmd + P</kbd>) is another versatile tool
+                    to navigate and perform actions quickly.
+                </p>
+            </section>
+
+            <section className="Help__Section">
                 <h3>Creating items</h3>
                 <p>
                     Type into the main input and press Enter to create an item.
@@ -96,15 +112,6 @@ export default function Help() {
                         <strong>Trash</strong> - trashed items
                     </li>
                 </ul>
-            </section>
-
-            <section className="Help__Section">
-                <h3>Keyboard shortcuts</h3>
-                <p>
-                    Press <kbd>Ctrl/Cmd + /</kbd> to see the full list of
-                    shortcuts. Common ones include navigation with arrow keys,
-                    editing selected items, and opening the command palette.
-                </p>
             </section>
 
             <section className="Help__Section">

@@ -10,12 +10,12 @@
     z-index: var(--zIndexHeader);
     @include GlassBlur;
 
-    body[data-scroll-locked] & {
-        // Handle content shift caused by fat scrollbar
-        // The variable is handled `react-remove-scroll-bar`
-        // (which is also used by radix)
-        width: calc(100% - var(--removed-body-scroll-bar-size));
-    }
+    // body[data-scroll-locked] & {
+    //     // Handle content shift caused by fat scrollbar
+    //     // The variable is handled `react-remove-scroll-bar`
+    //     // (which is also used by radix)
+    //     width: calc(100% - var(--removed-body-scroll-bar-size));
+    // }
 
     &__Wrapper {
         max-width: var(--fullWidth);

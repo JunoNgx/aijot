@@ -32,10 +32,7 @@ export default function Help() {
                         <code>:t: My novel draft</code>
                     </li>
                 </ul>
-            </section>
 
-            <section className="Help__Section">
-                <h3>Tags and collections</h3>
                 <p>
                     Append flags when creating an item to assign tags or
                     collections.

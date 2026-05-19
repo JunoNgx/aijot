@@ -75,7 +75,13 @@ export default function Help() {
             <section className="Help__Section">
                 <h3>Collections</h3>
                 <p>
-                    Collections group items by tag and/or type. The three{" "}
+                    Items exist in a flat pool, regardless of their tags or
+                    associated collections. Collections provide a window to view
+                    items by tag and/or type.
+                </p>
+
+                <p>
+                    In addition to your custom collections, the three{" "}
                     <strong>core collections</strong> are always present, but
                     configureable:
                 </p>
@@ -87,19 +93,8 @@ export default function Help() {
                         <strong>Untagged</strong> - items with no tags
                     </li>
                     <li>
-                        <strong>Trash</strong> - deleted items, purged after 7
-                        days
+                        <strong>Trash</strong> - trashed items
                     </li>
-                </ul>
-
-                <p>
-                    In addition to these, you can create your own collections
-                    from:
-                </p>
-                <ul>
-                    <li>CmdPalette</li>
-                    <li>Collection dropdown</li>
-                    <li>Collection list menu</li>
                 </ul>
             </section>
 

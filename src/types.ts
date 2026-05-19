@@ -22,6 +22,7 @@ export interface Item {
     faviconUrl?: string
     shouldCopyOnClick?: boolean
     isPinned?: boolean
+    isRedacted?: boolean
     tags: string[]
     previousContent?: string
     previousContentRecordedAt?: string

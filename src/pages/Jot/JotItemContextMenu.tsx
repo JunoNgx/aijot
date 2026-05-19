@@ -60,7 +60,7 @@ export default function JotItemContextMenu({ item }: Props) {
                     Pin
                 </ContextMenu.Item>
             )}
-            {item.type === "text" && (
+            {item.type === "text" && !item.title && (
                 <ContextMenu.Item
                     className="JotItemContextMenu__Item"
                     onClick={() => {

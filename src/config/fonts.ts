@@ -13,7 +13,7 @@ export const SANS_SERIF_FONTS: FontOption[] = [
     {
         name: "Fira Sans",
         cssName: "Fira Sans",
-        importPath: "@fontsource/ira-sans",
+        importPath: "@fontsource/fira-sans",
     },
     {
         name: "Inclusive Sans",

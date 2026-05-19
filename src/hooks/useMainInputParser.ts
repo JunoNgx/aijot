@@ -4,7 +4,6 @@ import {
     SYNTAX_PREFIX_LONG_TEXT,
     SYNTAX_FLAG_TAG,
     SYNTAX_FLAG_COLLECTION,
-    SYNTAX_FLAG_REDACTED,
     SYNTAX_FLAG_COMMON_PREFIX,
     SYNTAX_FILTER_TYPE_TEXT,
     SYNTAX_FILTER_TYPE_LINK,
@@ -58,20 +57,18 @@ function parseCreationFlags(input: string): {
     content: string
     tags: string[]
     colSlugs: string[]
-    isRedacted: boolean
 } {
     const tagIndex = input.indexOf(SYNTAX_FLAG_TAG)
     const collectionIndex = input.indexOf(SYNTAX_FLAG_COLLECTION)
-    const redactedIndex = input.indexOf(SYNTAX_FLAG_REDACTED)
 
-    const hasFlagSyntax =
-        tagIndex > -1 || collectionIndex > -1 || redactedIndex > -1
+    const hasFlagSyntax = tagIndex > -1 || collectionIndex > -1
     if (!hasFlagSyntax) {
-        return { content: input, tags: [], colSlugs: [], isRedacted: false }
+        return { content: input, tags: [], colSlugs: [] }
     }
 
     const flagStart = Math.min(
-        ...[tagIndex, collectionIndex, redactedIndex].filter((i) => i > -1),
+        tagIndex === -1 ? collectionIndex : tagIndex,
+        collectionIndex === -1 ? tagIndex : collectionIndex,
     )
 
     const content = input.slice(0, flagStart).trim()
@@ -80,9 +77,8 @@ function parseCreationFlags(input: string): {
     const flagsStr = input.slice(flagStart)
     const tags = extractFlagArgs(flagsStr, SYNTAX_FLAG_TAG)
     const colSlugs = extractFlagArgs(flagsStr, SYNTAX_FLAG_COLLECTION)
-    const isRedacted = flagsStr.includes(SYNTAX_FLAG_REDACTED)
 
-    return { content, tags, colSlugs, isRedacted }
+    return { content, tags, colSlugs }
 }
 
 function extractFlagArgs(allFlagsStr: string, targetFlagSyntax: string) {
@@ -133,7 +129,6 @@ function parseCreationData(raw: string): MainInputCreationData {
         content: parsedContent,
         tags,
         colSlugs,
-        isRedacted,
     } = parseCreationFlags(trimmedInputText)
 
     if (parsedContent.startsWith(SYNTAX_PREFIX_TODO)) {
@@ -153,7 +148,6 @@ function parseCreationData(raw: string): MainInputCreationData {
             title: title || undefined,
             tags,
             colSlugs,
-            isRedacted,
         }
     }
 
@@ -168,7 +162,6 @@ function parseCreationData(raw: string): MainInputCreationData {
         content: normalizedUrl,
         tags,
         colSlugs,
-        isRedacted,
     }
 }
 

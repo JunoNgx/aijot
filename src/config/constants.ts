@@ -171,7 +171,6 @@ export const SYNTAX_PREFIX_LONG_TEXT = ":t:"
 // Creation flags (suffixed after content)
 export const SYNTAX_FLAG_TAG = "::tg"
 export const SYNTAX_FLAG_COLLECTION = "::col"
-export const SYNTAX_FLAG_REDACTED = "::rd"
 export const SYNTAX_FLAG_COMMON_PREFIX = "::"
 
 // Browse/filter syntax

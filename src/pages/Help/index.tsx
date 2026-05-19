@@ -87,8 +87,9 @@ export default function Help() {
             <section className="Help__Section">
                 <h3>Collections</h3>
                 <p>
-                    Collections group items by tag. The sidebar shows the core
-                    collections:
+                    Collections group items by tag and/or type. The three{" "}
+                    <strong>core collections</strong> are always present, but
+                    configureable:
                 </p>
                 <ul>
                     <li>
@@ -101,6 +102,16 @@ export default function Help() {
                         <strong>Trash</strong> - deleted items, purged after 7
                         days
                     </li>
+                </ul>
+
+                <p>
+                    In addition to these, you can create your own collections
+                    from:
+                </p>
+                <ul>
+                    <li>CmdPalette</li>
+                    <li>Collection dropdown</li>
+                    <li>Collection list menu</li>
                 </ul>
             </section>
 

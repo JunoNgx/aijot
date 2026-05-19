@@ -167,6 +167,7 @@ export interface MainInputCreationData {
     title?: string
     tags: string[]
     colSlugs: string[]
+    isRedacted?: boolean
 }
 
 // ============================================================

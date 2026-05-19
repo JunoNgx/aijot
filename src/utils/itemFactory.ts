@@ -202,5 +202,6 @@ export function buildItem(creationData: MainInputCreationData): Item {
         type: creationData.itemType,
         content: creationData.content,
         title: creationData.title,
+        isRedacted: creationData.isRedacted,
     }
 }

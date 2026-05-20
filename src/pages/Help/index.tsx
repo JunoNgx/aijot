@@ -19,7 +19,7 @@ export default function Help() {
                 </p>
                 <p>
                     In addition to keyboard shortcuts, the Command Palette
-                    (activated by <kbd>Ctrl/Cmd + K</kbd> (or{" "}
+                    (activated by <kbd>Ctrl/Cmd + K</kbd> or{" "}
                     <kbd>Ctrl/Cmd + P</kbd>) is another versatile tool to
                     navigate and perform actions quickly.
                 </p>

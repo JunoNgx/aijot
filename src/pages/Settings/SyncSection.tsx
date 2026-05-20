@@ -48,7 +48,7 @@ export default function SyncSection() {
             {authToken && (
                 <div className="SyncSection__InfoWrapper">
                     <span className="SyncSection__Email">
-                        Connected as {authToken.email}
+                        Connected to {provider!.connectLabel} as {authToken.email}
                     </span>
                     <span className="SyncSection__Status">
                         {lastSyncTimeUiText}

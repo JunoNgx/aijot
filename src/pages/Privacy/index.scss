@@ -2,7 +2,7 @@
 @use "styles/global" as *;
 
 .Privacy {
-    @extend .RouteWrapper, .LegalPage;
+    @extend .RouteWrapper, .DocPage;
 
     &__Title {
         @extend .RouteWrapper__Title;

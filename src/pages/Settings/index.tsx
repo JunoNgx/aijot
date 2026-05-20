@@ -1,7 +1,7 @@
 import { useRef, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
-import { useGoogleAuth } from "@/hooks/useGoogleAuth"
+import { useSyncProvider } from "@/hooks/useSyncProvider"
 import { useNavigateRoutes } from "@/hooks/useNavigateRoutes"
 import { useLocalAppData } from "@/store/localAppData"
 import { useLocalUserSettings } from "@/store/localUserSettings"
@@ -97,7 +97,7 @@ export default function Settings() {
         (s) => s.setShouldShowDemoDataBanner,
     )
 
-    const { disconnect } = useGoogleAuth()
+    const { disconnect } = useSyncProvider()
     const { randomiseTheme } = useThemeActions()
     const { navigateToHelp, navigateToPrivacy, navigateToTerms } =
         useNavigateRoutes()
@@ -613,7 +613,7 @@ export default function Settings() {
 
             <SettingsSection
                 title="Danger Zone"
-                description="Removes all items and collections. Your data on Google Drive will remain intact."
+                description="Removes all items and collections. Your data on your cloud storage will remain intact."
                 sectionClassName="SettingsSection--Spaced"
                 titleClassName="SettingsSection__Title--Danger"
             >

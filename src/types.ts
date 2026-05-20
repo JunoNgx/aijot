@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import type { ThemeName } from "@/config/themes"
+import type { SyncAuthToken } from "@/services/syncProviderTypes"
 
 // ============================================================
 // Item
@@ -75,21 +76,14 @@ export interface LocalAppDataStore {
 
 export type SyncStatus = "idle" | "syncing" | "error"
 
-export interface AuthToken {
-    id: "google"
-    accessToken: string
-    expiresAt: string
-    email: string
-}
-
 export interface LocalSyncDataStore {
-    authToken?: AuthToken
-    driveFolderId?: string
+    authToken?: SyncAuthToken
+    rootId?: string
     lastSyncTime?: string
     syncStatus: SyncStatus
     syncError?: string
-    setAuthToken: (token: AuthToken | undefined) => void
-    setDriveFolderId: (id: string | undefined) => void
+    setAuthToken: (token: SyncAuthToken | undefined) => void
+    setRootId: (id: string | undefined) => void
     setLastSyncTime: (time: string) => void
     setSyncStatus: (status: SyncStatus) => void
     setSyncError: (error: string | undefined) => void
@@ -211,48 +205,4 @@ export interface ExportData {
 export interface LinkFetchResult {
     title: string
     faviconUrl: string
-}
-
-// ============================================================
-// Auth
-// ============================================================
-
-export type TokenResult = string | null | { expired: string }
-
-export interface GisTokenError {
-    type: string
-    message?: string
-}
-
-export interface GisCodeResponse {
-    code: string
-    error?: string
-    error_description?: string
-}
-
-export interface GisCodeClientConfig {
-    client_id: string
-    scope: string
-    ux_mode: "popup" | "redirect"
-    prompt?: string
-    callback: (response: GisCodeResponse) => void
-    error_callback?: (error: GisTokenError) => void
-}
-
-export interface GisCodeClient {
-    requestCode: () => void
-}
-
-declare global {
-    interface Window {
-        google?: {
-            accounts: {
-                oauth2: {
-                    initCodeClient: (
-                        config: GisCodeClientConfig,
-                    ) => GisCodeClient
-                }
-            }
-        }
-    }
 }

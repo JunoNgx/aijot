@@ -1,6 +1,6 @@
 import { IconRefresh } from "@tabler/icons-react"
-import { useGoogleAuth } from "@/hooks/useGoogleAuth"
 import { useSyncFn } from "@/hooks/useSync"
+import { useSyncProvider } from "@/hooks/useSyncProvider"
 import { useLocalSyncData } from "@/store/localSyncData"
 import { useLocalUserSettings } from "@/store/localUserSettings"
 import { ICON_PROPS_NORMAL } from "@/config/constants"
@@ -18,13 +18,14 @@ export default function SyncSection() {
         : "Last sync: Never"
 
     const {
+        provider,
         isConnected,
         isConnecting,
         connectError,
         connect,
         disconnect,
         authToken,
-    } = useGoogleAuth()
+    } = useSyncProvider()
     const { sync } = useSyncFn()
 
     const isSyncing = syncStatus === "syncing"
@@ -43,7 +44,7 @@ export default function SyncSection() {
     return (
         <SettingsSection
             title="Sync"
-            description="Back up your data to Google Drive"
+            description={`Back up your data to ${provider.connectLabel}`}
         >
             {isConnected && authToken && (
                 <div className="SyncSection__InfoWrapper">

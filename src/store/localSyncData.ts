@@ -6,12 +6,12 @@ export const useLocalSyncData = create<LocalSyncDataStore>()(
     persist(
         (set) => ({
             authToken: undefined,
-            driveFolderId: undefined,
+            rootId: undefined,
             lastSyncTime: undefined,
             syncStatus: "idle",
             syncError: undefined,
             setAuthToken: (authToken) => set({ authToken }),
-            setDriveFolderId: (driveFolderId) => set({ driveFolderId }),
+            setRootId: (rootId) => set({ rootId }),
             setLastSyncTime: (lastSyncTime) => set({ lastSyncTime }),
             setSyncStatus: (syncStatus) => set({ syncStatus }),
             setSyncError: (syncError) => set({ syncError }),
@@ -20,7 +20,7 @@ export const useLocalSyncData = create<LocalSyncDataStore>()(
             name: "localSyncData",
             partialize: (state) => ({
                 authToken: state.authToken,
-                driveFolderId: state.driveFolderId,
+                rootId: state.rootId,
                 lastSyncTime: state.lastSyncTime,
             }),
         },

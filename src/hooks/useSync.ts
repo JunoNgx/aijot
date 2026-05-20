@@ -1,19 +1,19 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { useCallback, useEffect, useRef } from "react"
 import { toast } from "sonner"
-import { getOrCreateAijotFolder } from "@/services/driveClient"
-import { runFullDriveSync } from "@/services/driveSync"
+import { runFullSync } from "@/services/syncEngine"
 import { useLocalSyncData } from "@/store/localSyncData"
-import type { TokenResult } from "@/types"
-import { useGoogleAuth } from "./useGoogleAuth"
+import type { SyncTokenResult } from "@/services/syncProviderTypes"
+import { useSyncProvider } from "./useSyncProvider"
 
 const DEBOUNCE_MS = 15_000
 const RESTORE_SYNC_THRESHOLD_MS = 24 * 60 * 60 * 1000
 
-// Module-level flag prevents concurrent syncs across hook instances.
 let isSyncing = false
 
-function isExpiredResult(result: TokenResult): result is { expired: string } {
+function isExpiredResult(
+    result: SyncTokenResult,
+): result is { expired: string } {
     return typeof result === "object" && result !== null
 }
 
@@ -21,27 +21,17 @@ function isAuthError(err: unknown): boolean {
     return err instanceof Error && err.message.includes("401")
 }
 
-function isScopeError(err: unknown): boolean {
-    if (!(err instanceof Error)) return false
-    const message = err.message.toLowerCase()
-    return (
-        message.includes("403") &&
-        (message.includes("insufficient authentication scopes") ||
-            message.includes("access_token_scope_insufficient"))
-    )
-}
-
 export function useSyncFn() {
     const {
-        driveFolderId,
-        setDriveFolderId,
+        rootId,
+        setRootId,
         setSyncStatus,
         setLastSyncTime,
         setSyncError,
         setAuthToken,
     } = useLocalSyncData()
 
-    const { getValidToken } = useGoogleAuth()
+    const { provider, getValidToken } = useSyncProvider()
     const queryClient = useQueryClient()
 
     const handleAuthExpired = useCallback(
@@ -62,9 +52,7 @@ export function useSyncFn() {
 
             const tokenResult = await getValidToken()
             if (isExpiredResult(tokenResult)) {
-                handleAuthExpired(
-                    "Google Drive session expired. Please reconnect in Settings.",
-                )
+                handleAuthExpired(provider.expiredMessage)
                 isSyncing = false
                 return
             }
@@ -78,13 +66,17 @@ export function useSyncFn() {
             setSyncError(undefined)
 
             try {
-                let folderId = driveFolderId
-                if (!folderId) {
-                    folderId = await getOrCreateAijotFolder(token)
-                    setDriveFolderId(folderId)
+                let currentRootId = rootId
+                if (!currentRootId) {
+                    currentRootId = await provider.getOrCreateRoot(token)
+                    setRootId(currentRootId)
                 }
 
-                const syncStartTime = await runFullDriveSync(token, folderId)
+                const syncStartTime = await runFullSync(
+                    token,
+                    currentRootId,
+                    provider,
+                )
                 await queryClient.invalidateQueries()
 
                 setSyncStatus("idle")
@@ -94,13 +86,13 @@ export function useSyncFn() {
                     toast.success("Sync complete")
                 }
             } catch (err) {
-                if (isScopeError(err)) {
+                if (provider.isScopeError(err)) {
                     setSyncStatus("idle")
                     setAuthToken(undefined)
-                    toast.error(
-                        "Google Drive access was revoked or has insufficient permissions. Please reconnect in Settings.",
-                        { id: "auth-reconnect", duration: Infinity },
-                    )
+                    toast.error(provider.revokedMessage, {
+                        id: "auth-reconnect",
+                        duration: Infinity,
+                    })
                     return
                 }
 
@@ -116,9 +108,7 @@ export function useSyncFn() {
                 const refreshedTokenResult = await getValidToken(true)
                 if (isExpiredResult(refreshedTokenResult)) {
                     setSyncStatus("idle")
-                    handleAuthExpired(
-                        "Google Drive session expired mid-sync. Please reconnect in Settings.",
-                    )
+                    handleAuthExpired(provider.expiredMessage)
                     return
                 }
 
@@ -128,10 +118,11 @@ export function useSyncFn() {
             }
         },
         [
-            driveFolderId,
+            rootId,
+            provider,
             getValidToken,
             queryClient,
-            setDriveFolderId,
+            setRootId,
             setLastSyncTime,
             setSyncError,
             setSyncStatus,
@@ -161,7 +152,6 @@ export function useSync() {
         debounceRef.current = setTimeout(() => sync(true), DEBOUNCE_MS)
     }, [sync])
 
-    // Trigger debounced sync after any successful mutation
     useEffect(() => {
         return queryClient.getMutationCache().subscribe((event) => {
             if (event.mutation?.state.status === "success") {
@@ -170,7 +160,6 @@ export function useSync() {
         })
     }, [queryClient, debouncedSync])
 
-    // Flush pending debounce on hide; sync on restore if last sync was stale
     useEffect(() => {
         const handleVisibilityChange = () => {
             if (document.visibilityState === "hidden") {

@@ -3,9 +3,11 @@ import { storage } from "@/db"
 import { useLocalSyncData } from "@/store/localSyncData"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
 import type { Collection, Item, ExportSettings } from "@/types"
-import { DATA_FILE, downloadFile, findFile, upsertFile } from "./driveClient"
+import type { SyncProvider } from "./syncProviderTypes"
 
-interface DriveData {
+export const DATA_FILE = "data.json"
+
+interface SyncData {
     items: Item[]
     collections: Collection[]
     settings: ExportSettings | null
@@ -64,9 +66,10 @@ function getLocalSettings(): ExportSettings {
     }
 }
 
-export async function runFullDriveSync(
+export async function runFullSync(
     token: string,
-    folderId: string,
+    rootId: string,
+    provider: SyncProvider,
 ): Promise<string> {
     const syncStartTime = DateTime.now().toUTC().toISO()!
 
@@ -83,13 +86,16 @@ export async function runFullDriveSync(
     let mergedCollections = localCollections
     let mergedSettings = getLocalSettings()
 
-    const remoteFile = await findFile(token, folderId, DATA_FILE)
+    const remoteFile = await provider.findFile(token, rootId, DATA_FILE)
     const shouldDownload =
         remoteFile !== null &&
         (!lastSyncTime || remoteFile.modifiedTime > lastSyncTime)
 
     if (shouldDownload) {
-        const remoteData = await downloadFile<DriveData>(token, remoteFile.id)
+        const remoteData = await provider.downloadFile<SyncData>(
+            token,
+            remoteFile.id,
+        )
         mergedItems = mergeRecords(localItems, remoteData.items ?? [])
         mergedCollections = mergeRecords(
             localCollections,
@@ -125,9 +131,9 @@ export async function runFullDriveSync(
         settingsChangedSinceLastSync
 
     if (shouldUpload) {
-        await upsertFile(
+        await provider.upsertFile(
             token,
-            folderId,
+            rootId,
             DATA_FILE,
             {
                 items: mergedItems,

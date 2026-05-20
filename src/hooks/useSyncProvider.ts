@@ -2,6 +2,7 @@ import { useCallback, useState } from "react"
 import { toast } from "sonner"
 import { useLocalSyncData } from "@/store/localSyncData"
 import { googleProvider } from "@/services/googleProvider"
+import { dropboxProvider } from "@/services/dropboxProvider"
 import type {
     SyncAuthToken,
     SyncProvider,
@@ -11,6 +12,7 @@ import type {
 
 const providers: Record<string, SyncProvider> = {
     google: googleProvider,
+    dropbox: dropboxProvider,
 }
 
 function isTokenValid(token: SyncAuthToken): boolean {

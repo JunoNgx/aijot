@@ -1,5 +1,7 @@
+export type SyncProviderName = "google" | "dropbox"
+
 export interface SyncAuthToken {
-    provider: "google"
+    provider: SyncProviderName
     accessToken: string
     expiresAt: string
     email: string

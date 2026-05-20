@@ -51,6 +51,10 @@ export function useSyncFn() {
             isSyncing = true
 
             const tokenResult = await getValidToken()
+            if (!provider) {
+                isSyncing = false
+                return
+            }
             if (isExpiredResult(tokenResult)) {
                 handleAuthExpired(provider.expiredMessage)
                 isSyncing = false

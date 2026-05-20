@@ -7,11 +7,13 @@ export const useLocalSyncData = create<LocalSyncDataStore>()(
         (set) => ({
             authToken: undefined,
             rootId: undefined,
+            providerName: undefined,
             lastSyncTime: undefined,
             syncStatus: "idle",
             syncError: undefined,
             setAuthToken: (authToken) => set({ authToken }),
             setRootId: (rootId) => set({ rootId }),
+            setProviderName: (providerName) => set({ providerName }),
             setLastSyncTime: (lastSyncTime) => set({ lastSyncTime }),
             setSyncStatus: (syncStatus) => set({ syncStatus }),
             setSyncError: (syncError) => set({ syncError }),
@@ -21,6 +23,7 @@ export const useLocalSyncData = create<LocalSyncDataStore>()(
             partialize: (state) => ({
                 authToken: state.authToken,
                 rootId: state.rootId,
+                providerName: state.providerName,
                 lastSyncTime: state.lastSyncTime,
             }),
         },

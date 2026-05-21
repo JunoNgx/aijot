@@ -2,6 +2,10 @@ import { Dropbox, type DropboxResponseError } from "dropbox"
 import { BACKEND_URL } from "@/config/constants"
 import type { SyncProvider } from "./syncProviderTypes"
 
+type DropboxErrorBody = {
+    error?: { ".tag"?: string }
+}
+
 const DROPBOX_APP_KEY = import.meta.env.VITE_DROPBOX_APP_KEY ?? ""
 const REDIRECT_URI = window.location.origin
 const SCOPE =
@@ -177,11 +181,11 @@ export const dropboxProvider: SyncProvider = {
 
     isScopeError(err) {
         if (!(err instanceof Error)) return false
-        const message = err.message.toLowerCase()
-        return (
-            message.includes("403") &&
-            message.includes("insufficient_permissions")
-        )
+
+        const dropboxErr =
+            err as unknown as DropboxResponseError<DropboxErrorBody>
+        const tag = dropboxErr.error?.error?.[".tag"]
+        return tag === "insufficient_permissions" || tag === "missing_scope"
     },
 
     async getOrCreateRoot(_token) {

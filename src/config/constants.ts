@@ -16,6 +16,7 @@ export const TRASH_PURGE_DURATION_DAY = 7
 export const SOFT_DELETE_PURGE_DURATION_DAY = 60
 
 export const BACKEND_URL = "https://aijot-backend.vercel.app"
+// export const BACKEND_URL = "http://localhost:3000"
 
 export const DEFAULT_USERNAME = "David"
 

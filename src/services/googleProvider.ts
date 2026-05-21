@@ -101,7 +101,7 @@ function buildMultipart(
 }
 
 async function postAuthCallback(code: string): Promise<SyncAuthToken> {
-    const res = await fetch(`${BACKEND_URL}/api/auth/callback`, {
+    const res = await fetch(`${BACKEND_URL}/api/auth/google/callback`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -125,7 +125,7 @@ async function postAuthCallback(code: string): Promise<SyncAuthToken> {
 async function postAuthRefresh(): Promise<
     Pick<SyncAuthToken, "accessToken" | "expiresAt">
 > {
-    const res = await fetch(`${BACKEND_URL}/api/auth/refresh`, {
+    const res = await fetch(`${BACKEND_URL}/api/auth/google/refresh`, {
         method: "POST",
         credentials: "include",
     })
@@ -143,7 +143,7 @@ async function postAuthRefresh(): Promise<
 }
 
 async function postAuthLogout(): Promise<void> {
-    await fetch(`${BACKEND_URL}/api/auth/logout`, {
+    await fetch(`${BACKEND_URL}/api/auth/google/logout`, {
         method: "POST",
         credentials: "include",
     })

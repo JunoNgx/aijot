@@ -32,9 +32,9 @@ A minimal keyboard-first note-taking application with a focus on quick keyboard-
 Backend is deployed at `https://aijot-backend.vercel.app`, consisting of the following endpoints:
 
 - Google auth flow
-    - POST `/api/auth/callback`
-    - POST `/api/auth/refresh`
-    - POST `/api/auth/logout`
+    - POST `/api/auth/google/callback`
+    - POST `/api/auth/google/refresh`
+    - POST `/api/auth/google/logout`
 - Link fetch
     - GET `/api/link/fetch/` for fetching link-type title and favicon url.
         - Request param: `url`: link must be correctly formatted and appended with protocol correctly by client (passing `new URL(url)`) upon being sent
@@ -525,7 +525,7 @@ Sync is triggered debounced to 15s, after the user has made a change to `items` 
 - Check environment variable for `GOOGLE_CLIENT_ID`
 - Load GIS at `https://accounts.google.com/gsi/client`
 - Upon successful initialise the client `window.google?.accounts.oauth2.initCodeClient`
-- Upon successful response, make a request to backend at `POST auth/callback` use the provided auth code `res.code` to exchange for refresh token (in the body) and refresh token (set via cookie)
+- Upon successful response, make a request to backend at `POST auth/google/callback` use the provided auth code `res.code` to exchange for refresh token (in the body) and refresh token (set via cookie)
 
 #### Sync flow
 
@@ -543,7 +543,7 @@ Sync is triggered debounced to 15s, after the user has made a change to `items` 
 #### Disconnect/logout
 
 - User no longer wants to connect, clicks on `Disconnect` button in settings
-- POST request is made to `/auth/logout`
+- POST request is made to `/auth/google/logout`
 - Server destroys the cookie
 - Client nullifies auth status
 

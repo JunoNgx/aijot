@@ -41,8 +41,6 @@ export default function SyncSection() {
         "Sync now"
     )
 
-    const descriptionLabel = provider?.connectLabel ?? "your cloud storage"
-
     const connectedContent = (
         <>
             {authToken && (
@@ -105,7 +103,7 @@ export default function SyncSection() {
     return (
         <SettingsSection
             title="Sync"
-            description={`Back up your data to ${descriptionLabel}`}
+            description="Back up your data to cloud storage"
         >
             {isConnected ? connectedContent : disconnectedContent}
             {connectError && (

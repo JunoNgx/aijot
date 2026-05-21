@@ -41,15 +41,15 @@ export default function SyncSection() {
         "Sync now"
     )
 
-    return (
-        <SettingsSection
-            title="Sync"
-            description={`Back up your data to ${provider.connectLabel}`}
-        >
-            {isConnected && authToken && (
+    const descriptionLabel = provider?.connectLabel ?? "your cloud storage"
+
+    const connectedContent = (
+        <>
+            {authToken && (
                 <div className="SyncSection__InfoWrapper">
                     <span className="SyncSection__Email">
-                        Connected as {authToken.email}
+                        Connected to {provider!.connectLabel} as{" "}
+                        {authToken.email}
                     </span>
                     <span className="SyncSection__Status">
                         {lastSyncTimeUiText}
@@ -61,41 +61,58 @@ export default function SyncSection() {
                     )}
                 </div>
             )}
+            <div className="SyncSection__BtnRow">
+                <button
+                    className="SyncSection__BtnAction"
+                    type="button"
+                    disabled={isSyncing}
+                    onClick={() => sync()}
+                >
+                    {syncButtonContent}
+                </button>
+                <button
+                    className="SyncSection__BtnAction"
+                    type="button"
+                    onClick={disconnect}
+                >
+                    Disconnect
+                </button>
+            </div>
+        </>
+    )
+
+    const disconnectedContent = (
+        <div className="SyncSection__BtnRow">
+            <button
+                className="SyncSection__BtnConnect"
+                type="button"
+                disabled={isConnecting}
+                onClick={() => connect("google")}
+            >
+                Connect Google Drive
+            </button>
+            <button
+                className="SyncSection__BtnConnect"
+                type="button"
+                disabled={isConnecting}
+                onClick={() => connect("dropbox")}
+            >
+                Connect Dropbox
+            </button>
+        </div>
+    )
+
+    return (
+        <SettingsSection
+            title="Sync"
+            description={`Back up your data to ${descriptionLabel}`}
+        >
+            {isConnected ? connectedContent : disconnectedContent}
             {connectError && (
                 <div className="SyncSection__Status SyncSection__Status--Error">
                     {connectError}
                 </div>
             )}
-            <div className="SyncSection__BtnRow">
-                {isConnected ? (
-                    <>
-                        <button
-                            className="SyncSection__BtnAction"
-                            type="button"
-                            disabled={isSyncing}
-                            onClick={() => sync()}
-                        >
-                            {syncButtonContent}
-                        </button>
-                        <button
-                            className="SyncSection__BtnAction"
-                            type="button"
-                            onClick={disconnect}
-                        >
-                            Disconnect
-                        </button>
-                    </>
-                ) : (
-                    <button
-                        className="SyncSection__BtnConnect"
-                        type="button"
-                        disabled={isConnecting}
-                        onClick={connect}
-                    >
-                        {isConnecting ? "Connecting..." : "Connect"}
-                    </button>
-                )}
-            </div>
         </SettingsSection>
     )
 }

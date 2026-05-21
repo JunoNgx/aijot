@@ -44,7 +44,7 @@ pnpm dev
 
 ### Environment variable
 
-`VITE_GOOGLE_CLIENT_ID`: the Google Clould client ID, only used when user attempts to connect to Google for Drive data sync.
+Refer to `.env.example`
 
 ## Contribution
 

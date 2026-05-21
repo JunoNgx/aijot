@@ -2,10 +2,18 @@ import { useCallback, useState } from "react"
 import { toast } from "sonner"
 import { useLocalSyncData } from "@/store/localSyncData"
 import { googleProvider } from "@/services/googleProvider"
+import { dropboxProvider } from "@/services/dropboxProvider"
 import type {
     SyncAuthToken,
+    SyncProvider,
+    SyncProviderName,
     SyncTokenResult,
 } from "@/services/syncProviderTypes"
+
+const providers: Record<string, SyncProvider> = {
+    google: googleProvider,
+    dropbox: dropboxProvider,
+}
 
 function isTokenValid(token: SyncAuthToken): boolean {
     const TOKEN_EXPIRY_BUFFER_MS = 10 * 60 * 1000
@@ -16,45 +24,66 @@ function isTokenValid(token: SyncAuthToken): boolean {
 }
 
 export function useSyncProvider() {
-    const { authToken, setAuthToken, setRootId } = useLocalSyncData()
+    const { authToken, setAuthToken, setRootId, setProviderName } =
+        useLocalSyncData()
     const [isConnecting, setIsConnecting] = useState(false)
     const [connectError, setConnectError] = useState<string | null>(null)
 
     const isConnected = authToken !== undefined
 
-    const connect = useCallback(async () => {
-        setIsConnecting(true)
-        setConnectError(null)
+    const activeProvider = authToken
+        ? (providers[authToken.provider] ?? null)
+        : null
 
-        try {
-            const token = await googleProvider.connect()
-            setAuthToken(token)
-            toast.success(`Connected as ${token.email}`)
-        } catch (err) {
-            setConnectError(
-                err instanceof Error ? err.message : "Authentication failed.",
-            )
-        } finally {
-            setIsConnecting(false)
-        }
-    }, [setAuthToken])
+    const connect = useCallback(
+        async (name: SyncProviderName) => {
+            const provider = providers[name]
+            if (!provider) return
+
+            if (authToken && authToken.provider !== name) {
+                await providers[authToken.provider]?.disconnect()
+                setRootId(undefined)
+                setAuthToken(undefined)
+            }
+
+            setIsConnecting(true)
+            setConnectError(null)
+
+            try {
+                const token = await provider.connect()
+                setProviderName(name)
+                setAuthToken(token)
+                toast.success(`Connected as ${token.email}`)
+            } catch (err) {
+                setConnectError(
+                    err instanceof Error
+                        ? err.message
+                        : "Authentication failed.",
+                )
+            } finally {
+                setIsConnecting(false)
+            }
+        },
+        [authToken, setAuthToken, setProviderName, setRootId],
+    )
 
     const disconnect = useCallback(async () => {
-        await googleProvider.disconnect()
+        if (activeProvider) await activeProvider.disconnect()
         setAuthToken(undefined)
         setRootId(undefined)
-    }, [setAuthToken, setRootId])
+        setProviderName(undefined)
+    }, [activeProvider, setAuthToken, setRootId, setProviderName])
 
     const getValidToken = useCallback(
         async (shouldForceRefresh = false): Promise<SyncTokenResult> => {
-            if (!authToken) return null
+            if (!authToken || !activeProvider) return null
             if (!shouldForceRefresh && isTokenValid(authToken)) {
                 return authToken.accessToken
             }
 
             try {
                 const refreshedToken =
-                    await googleProvider.refreshAuthToken(authToken)
+                    await activeProvider.refreshAuthToken(authToken)
                 const mergedToken: SyncAuthToken = {
                     ...authToken,
                     accessToken: refreshedToken.accessToken,
@@ -68,11 +97,11 @@ export function useSyncProvider() {
                 return { expired: message }
             }
         },
-        [authToken, setAuthToken],
+        [authToken, activeProvider, setAuthToken],
     )
 
     return {
-        provider: googleProvider,
+        provider: activeProvider,
         authToken,
         isConnected,
         isConnecting,

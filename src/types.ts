@@ -1,6 +1,9 @@
 import type { ReactNode } from "react"
 import type { ThemeName } from "@/config/themes"
-import type { SyncAuthToken } from "@/services/syncProviderTypes"
+import type {
+    SyncAuthToken,
+    SyncProviderName,
+} from "@/services/syncProviderTypes"
 
 // ============================================================
 // Item
@@ -79,11 +82,13 @@ export type SyncStatus = "idle" | "syncing" | "error"
 export interface LocalSyncDataStore {
     authToken?: SyncAuthToken
     rootId?: string
+    providerName?: SyncProviderName
     lastSyncTime?: string
     syncStatus: SyncStatus
     syncError?: string
     setAuthToken: (token: SyncAuthToken | undefined) => void
     setRootId: (id: string | undefined) => void
+    setProviderName: (name: SyncProviderName | undefined) => void
     setLastSyncTime: (time: string) => void
     setSyncStatus: (status: SyncStatus) => void
     setSyncError: (error: string | undefined) => void

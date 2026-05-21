@@ -189,7 +189,7 @@ export const dropboxProvider: SyncProvider = {
     },
 
     async findFile(token, _rootId, name) {
-        const client = new Dropbox({ accessToken: token, fetch: self.fetch })
+        const client = new Dropbox({ accessToken: token })
         try {
             const response = await client.filesGetMetadata({
                 path: `/${name}`,
@@ -214,7 +214,7 @@ export const dropboxProvider: SyncProvider = {
     },
 
     async downloadFile(token, fileId) {
-        const client = new Dropbox({ accessToken: token, fetch: self.fetch })
+        const client = new Dropbox({ accessToken: token })
         const response = await client.filesDownload({ path: fileId })
         const blob = (response.result as unknown as { fileBlob: Blob }).fileBlob
         const text = await blob.text()
@@ -222,7 +222,7 @@ export const dropboxProvider: SyncProvider = {
     },
 
     async upsertFile(token, _rootId, name, data) {
-        const client = new Dropbox({ accessToken: token, fetch: self.fetch })
+        const client = new Dropbox({ accessToken: token })
         await client.filesUpload({
             path: `/${name}`,
             contents: JSON.stringify(data, null, 2),

@@ -135,7 +135,11 @@ export const dropboxProvider: SyncProvider = {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
-                body: JSON.stringify({ code, code_verifier: verifier }),
+                body: JSON.stringify({
+                    code,
+                    code_verifier: verifier,
+                    redirect_uri: REDIRECT_URI,
+                }),
             },
         )
 

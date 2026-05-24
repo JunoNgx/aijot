@@ -1,5 +1,14 @@
 import { DateTime } from "luxon"
+import { BACKEND_URL } from "@/config/constants"
 import type { Item, Collection, CoreCollectionConfig } from "@/types"
+
+export function verifyBackendUrl(): void {
+    if (!BACKEND_URL) {
+        throw new Error(
+            "Backend URL is not configured. Set VITE_BACKEND_URL in your environment.",
+        )
+    }
+}
 
 export function generateSlug(str: string): string {
     return str

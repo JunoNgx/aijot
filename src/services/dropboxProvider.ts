@@ -1,5 +1,6 @@
 import { Dropbox, type DropboxResponseError } from "dropbox"
 import { BACKEND_URL } from "@/config/constants"
+import { verifyBackendUrl } from "@/utils/helpers"
 import type { SyncProvider } from "./syncProviderTypes"
 
 type DropboxErrorBody = {
@@ -116,6 +117,7 @@ export const dropboxProvider: SyncProvider = {
         "Dropbox access was revoked or has insufficient permissions. Please reconnect in Settings.",
 
     async connect() {
+        verifyBackendUrl()
         if (!DROPBOX_APP_KEY) {
             throw new Error("Dropbox App Key is not configured.")
         }
@@ -157,6 +159,7 @@ export const dropboxProvider: SyncProvider = {
     },
 
     async disconnect() {
+        verifyBackendUrl()
         await fetchOrThrow(`${BACKEND_URL}/api/auth/dropbox/logout`, {
             method: "POST",
             credentials: "include",
@@ -164,6 +167,7 @@ export const dropboxProvider: SyncProvider = {
     },
 
     async refreshAuthToken(_token) {
+        verifyBackendUrl()
         const res = await fetchOrThrow(
             `${BACKEND_URL}/api/auth/dropbox/refresh`,
             {

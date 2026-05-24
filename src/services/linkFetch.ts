@@ -1,7 +1,9 @@
 import { BACKEND_URL } from "@/config/constants"
+import { verifyBackendUrl } from "@/utils/helpers"
 import type { LinkFetchResult } from "@/types"
 
 export async function fetchLinkMeta(url: string): Promise<LinkFetchResult> {
+    verifyBackendUrl()
     let normalizedUrl: string
     try {
         const urlObj = new URL(url)

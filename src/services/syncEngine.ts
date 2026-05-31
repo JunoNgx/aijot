@@ -55,7 +55,8 @@ function getLocalSettings(): ExportSettings {
                 state.shouldApplyTagsOfCurrCollection,
             defaultCollectionSlug: state.defaultCollectionSlug,
             shouldCustomSortCollections: state.shouldCustomSortCollections,
-            shouldShowJotItemExtraInfo: state.shouldShowJotItemExtraInfo,
+            shouldEnableJotItemExpandedModeByDefault:
+                state.shouldEnableJotItemExpandedModeByDefault,
             settingsUpdatedAt: state.settingsUpdatedAt,
         },
         coreCollections: {

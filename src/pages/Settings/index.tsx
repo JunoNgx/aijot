@@ -79,11 +79,11 @@ export default function Settings() {
     const setShouldCustomSortCollections = useSyncedUserSettings(
         (s) => s.setShouldCustomSortCollections,
     )
-    const shouldShowJotItemExtraInfo = useSyncedUserSettings(
-        (s) => s.shouldShowJotItemExtraInfo,
+    const shouldEnableJotItemExpandedModeByDefault = useSyncedUserSettings(
+        (s) => s.shouldEnableJotItemExpandedModeByDefault,
     )
-    const setShouldShowJotItemExtraInfo = useSyncedUserSettings(
-        (s) => s.setShouldShowJotItemExtraInfo,
+    const setShouldEnableJotItemExpandedModeByDefault = useSyncedUserSettings(
+        (s) => s.setShouldEnableJotItemExpandedModeByDefault,
     )
     const importAllSettings = useSyncedUserSettings((s) => s.importAllSettings)
 
@@ -111,7 +111,7 @@ export default function Settings() {
                 shouldApplyTagsOfCurrCollection,
                 defaultCollectionSlug,
                 shouldCustomSortCollections,
-                shouldShowJotItemExtraInfo,
+                shouldEnableJotItemExpandedModeByDefault,
             },
             coreCollections: {
                 all: allCollection,
@@ -383,9 +383,11 @@ export default function Settings() {
                         <input
                             aria-describedby={itemDisplayDescId}
                             type="checkbox"
-                            checked={shouldShowJotItemExtraInfo}
+                            checked={shouldEnableJotItemExpandedModeByDefault}
                             onChange={(e) =>
-                                setShouldShowJotItemExtraInfo(e.target.checked)
+                                setShouldEnableJotItemExpandedModeByDefault(
+                                    e.target.checked,
+                                )
                             }
                         />
                         Enable expanded mode in the jot item list by default

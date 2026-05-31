@@ -18,7 +18,7 @@ export const useSyncedUserSettings = create<SyncedUserSettingsStore>()(
             shouldApplyTagsOfCurrCollection: true,
             defaultCollectionSlug: "all",
             shouldCustomSortCollections: true,
-            shouldShowJotItemExtraInfo: false,
+            shouldEnableJotItemExpandedModeByDefault: false,
             allCollection: DEFAULT_ALL_COLLECTION,
             untaggedCollection: DEFAULT_UNTAGGED_COLLECTION,
             trashCollection: DEFAULT_TRASH_COLLECTION,
@@ -37,9 +37,9 @@ export const useSyncedUserSettings = create<SyncedUserSettingsStore>()(
                     shouldCustomSortCollections: value,
                     ...updateTimestamp(),
                 }),
-            setShouldShowJotItemExtraInfo: (value) =>
+            setShouldEnableJotItemExpandedModeByDefault: (value) =>
                 set({
-                    shouldShowJotItemExtraInfo: value,
+                    shouldEnableJotItemExpandedModeByDefault: value,
                     ...updateTimestamp(),
                 }),
             setAllCollection: (config) =>
@@ -71,8 +71,9 @@ export const useSyncedUserSettings = create<SyncedUserSettingsStore>()(
                         settings.syncedUserSettings.defaultCollectionSlug,
                     shouldCustomSortCollections:
                         settings.syncedUserSettings.shouldCustomSortCollections,
-                    shouldShowJotItemExtraInfo:
-                        settings.syncedUserSettings.shouldShowJotItemExtraInfo,
+                    shouldEnableJotItemExpandedModeByDefault:
+                        settings.syncedUserSettings
+                            .shouldEnableJotItemExpandedModeByDefault,
                     allCollection: settings.coreCollections.all,
                     untaggedCollection: settings.coreCollections.untagged,
                     trashCollection: settings.coreCollections.trash,

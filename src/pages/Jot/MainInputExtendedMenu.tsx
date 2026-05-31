@@ -39,8 +39,8 @@ export default function MainInputExtendedMenu({
     const { triggerPointerDown, triggerKeyDown, contentCloseAutoFocus } =
         useDropdownFocusCleanup()
     const visibleItems = useTransientUiState((s) => s.mainListVisibleItems)
-    const isShowingJotItemExtraInfo = useTransientUiState(
-        (s) => s.isShowingJotItemExtraInfo,
+    const isJotItemExpandedModeEnabled = useTransientUiState(
+        (s) => s.isJotItemExpandedModeEnabled,
     )
     const { massTagEditMutation } = useItemsMutations()
     const { createItem } = useItemActions()
@@ -79,8 +79,8 @@ export default function MainInputExtendedMenu({
     const handleToggleExpandedMode = () => {
         useTransientUiState
             .getState()
-            .setIsShowingJotItemExtraInfo(
-                !useTransientUiState.getState().isShowingJotItemExtraInfo,
+            .setIsJotItemExpandedModeEnabled(
+                !useTransientUiState.getState().isJotItemExpandedModeEnabled,
             )
     }
 
@@ -150,7 +150,7 @@ export default function MainInputExtendedMenu({
                         className="MainInputExtendedMenu__Item"
                         onSelect={handleToggleExpandedMode}
                     >
-                        {isShowingJotItemExtraInfo ? (
+                        {isJotItemExpandedModeEnabled ? (
                             <IconCheckbox {...ICON_PROPS_ITEM_DROPDOWN} />
                         ) : (
                             <IconSquare {...ICON_PROPS_ITEM_DROPDOWN} />

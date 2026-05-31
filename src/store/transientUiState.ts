@@ -10,8 +10,8 @@ export const useTransientUiState = create<{
     removeFetchingLinkMetaItemId: (id: string) => void
     mainListVisibleItems: Item[]
     setMainListVisibleItems: (items: Item[]) => void
-    isShowingJotItemExtraInfo: boolean
-    setIsShowingJotItemExtraInfo: (val: boolean) => void
+    isJotItemExpandedModeEnabled: boolean
+    setIsJotItemExpandedModeEnabled: (val: boolean) => void
 }>((set) => ({
     copiedItemIds: [],
     addCopiedItemId: (id) =>
@@ -47,7 +47,7 @@ export const useTransientUiState = create<{
         })),
     mainListVisibleItems: [],
     setMainListVisibleItems: (items) => set({ mainListVisibleItems: items }),
-    isShowingJotItemExtraInfo: false,
-    setIsShowingJotItemExtraInfo: (val) =>
-        set({ isShowingJotItemExtraInfo: val }),
+    isJotItemExpandedModeEnabled: false,
+    setIsJotItemExpandedModeEnabled: (val) =>
+        set({ isJotItemExpandedModeEnabled: val }),
 }))

@@ -97,18 +97,18 @@ export default function Jot() {
     const { shouldShowDemoDataBanner } = useLocalAppData()
     const mainInputRef = useRef<HTMLInputElement>(null)
 
-    const defaultShouldShowJotItemExtraInfo = useSyncedUserSettings(
-        (s) => s.shouldShowJotItemExtraInfo,
+    const shouldEnableExpandedModeByDefault = useSyncedUserSettings(
+        (s) => s.shouldEnableJotItemExpandedModeByDefault,
     )
-    const isShowingJotItemExtraInfo = useTransientUiState(
-        (s) => s.isShowingJotItemExtraInfo,
+    const isJotItemExpandedModeEnabled = useTransientUiState(
+        (s) => s.isJotItemExpandedModeEnabled,
     )
-    const setIsShowingJotItemExtraInfo = useTransientUiState(
-        (s) => s.setIsShowingJotItemExtraInfo,
+    const setIsJotItemExpandedModeEnabled = useTransientUiState(
+        (s) => s.setIsJotItemExpandedModeEnabled,
     )
 
     useLayoutEffect(() => {
-        setIsShowingJotItemExtraInfo(defaultShouldShowJotItemExtraInfo)
+        setIsJotItemExpandedModeEnabled(shouldEnableExpandedModeByDefault)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -169,8 +169,8 @@ export default function Jot() {
     useHotkeys(
         SHORTCUT_TOGGLE_ITEM_EXPANDED_MODE,
         () => {
-            setIsShowingJotItemExtraInfo(
-                !useTransientUiState.getState().isShowingJotItemExtraInfo,
+            setIsJotItemExpandedModeEnabled(
+                !useTransientUiState.getState().isJotItemExpandedModeEnabled,
             )
         },
         { enableOnFormTags: true },
@@ -224,7 +224,7 @@ export default function Jot() {
             item={item}
             isSelected={index === selectedIndex}
             itemIndex={index}
-            isExpandedInfoMode={isShowingJotItemExtraInfo}
+            isExpandedMode={isJotItemExpandedModeEnabled}
         />
     ))
 
@@ -250,7 +250,7 @@ export default function Jot() {
             />
             <div
                 id={listboxId}
-                className={`Jot__List${isShowingJotItemExtraInfo ? " Jot__List--Expanded" : ""}`}
+                className={`Jot__List${isJotItemExpandedModeEnabled ? " Jot__List--Expanded" : ""}`}
                 role="listbox"
                 aria-orientation="vertical"
             >

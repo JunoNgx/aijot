@@ -73,7 +73,7 @@ interface Props {
     item: Item
     isSelected: boolean
     itemIndex: number
-    isExpandedInfoMode: boolean
+    isExpandedMode: boolean
     id?: string
 }
 
@@ -81,7 +81,7 @@ export default memo(function JotItem({
     item,
     isSelected,
     itemIndex,
-    isExpandedInfoMode,
+    isExpandedMode,
     id,
 }: Props) {
     const { triggerPrimaryAction } = useItemActions()
@@ -98,7 +98,7 @@ export default memo(function JotItem({
         is24HourClock,
     )
 
-    const rootClassName = `JotItem${isSelected ? " JotItem--Selected" : ""}${isExpandedInfoMode ? " JotItem--Expanded" : ""}`
+    const rootClassName = `JotItem${isSelected ? " JotItem--Selected" : ""}${isExpandedMode ? " JotItem--Expanded" : ""}`
 
     const hasStatusIndicator = item.shouldCopyOnClick || item.isPinned
     const itemStatusIndicators = hasStatusIndicator && (
@@ -188,7 +188,7 @@ export default memo(function JotItem({
                     onClick={handleClick}
                     {...rest}
                 >
-                    {isExpandedInfoMode ? (
+                    {isExpandedMode ? (
                         <JotItemExpandedLayout
                             item={item}
                             isCopied={isCopied}

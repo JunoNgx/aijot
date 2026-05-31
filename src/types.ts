@@ -99,7 +99,7 @@ export interface SyncedUserSettingsStore {
     shouldApplyTagsOfCurrCollection: boolean
     defaultCollectionSlug: string
     shouldCustomSortCollections: boolean
-    shouldShowJotItemExtraInfo: boolean
+    shouldEnableJotItemExpandedModeByDefault: boolean
     allCollection: CoreCollectionConfig
     untaggedCollection: CoreCollectionConfig
     trashCollection: CoreCollectionConfig
@@ -108,7 +108,7 @@ export interface SyncedUserSettingsStore {
     setShouldApplyTagsOfCurrCollection: (value: boolean) => void
     setDefaultCollectionSlug: (slug: string) => void
     setShouldCustomSortCollections: (value: boolean) => void
-    setShouldShowJotItemExtraInfo: (value: boolean) => void
+    setShouldEnableJotItemExpandedModeByDefault: (value: boolean) => void
     setAllCollection: (config: Partial<CoreCollectionConfig>) => void
     setUntaggedCollection: (config: Partial<CoreCollectionConfig>) => void
     setTrashCollection: (config: Partial<CoreCollectionConfig>) => void
@@ -178,7 +178,7 @@ export interface ExportSettings {
         shouldApplyTagsOfCurrCollection: boolean
         defaultCollectionSlug: string
         shouldCustomSortCollections: boolean
-        shouldShowJotItemExtraInfo: boolean
+        shouldEnableJotItemExpandedModeByDefault: boolean
         settingsUpdatedAt?: string
     }
     coreCollections: {

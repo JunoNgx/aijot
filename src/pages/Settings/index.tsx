@@ -388,14 +388,15 @@ export default function Settings() {
                                 setShouldShowJotItemExtraInfo(e.target.checked)
                             }
                         />
-                        Display jot items with extra info by default
+                        Enable expanded mode in the jot item list by default
                     </label>
                     <small
                         id={itemDisplayDescId}
                         className="Field__Description"
                     >
-                        Default initial state for item display mode. Can be
-                        toggled mid-session.
+                        Expanded mode display extra information. Expanded mode
+                        can be toggled anytime mid-session. This only affects
+                        the initial state upon startup.
                     </small>
                 </div>
             </SettingsSection>

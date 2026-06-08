@@ -8,7 +8,8 @@
     text-align: center;
 
     &__SyncWrapper {
-        @include FlexRowJustifyEnd;
+        display: grid;
+        place-items: center;
         margin-top: 0;
     }
 

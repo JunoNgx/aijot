@@ -1,7 +1,8 @@
 {
     "rewrites": [
+        { "source": "/api/:path*", "destination": "/api/index" },
         {
-            "source": "/((?!assets/|favicon.ico|robots.txt).*)",
+            "source": "/((?!assets/|favicon.ico|robots.txt|api/).*)",
             "destination": "/"
         }
     ],

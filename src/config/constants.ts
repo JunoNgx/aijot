@@ -15,8 +15,6 @@ export const DB_VERSION = 1
 export const TRASH_PURGE_DURATION_DAY = 7
 export const SOFT_DELETE_PURGE_DURATION_DAY = 60
 
-export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
-
 export const DEFAULT_USERNAME = "David"
 
 // ============================================================

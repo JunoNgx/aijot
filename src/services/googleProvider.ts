@@ -1,5 +1,3 @@
-import { BACKEND_URL } from "@/config/constants"
-import { verifyBackendUrl } from "@/utils/helpers"
 import type { SyncAuthToken, SyncFile, SyncProvider } from "./syncProviderTypes"
 
 const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID ?? ""
@@ -102,8 +100,7 @@ function buildMultipart(
 }
 
 async function postAuthCallback(code: string): Promise<SyncAuthToken> {
-    verifyBackendUrl()
-    const res = await fetch(`${BACKEND_URL}/api/auth/google/callback`, {
+    const res = await fetch("/api/auth/google/callback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -127,8 +124,7 @@ async function postAuthCallback(code: string): Promise<SyncAuthToken> {
 async function postAuthRefresh(): Promise<
     Pick<SyncAuthToken, "accessToken" | "expiresAt">
 > {
-    verifyBackendUrl()
-    const res = await fetch(`${BACKEND_URL}/api/auth/google/refresh`, {
+    const res = await fetch("/api/auth/google/refresh", {
         method: "POST",
         credentials: "include",
     })
@@ -146,8 +142,7 @@ async function postAuthRefresh(): Promise<
 }
 
 async function postAuthLogout(): Promise<void> {
-    verifyBackendUrl()
-    await fetch(`${BACKEND_URL}/api/auth/google/logout`, {
+    await fetch("/api/auth/google/logout", {
         method: "POST",
         credentials: "include",
     })

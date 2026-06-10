@@ -1,9 +1,6 @@
-import { BACKEND_URL } from "@/config/constants"
-import { verifyBackendUrl } from "@/utils/helpers"
 import type { LinkFetchResult } from "@/types"
 
 export async function fetchLinkMeta(url: string): Promise<LinkFetchResult> {
-    verifyBackendUrl()
     let normalizedUrl: string
     try {
         const urlObj = new URL(url)
@@ -20,13 +17,10 @@ export async function fetchLinkMeta(url: string): Promise<LinkFetchResult> {
 
     try {
         const encodedUrl = encodeURIComponent(normalizedUrl)
-        const response = await fetch(
-            `${BACKEND_URL}/api/link/fetch?url=${encodedUrl}`,
-            {
-                method: "GET",
-                credentials: "include",
-            },
-        )
+        const response = await fetch(`/api/link/fetch?url=${encodedUrl}`, {
+            method: "GET",
+            credentials: "include",
+        })
 
         if (!response.ok) {
             if (response.status === 429) {

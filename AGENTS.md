@@ -1,5 +1,3 @@
-# aijot-frontend — Implementation Notes
-
 ## Maintainer's preferences
 
 - Use 4 space indentation

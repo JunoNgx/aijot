@@ -1,2 +1,6 @@
+packages:
+    - api
+
 allowBuilds:
     "@parcel/watcher": true
+    esbuild: true

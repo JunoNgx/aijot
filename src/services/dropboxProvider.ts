@@ -1,6 +1,4 @@
 import { Dropbox, type DropboxResponseError } from "dropbox"
-import { BACKEND_URL } from "@/config/constants"
-import { verifyBackendUrl } from "@/utils/helpers"
 import type { SyncProvider } from "./syncProviderTypes"
 
 type DropboxErrorBody = {
@@ -117,7 +115,6 @@ export const dropboxProvider: SyncProvider = {
         "Dropbox access was revoked or has insufficient permissions. Please reconnect in Settings.",
 
     async connect() {
-        verifyBackendUrl()
         if (!DROPBOX_APP_KEY) {
             throw new Error("Dropbox App Key is not configured.")
         }
@@ -135,19 +132,16 @@ export const dropboxProvider: SyncProvider = {
 
         const code = await openPopup(authUrl.toString())
 
-        const res = await fetchOrThrow(
-            `${BACKEND_URL}/api/auth/dropbox/callback`,
-            {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-                body: JSON.stringify({
-                    code,
-                    code_verifier: verifier,
-                    redirect_uri: REDIRECT_URI,
-                }),
-            },
-        )
+        const res = await fetchOrThrow("/api/auth/dropbox/callback", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({
+                code,
+                code_verifier: verifier,
+                redirect_uri: REDIRECT_URI,
+            }),
+        })
 
         const data = await res.json()
         return {
@@ -159,22 +153,17 @@ export const dropboxProvider: SyncProvider = {
     },
 
     async disconnect() {
-        verifyBackendUrl()
-        await fetchOrThrow(`${BACKEND_URL}/api/auth/dropbox/logout`, {
+        await fetchOrThrow("/api/auth/dropbox/logout", {
             method: "POST",
             credentials: "include",
         })
     },
 
     async refreshAuthToken(_token) {
-        verifyBackendUrl()
-        const res = await fetchOrThrow(
-            `${BACKEND_URL}/api/auth/dropbox/refresh`,
-            {
-                method: "POST",
-                credentials: "include",
-            },
-        )
+        const res = await fetchOrThrow("/api/auth/dropbox/refresh", {
+            method: "POST",
+            credentials: "include",
+        })
 
         const data = await res.json()
         return {

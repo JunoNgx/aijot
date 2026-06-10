@@ -1,10 +1,8 @@
-# ai\*jot (frontend)
+# ai\*jot
 
 A minimalist keyboard-first note-taking Progressive Web App, tailored for fast operations and data-privacy. A sequel to [JustJot](https://github.com/JunoNgx/justjot-frontend).
 
-Backend repository: [https://github.com/JunoNgx/justjot-backend]()
-
-## Current deployment
+## Production deployment
 
 The application is currently deployed at [aijot.app](https://aijot.app/) via Vercel.
 
@@ -25,6 +23,8 @@ The application is currently deployed at [aijot.app](https://aijot.app/) via Ver
 - Google Drive API (optional)
 - CodeMirror 6
 
+- Hono (backend)
+
 ## CSS
 
 The project's CSS uses [BEM convention](https://getbem.com/naming/) for elements' classnames with `PascalCase`, inheriting the convention used in JustJot.
@@ -35,16 +35,18 @@ JotItem__PrimaryText--Selected
 
 This convention has improved (subjective) readability without any encountered issue. This remains in the codebase as of time of writing.
 
-## Running locally
+## Environment variables
 
-```
-pnpm install
-pnpm dev
-```
+Refer to `.env.example` in the root directory (for frontend) and in `/api` (for backend), respectively.
 
-### Environment variable
+In Vercel deployment, all environment variables are merged and shared in the project's single dashboard.
 
-Refer to `.env.example`
+## Local development
+
+- Frontend: `pnpm dev` (Vite, port 5173)
+- Backend: `pnpm --filter @aijot/backend dev` (tsx, port 3000)
+- Vite proxies `/api` to `localhost:3000` during dev
+- As a shorthand, run `pnpm dev:all` to run both
 
 ## Contribution
 

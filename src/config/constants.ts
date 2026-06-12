@@ -7,7 +7,7 @@ const CORE_COLLECTION_INIT_TIME = DateTime.now().toUTC().toISO()
 // App
 // ============================================================
 
-export const APP_VERSION = "0.9.0"
+export const APP_VERSION = import.meta.env.PACKAGE_VERSION
 export const COMMIT_SHA = import.meta.env.VERCEL_GIT_COMMIT_SHA
 
 export const DEVELOPER_WEBSITE_URL = "https://JunoNgx.com"

@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom"
 import "./index.scss"
-import { ROUTE_JOT, ROUTE_PRIVACY, ROUTE_TERMS } from "@/config/constants"
+import {
+    DEVELOPER_WEBSITE_URL,
+    GITHUB_REPO_URL,
+    ROUTE_JOT,
+    ROUTE_PRIVACY,
+    ROUTE_TERMS,
+} from "@/config/constants"
 import { useThemeActions } from "@/hooks/useThemeActions"
 import { useCommandPaletteStore } from "@/store/commandPaletteStore"
 import AijotLogo from "@/components/AijotLogo"
@@ -59,7 +65,7 @@ export default function Landing() {
                 <p className="Landing__FooterCredit">
                     made by{" "}
                     <a
-                        href="https://JunoNgx.com"
+                        href={DEVELOPER_WEBSITE_URL}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
@@ -68,7 +74,7 @@ export default function Landing() {
                 </p>
                 <div className="Landing__FooterLinks">
                     <a
-                        href="https://github.com/JunoNgx/aijot-frontend"
+                        href={GITHUB_REPO_URL}
                         target="_blank"
                         rel="noopener noreferrer"
                     >

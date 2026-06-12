@@ -23,7 +23,12 @@ import {
     commitJustJotImport,
 } from "@/services/justjotImport"
 import { clearAllData, resetApp } from "@/utils/clearData"
-import { APP_VERSION, COMMIT_SHA } from "@/config/constants"
+import {
+    APP_VERSION,
+    COMMIT_SHA,
+    DEVELOPER_WEBSITE_URL,
+    GITHUB_REPO_URL,
+} from "@/config/constants"
 import { useThemeActions } from "@/hooks/useThemeActions"
 import type { ExportData, ImportSummary } from "@/types"
 import type { JustJotExportData } from "@/services/justjotImport"
@@ -575,7 +580,7 @@ export default function Settings() {
                     Made by{" "}
                     <a
                         className="Settings__Link"
-                        href="https://JunoNgx.com"
+                        href={DEVELOPER_WEBSITE_URL}
                         target="_blank"
                         rel="noreferrer"
                     >
@@ -585,7 +590,7 @@ export default function Settings() {
                 <p className="Settings__Version">
                     <a
                         className="Settings__Link"
-                        href="https://github.com/JunoNgx/aijot-frontend"
+                        href={GITHUB_REPO_URL}
                         target="_blank"
                         rel="noreferrer"
                     >

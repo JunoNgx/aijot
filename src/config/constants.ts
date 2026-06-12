@@ -10,6 +10,9 @@ const CORE_COLLECTION_INIT_TIME = DateTime.now().toUTC().toISO()
 export const APP_VERSION = "0.9.0"
 export const COMMIT_SHA = import.meta.env.VERCEL_GIT_COMMIT_SHA
 
+export const DEVELOPER_WEBSITE_URL = "https://JunoNgx.com"
+export const GITHUB_REPO_URL = "https://github.com/JunoNgx/aijot-frontend"
+
 export const DB_VERSION = 1
 
 export const TRASH_PURGE_DURATION_DAY = 7

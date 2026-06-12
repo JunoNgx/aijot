@@ -18,7 +18,7 @@ A minimal keyboard-first note-taking application with a focus on quick keyboard-
     - BEM convention with pascal case (e.g. `JotItem__PrimaryText--Selected`)
     - `global.scss` at root
     - Each component has a co-located module scss file `*.module.scss`
-- Backend is implemented elsewhere
+- Backend is a Hono server on Vercel edge runtime, co-located in `api/` as a pnpm workspace package
 
 ## Platform
 
@@ -29,12 +29,18 @@ A minimal keyboard-first note-taking application with a focus on quick keyboard-
 
 ## Backend
 
-Backend is deployed at `https://aijot-backend.vercel.app`, consisting of the following endpoints:
+Backend is co-located in `api/` as a pnpm workspace package. Deployed on Vercel edge runtime (Hono framework).
+
+### Endpoints
 
 - Google auth flow
     - POST `/api/auth/google/callback`
     - POST `/api/auth/google/refresh`
     - POST `/api/auth/google/logout`
+- Dropbox auth flow
+    - POST `/api/auth/dropbox/callback`
+    - POST `/api/auth/dropbox/refresh`
+    - POST `/api/auth/dropbox/logout`
 - Link fetch
     - GET `/api/link/fetch/` for fetching link-type title and favicon url.
         - Request param: `url`: link must be correctly formatted and appended with protocol correctly by client (passing `new URL(url)`) upon being sent
@@ -137,10 +143,13 @@ Fields to index: id, sortOrder, slug
 
 - `/`: root; landing page
 - `/jot`: home page; default page for pwa
-    - Alias for all items
+    - Redirects to `/jot/{defaultCollectionSlug}`
 - `/jot/:slug`: route to specific collection by slug
 - `/collections`: Manage collection menu
-- `/profile`: Profile
+- `/settings`: Settings
+- `/help`: Help guide
+- `/privacy`: Privacy policy
+- `/terms`: Terms of Service
 
 ## Persistent app data stores
 
@@ -159,13 +168,19 @@ Stores that are prefixed with `local*` are for local use only and never synced.
 
 #### `localSyncData`
 
-- authToken: store the access token after access to Google Drive was granted by user
-    - id: "google"
+Persisted fields:
+
+- authToken: store the access token after sync provider authentication
+    - provider: `"google" | "dropbox"`
     - accessToken
     - expiresAt
     - email
-- driveFolderId: the id of the `aijot` folder from user's Google Drive, to reduce the amount of requests back and forth
+- rootId: the id of the remote root folder (Google Drive folder ID; empty string for Dropbox)
+- providerName: `"google" | "dropbox"`
 - lastSyncTime: to trigger auto sync when current data is stale
+
+Non-persisted (transient) fields:
+
 - syncStatus: "idle" | "syncing" | "error"
 - syncError: store error from sync upon issue encountered
 
@@ -175,9 +190,15 @@ Stores that are prefixed with `local*` are for local use only and never synced.
 - shouldApplyTagsOfCurrCollection: boolean, true by default. When checked, when viewing a collection, creating new items will automatically apply the tags associated with this collection.
 - defaultCollectionSlug: string, "all" by default. The collection to navigate to when landing on /jot.
 - shouldCustomSortCollections: boolean, true by default. When true, collections use a custom sort order; when false, sorted alphabetically.
-- shouldShowJotItemExtraInfo: boolean, false by default. Controls whether newly created jot items will automatically inherit the tags of the currently viewing collection.
+- shouldEnableJotItemExpandedModeByDefault: boolean, false by default. Controls whether jot items are displayed in expanded mode by default on startup.
+- allCollection: core collection config for "Everything"
+- untaggedCollection: core collection config for "Untagged"
+- trashCollection: core collection config for "Trash"
+- settingsUpdatedAt: iso timestamp, auto-updated by every setter for sync conflict resolution
 
-### `coreCollectionSettings`
+### Core collection defaults
+
+Core collection settings are stored within `syncedUserSettings` (not a separate store).
 
 - Trash bin settings:
     - Name: `Trash` by default
@@ -185,7 +206,7 @@ Stores that are prefixed with `local*` are for local use only and never synced.
     - Emoji: wastebasket by default
     - Colour: muted red
 - All collections settings:
-    - Name: `everything` by default
+    - Name: `Everything` by default
     - Slug: `all` by default
     - Emoji: box by default
     - Colour: light grey
@@ -194,7 +215,7 @@ Stores that are prefixed with `local*` are for local use only and never synced.
     - Slug: `untagged` by default
     - Emoji: tag by default
     - Colour: warm amber
-- Also, build system collection getters
+- Core collection getters are built from these settings
 
 ## User interface
 
@@ -527,23 +548,31 @@ Sync is triggered debounced to 15s, after the user has made a change to `items` 
 - Upon successful initialise the client `window.google?.accounts.oauth2.initCodeClient`
 - Upon successful response, make a request to backend at `POST auth/google/callback` use the provided auth code `res.code` to exchange for refresh token (in the body) and refresh token (set via cookie)
 
+#### Connecting to Dropbox/Authorization code flow
+
+- User clicks on Connect to Dropbox button in settings
+- Check environment variable for `DROPBOX_APP_KEY`
+- Use PKCE (S256) OAuth flow via popup
+- Upon successful response, make a request to backend at `POST auth/dropbox/callback` with the provided auth code and PKCE `code_verifier` to exchange for refresh token (in the body) and access token
+- Dropbox uses the `dropbox` npm SDK for file operations
+
 #### Sync flow
 
 - Sync flow is triggered either by changes, staleness, or user's explicit action
 - Perform necessary guard check (internet connection, already sync)
-- Try using cached access token, else refresh via backend endpoint `POST auth/refresh`
+- Try using cached access token, else refresh via backend endpoint `POST auth/{provider}/refresh`
     - If fails, abort and display error
-- Try using cached folder id for `ai-jot`, else query for this folder id
-    - During the process, if Google responds with `401`, nullify auth status and prompt user to re-connect.
+- Try using cached folder id for `aijot` (Google) or empty string (Dropbox), else query for this folder id
+    - During the process, if provider responds with `401`, nullify auth status and prompt user to re-connect.
 - Query related files
-- Download remote data and resolve against local data, using `lastSyncTime`, GDrive's metadata `modifiedTime`, and records' `updatedAt`
+- Download remote data and resolve against local data, using `lastSyncTime`, provider's metadata `modifiedTime`, and records' `updatedAt`
 - Skip upload if remote data is newer
 - Invalidate TanStack query caches to triggers full refetch and re-render
 
 #### Disconnect/logout
 
 - User no longer wants to connect, clicks on `Disconnect` button in settings
-- POST request is made to `/auth/google/logout`
+- POST request is made to `/auth/{provider}/logout`
 - Server destroys the cookie
 - Client nullifies auth status
 
@@ -552,8 +581,8 @@ Sync is triggered debounced to 15s, after the user has made a change to `items` 
 - All JSON files are pretty printed for human readability purpose.
 - Everything is stored in one single file to reduce the upload/download time.
 - Cloud storage data file has the exact shape as exported file
-- /ai-jot
-    - `data.json`
+- Google Drive: `/aijot/data.json`
+- Dropbox: `/data.json` (app root)
 
 ### Resolution logic
 
@@ -583,7 +612,7 @@ User can export all data to one single json file. The same data can be re-import
             "shouldApplyTagsOfCurrCollection": true,
             "defaultCollectionSlug": "all",
             "shouldCustomSortCollections": true,
-            "shouldShowJotItemExtraInfo": false
+            "shouldEnableJotItemExpandedModeByDefault": false
         },
         "coreCollections": {
             "all": { "name": "All", "slug": "all", "colour": "#ffffff" },
@@ -600,12 +629,19 @@ First time user (see `shouldShowDemoDataBanner`) will receive a banner inviting 
 
 ## File structure
 
+- api: Hono backend server (Vercel edge runtime)
+    - src
+        - routes: API endpoints (googleAuth, dropboxAuth, link)
+        - lib: shared utilities (constants, metadata fetcher)
+        - middleware: rate limiting
+    - index.ts: Vercel edge entry point
+    - dev.ts: local dev server
 - src
     - pages: include `index.tsx` related components exclusively used in that route
         - Landing
         - Jot (handles both /jot and /jot/:slug)
         - Collections
-        - Profile
+        - Settings
         - Help
         - Privacy
         - Terms
@@ -618,7 +654,9 @@ First time user (see `shouldShowDemoDataBanner`) will receive a banner inviting 
         - localAppData
         - localSyncData
         - syncedUserSettings
-        - coreCollectionSettings
+        - dialogStore
+        - commandPaletteStore
+        - transientUiState
     - db: Dexie setup and schema
     - services: API calls and sync
         - auth
@@ -634,7 +672,6 @@ First time user (see `shouldShowDemoDataBanner`) will receive a banner inviting 
         - constants.ts: routes, defaults, shortcuts, syntax prefixes
         - themes.ts: theme color definitions
         - fonts.ts: curated font lists
-    - routes.tsx: React Router config
     - App.tsx
     - main.tsx
 

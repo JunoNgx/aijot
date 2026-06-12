@@ -11,7 +11,7 @@ export const APP_VERSION = "0.9.0"
 export const COMMIT_SHA = import.meta.env.VERCEL_GIT_COMMIT_SHA
 
 export const DEVELOPER_WEBSITE_URL = "https://JunoNgx.com"
-export const GITHUB_REPO_URL = "https://github.com/JunoNgx/aijot-frontend"
+export const GITHUB_REPO_URL = "https://github.com/JunoNgx/aijot"
 
 export const DB_VERSION = 1
 

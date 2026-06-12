@@ -27,8 +27,8 @@
     }
 
     &__Logo {
-        font-weight: 600;
-        color: var(--colText);
+        width: var(--logoSizeHeader);
+        height: var(--logoSizeHeader);
         user-select: none;
         cursor: pointer;
     }

@@ -1,6 +1,7 @@
 import { Link, useMatch } from "react-router-dom"
 import UserDropdown from "./UserDropdown"
 import CollectionDropdown from "./CollectionDropdown"
+import AijotLogo from "./AijotLogo"
 import "./Header.scss"
 import {
     ROUTE_JOT,
@@ -25,7 +26,7 @@ export default function Header() {
             <div className="Header__Wrapper">
                 <div className="Header__Block Header__Block--Left">
                     <Link to={ROUTE_JOT} className="Header__Logo">
-                        ai*jot
+                        <AijotLogo />
                     </Link>
                     {shouldShowCollectionDropdown && (
                         <>

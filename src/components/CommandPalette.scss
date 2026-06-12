@@ -5,6 +5,11 @@
     &__Overlay {
         @extend .DialogWrapper__Overlay;
         z-index: var(--zIndexCommandPaletteOverlay);
+
+        &--NoBlur {
+            background-color: transparent;
+            backdrop-filter: none;
+        }
     }
 
     &__Content {

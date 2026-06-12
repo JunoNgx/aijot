@@ -384,56 +384,65 @@ export default function CommandPalette({
     )
 
     return (
-        <Dialog.Content
-            className="CommandPalette__Content"
-            aria-describedby={undefined}
-            onInteractOutside={revertThemePreview}
-            onOpenAutoFocus={(e) => {
-                if (window.matchMedia("(hover: none)").matches) {
-                    e.preventDefault()
+        <>
+            <Dialog.Overlay
+                className={
+                    isThemeMode
+                        ? "CommandPalette__Overlay CommandPalette__Overlay--NoBlur"
+                        : "CommandPalette__Overlay"
                 }
-            }}
-            onCloseAutoFocus={handleCloseAutoFocus}
-        >
-            <Dialog.Title className="VisuallyHidden">
-                Command Palette
-            </Dialog.Title>
-            <Command
-                label="Command palette"
-                value={isThemeMode ? currentTheme : undefined}
-                // Hacky implementation: force clearing search query upon mode switch
-                // cmdk unfortunately doesn't expose the search state for external control
-                key={mode}
-                onValueChange={(value) => {
-                    if (isThemeMode && value) {
-                        handleThemePreview(value as ThemeName)
+            />
+            <Dialog.Content
+                className="CommandPalette__Content"
+                aria-describedby={undefined}
+                onInteractOutside={revertThemePreview}
+                onOpenAutoFocus={(e) => {
+                    if (window.matchMedia("(hover: none)").matches) {
+                        e.preventDefault()
                     }
                 }}
+                onCloseAutoFocus={handleCloseAutoFocus}
             >
-                <Command.Input
-                    className="CommandPalette__Input"
-                    placeholder={searchPlaceholder}
-                />
-                <Command.List
-                    ref={listRef}
-                    className="CommandPaletteList__List"
+                <Dialog.Title className="VisuallyHidden">
+                    Command Palette
+                </Dialog.Title>
+                <Command
+                    label="Command palette"
+                    value={isThemeMode ? currentTheme : undefined}
+                    // Hacky implementation: force clearing search query upon mode switch
+                    // cmdk unfortunately doesn't expose the search state for external control
+                    key={mode}
+                    onValueChange={(value) => {
+                        if (isThemeMode && value) {
+                            handleThemePreview(value as ThemeName)
+                        }
+                    }}
                 >
-                    <Command.Empty className="CommandPaletteList__Empty">
-                        No results found.
-                    </Command.Empty>
+                    <Command.Input
+                        className="CommandPalette__Input"
+                        placeholder={searchPlaceholder}
+                    />
+                    <Command.List
+                        ref={listRef}
+                        className="CommandPaletteList__List"
+                    >
+                        <Command.Empty className="CommandPaletteList__Empty">
+                            No results found.
+                        </Command.Empty>
 
-                    {isMainMode ? (
-                        <>
-                            {collectionsGroup}
-                            {collectionActionsGroup}
-                            {navigationGroup}
-                            {actionsGroup}
-                        </>
-                    ) : (
-                        themeGroup
-                    )}
-                </Command.List>
-            </Command>
-        </Dialog.Content>
+                        {isMainMode ? (
+                            <>
+                                {collectionsGroup}
+                                {collectionActionsGroup}
+                                {navigationGroup}
+                                {actionsGroup}
+                            </>
+                        ) : (
+                            themeGroup
+                        )}
+                    </Command.List>
+                </Command>
+            </Dialog.Content>
+        </>
     )
 }

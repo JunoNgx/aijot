@@ -39,7 +39,6 @@ export default function CommandPaletteManager() {
     return (
         <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
             <Dialog.Portal>
-                <Dialog.Overlay className="CommandPalette__Overlay" />
                 <CommandPalette
                     mode={mode}
                     onModeChange={handleModeChange}

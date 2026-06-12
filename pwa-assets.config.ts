@@ -15,10 +15,11 @@ export default defineConfig({
     },
     preset: {
         ...minimal2023Preset,
-        // transparent: {
-        //     sizes: [],
-        //     favicons: [[48, "favicon.ico"]],
-        // },
+        apple: {
+            // iOS home screen
+            sizes: [180],
+            resizeOptions: RESIZE_OPTIONS,
+        },
         maskable: {
             // 32: Browser tabs
             // 128: Chrome Web Store
@@ -27,14 +28,6 @@ export default defineConfig({
             sizes: [32, 128, 192, 512],
             resizeOptions: RESIZE_OPTIONS,
         },
-        apple: {
-            // iOS home screen
-            sizes: [180],
-            resizeOptions: RESIZE_OPTIONS,
-        },
     },
-    images: [
-        "public/sourceLogo.svg",
-        // "public/sourceLogoWithOutline.svg",
-    ],
+    images: ["public/sourceLogo.svg"],
 })

@@ -10,7 +10,7 @@
         "lint": "eslint .",
         "format": "prettier --write .",
         "preview": "vite preview",
-        "generate-pwa-assets": "pwa-assets-generator"
+        "update-icons": "pwa-assets-generator -c pwa-assets.config.ts && pwa-assets-generator -c pwa-assets-favicon.config.ts"
     },
     "dependencies": {
         "@codemirror/commands": "^6.10.3",

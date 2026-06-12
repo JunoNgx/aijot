@@ -25,6 +25,7 @@ import {
 import { clearAllData, resetApp } from "@/utils/clearData"
 import {
     APP_VERSION,
+    ARTIST_WEBSITE_URL,
     COMMIT_SHA,
     DEVELOPER_WEBSITE_URL,
     GITHUB_REPO_URL,
@@ -577,7 +578,7 @@ export default function Settings() {
                     Version {APP_VERSION} ({COMMIT_SHA})
                 </p>
                 <p className="Settings__Version">
-                    Made by{" "}
+                    Developed by{" "}
                     <a
                         className="Settings__Link"
                         href={DEVELOPER_WEBSITE_URL}
@@ -585,6 +586,17 @@ export default function Settings() {
                         rel="noreferrer"
                     >
                         Juno Nguyen
+                    </a>
+                </p>
+                <p className="Settings__Version">
+                    Logo illustration by{" "}
+                    <a
+                        className="Settings__Link"
+                        href={ARTIST_WEBSITE_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Casey Kwokdinata
                     </a>
                 </p>
                 <p className="Settings__Version">

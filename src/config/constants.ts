@@ -12,6 +12,7 @@ export const COMMIT_SHA = import.meta.env.VERCEL_GIT_COMMIT_SHA
 
 export const DEVELOPER_WEBSITE_URL = "https://JunoNgx.com"
 export const GITHUB_REPO_URL = "https://github.com/JunoNgx/aijot"
+export const ARTIST_WEBSITE_URL = "https://caseykwokdinata.webflow.io"
 
 export const DB_VERSION = 1
 

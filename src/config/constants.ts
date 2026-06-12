@@ -84,6 +84,7 @@ export const REDACTED_PLACEHOLDER = "■■■■■■■■"
 // Routes
 // ============================================================
 
+export const ROUTE_LANDING = "/"
 export const ROUTE_JOT = "/jot"
 export const ROUTE_COLLECTION = "/jot/:slug"
 export const ROUTE_COLLECTIONS = "/collections"

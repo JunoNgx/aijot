@@ -3,6 +3,7 @@ import "./index.scss"
 import { ROUTE_JOT, ROUTE_PRIVACY, ROUTE_TERMS } from "@/config/constants"
 import { useThemeActions } from "@/hooks/useThemeActions"
 import { useCommandPaletteStore } from "@/store/commandPaletteStore"
+import AijotLogo from "@/components/AijotLogo"
 
 export default function Landing() {
     const { randomiseTheme } = useThemeActions()
@@ -10,6 +11,9 @@ export default function Landing() {
     return (
         <div className="Landing">
             <section className="Landing__Hero">
+                <div className="Landing__Logo">
+                    <AijotLogo />
+                </div>
                 <h1 className="Landing__Title">ai*jot</h1>
                 <p className="Landing__Tagline">*sloth, not LLM</p>
                 {/* <p className="Landing__Definition">
@@ -79,16 +83,9 @@ export default function Landing() {
                 <p className="Landing__Text">
                     You probably know the drill. No ad, no sub, no tracking.
                     Open source and free forever. Fork and host all you want.{" "}
-                    <a
-                        href="https://github.com/JunoNgx/aijot-backend"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Backend
-                    </a>{" "}
-                    only does what it needs, no remote database. Data only leave
-                    your device to go to your Google Drive, only when you
-                    choose.
+                    Backend only does what it needs, no remote database. Data
+                    only leave your device to go to your Google Drive, only when
+                    you choose.
                 </p>
             </section>
 

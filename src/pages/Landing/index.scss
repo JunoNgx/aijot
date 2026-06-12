@@ -15,6 +15,12 @@
         margin-bottom: 4rem;
     }
 
+    &__Logo {
+        width: var(--logoSizeLanding);
+        height: var(--logoSizeLanding);
+        margin-bottom: 1rem;
+    }
+
     &__Title {
         font-size: var(--fontSizeLogo);
         font-weight: bold;

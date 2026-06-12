@@ -33,8 +33,8 @@ export default function Landing() {
             </section>
 
             <p className="Landing__MainContent">
-                Keyboard-first. Handle notes, bookmarks, and todos. Organised by
-                tags. Lots of themes (
+                Tailored for keyboard use. Handle notes, bookmarks, and todos. Organised by
+                tags. Bunch of tastful themes (
                 <button
                     type="button"
                     className="Landing__InlineAction"

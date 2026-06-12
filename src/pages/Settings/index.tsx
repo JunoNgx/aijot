@@ -33,6 +33,7 @@ import BackBtn from "@/components/BackBtn"
 import SettingsSection from "./SettingsSection"
 import SyncSection from "./SyncSection"
 import ImportPreview from "./ImportPreview"
+import AijotLogo from "@/components/AijotLogo"
 
 export default function Settings() {
     useDocumentTitle("Settings")
@@ -564,6 +565,9 @@ export default function Settings() {
                 onTitleClick={handleDebugEnableClick}
                 onTitleKeyDown={handleAboutKeyDown}
             >
+                <div className="Settings__Logo">
+                    <AijotLogo />
+                </div>
                 <p className="Settings__Version">
                     Version {APP_VERSION} ({COMMIT_SHA})
                 </p>

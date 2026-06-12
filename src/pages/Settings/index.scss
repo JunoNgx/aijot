@@ -75,6 +75,12 @@
         }
     }
 
+    &__Logo {
+        max-width: var(--logoSizeAbout);
+        max-height: var(--logoSizeAbout);
+        margin-bottom: 1rem;
+    }
+
     p {
         line-height: 1.5;
     }

@@ -16,15 +16,15 @@ export default defineConfig({
     preset: {
         ...minimal2023Preset,
         transparent: {
-            // Browser tabs, Chrome Web Store, Android, high-res displays
-            sizes: [32, 128, 192, 512],
-            // Legacy browser tab icons
+            sizes: [],
             favicons: [[48, "favicon.ico"]],
-            resizeOptions: RESIZE_OPTIONS,
         },
         maskable: {
-            // Android adaptive icons
-            sizes: [512],
+            // 32: Browser tabs
+            // 128: Chrome Web Store
+            // 192: Android
+            // 512: High-res displays
+            sizes: [32, 128, 192, 512],
             resizeOptions: RESIZE_OPTIONS,
         },
         apple: {

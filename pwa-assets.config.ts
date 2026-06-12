@@ -15,10 +15,10 @@ export default defineConfig({
     },
     preset: {
         ...minimal2023Preset,
-        transparent: {
-            sizes: [],
-            favicons: [[48, "favicon.ico"]],
-        },
+        // transparent: {
+        //     sizes: [],
+        //     favicons: [[48, "favicon.ico"]],
+        // },
         maskable: {
             // 32: Browser tabs
             // 128: Chrome Web Store
@@ -33,5 +33,8 @@ export default defineConfig({
             resizeOptions: RESIZE_OPTIONS,
         },
     },
-    images: ["public/sourceLogo.svg"],
+    images: [
+        "public/sourceLogo.svg",
+        // "public/sourceLogoWithOutline.svg",
+    ],
 })

@@ -26,77 +26,38 @@ export default function Landing() {
                 </p>
             </section>
 
-            <section className="Landing__Section">
-                <h2 className="Landing__SectionTitle">
-                    Use keyboard; be more like sloth
-                </h2>
-                <p className="Landing__Text">
-                    Sloth achieves a lot despite moving very little, just like
-                    you can with your keyboard. Create everything with tags from
-                    one single input, and do everything else with command
-                    palette like a neovim nerd, because you can in this app.
-                </p>
-            </section>
-
-            <section className="Landing__Section">
-                <h2 className="Landing__SectionTitle">
-                    A simple, sane, and flexible system
-                </h2>
-                <p className="Landing__Text">
-                    All you need for noting: text, bookmarks, and todos. Add
-                    tags to create collections. Browse what you want to see, and
-                    instantly search for what you need.
-                </p>
-            </section>
-
-            <section className="Landing__Section">
-                <h2 className="Landing__SectionTitle">
-                    Dark/light theme is so 2015; get some personality
-                </h2>
-                <p className="Landing__Text">
-                    Spotify can't even do light theme as of 2026, but I don't
-                    work for them. Choose from original tasteful themes, or 60
-                    other well-known and proven colour palettes.{" "}
-                    <button
-                        type="button"
-                        className="Landing__InlineAction"
-                        onClick={randomiseTheme}
-                    >
-                        Randomise
-                    </button>{" "}
-                    or{" "}
-                    <button
-                        type="button"
-                        className="Landing__InlineAction"
-                        onClick={() => {
-                            useCommandPaletteStore.getState().open("theme")
-                        }}
-                    >
-                        pick one
-                    </button>
-                    . Go wild.
-                </p>
-            </section>
-
-            <section className="Landing__Section">
-                <h2 className="Landing__SectionTitle">All the FOSS fuss</h2>
-                <p className="Landing__Text">
-                    You probably know the drill. No ad, no sub, no tracking.
-                    Open source and free forever. Fork and host all you want.{" "}
-                    Backend only does what it needs, no remote database. Data
-                    only leave your device to go to your Google Drive, only when
-                    you choose.
-                </p>
-            </section>
+            <p className="Landing__MainContent">
+                Keyboard-first. Handle notes, bookmarks, and todos. Organised by
+                tags. Lots of themes (
+                <button
+                    type="button"
+                    className="Landing__InlineAction"
+                    onClick={randomiseTheme}
+                >
+                    randomise
+                </button>{" "}
+                or{" "}
+                <button
+                    type="button"
+                    className="Landing__InlineAction"
+                    onClick={() => {
+                        useCommandPaletteStore.getState().open("theme")
+                    }}
+                >
+                    pick one
+                </button>
+                ). Offline-first and privacy-first. Optionally sync to Dropbox
+                or GDrive. Open source and free forever.
+            </p>
 
             <Link to={ROUTE_JOT} className="Landing__Btn">
                 Get started
             </Link>
-            <p className="Landing__BtnHint">(no account needed)</p>
+            <p className="Landing__BtnHint">(no account or signup needed)</p>
 
             <footer className="Landing__Footer">
                 <p className="Landing__FooterCredit">
-                    Made by{" "}
+                    made by{" "}
                     <a
                         href="https://JunoNgx.com"
                         target="_blank"

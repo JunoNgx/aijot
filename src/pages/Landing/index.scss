@@ -4,27 +4,29 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     min-height: 100vh;
-    padding: 3rem 1.5rem;
+    padding: 1.5rem;
 
     &__Hero {
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
-        margin-bottom: 4rem;
+        margin-bottom: 1.5rem;
     }
 
     &__Logo {
         width: var(--logoSizeLanding);
         height: var(--logoSizeLanding);
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
     }
 
     &__Title {
         font-size: var(--fontSizeLogo);
         font-weight: bold;
         margin: 0;
+        color: var(--colMain);
     }
 
     &__Tagline {
@@ -48,7 +50,7 @@
 
     &__Btn {
         @extend .Btn, .Btn--Pri;
-        margin-top: 1.5rem;
+        margin-top: 1rem;
 
         &:visited {
             color: var(--colBg);
@@ -58,7 +60,7 @@
     &__BtnHint {
         font-size: var(--fontSizeSm);
         color: var(--colTextAlt);
-        margin: 0.5rem 0 0;
+        margin: 0.25rem 0 2rem;
     }
 
     &__Section {
@@ -79,6 +81,15 @@
         margin: 0;
     }
 
+    &__MainContent {
+        font-size: var(--fontSizeMd);
+        line-height: 1.5;
+        max-width: var(--landingMaxWidth);
+        margin: 0 0 1rem;
+        text-align: justify;
+        text-justify: inter-word;
+    }
+
     &__InlineAction {
         @extend .Btn, .Btn--Tert;
         display: inline;
@@ -91,8 +102,6 @@
         flex-direction: column;
         align-items: center;
         gap: 0.5rem;
-        margin-top: auto;
-        padding-top: 2rem;
         font-size: var(--fontSizeSm);
         color: var(--colTextAlt);
 

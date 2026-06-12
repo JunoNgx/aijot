@@ -42,7 +42,7 @@ export default defineConfig({
                 description: "A minimalist keyboard-first note app",
                 start_url: "/jot",
                 display: "standalone",
-                background_color: "#1a1a1a",
+                background_color: "#8eada7",
                 theme_color: "#1a1a1a",
                 icons: [
                     {

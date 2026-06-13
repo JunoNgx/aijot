@@ -33,7 +33,15 @@ export default function Landing() {
             </section>
 
             <p className="Landing__MainContent">
-                Tailored for keyboard use. Handle notes, bookmarks, and todos.
+                Successor to{" "}
+                <a
+                    href="https://justjot.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    JustJot
+                </a>
+                . Tailored for keyboard use. Handle notes, bookmarks, and todos.
                 Organised by tags. Bunch of tastful themes (
                 <button
                     type="button"

@@ -8,7 +8,7 @@ const CORE_COLLECTION_INIT_TIME = DateTime.now().toUTC().toISO()
 // ============================================================
 
 export const APP_VERSION = import.meta.env.PACKAGE_VERSION
-export const COMMIT_SHA = import.meta.env.VERCEL_GIT_COMMIT_SHA
+export const COMMIT_SHA = import.meta.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7)
 
 export const DEVELOPER_WEBSITE_URL = "https://JunoNgx.com"
 export const GITHUB_REPO_URL = "https://github.com/JunoNgx/aijot"

@@ -41,8 +41,8 @@ export default function Landing() {
                 >
                     JustJot
                 </a>
-                . Tailored for keyboard use. Handle notes, bookmarks, and todos.
-                Organised by tags. Bunch of tasteful themes (
+                . Tailored for keyboard use. Handles notes, bookmarks, and
+                todos. Organised by tags. Bunch of tasteful themes (
                 <button
                     type="button"
                     className="Landing__InlineAction"
@@ -60,7 +60,7 @@ export default function Landing() {
                 >
                     pick one
                 </button>
-                ). Offline-first and privacy-first. Optionally sync to Dropbox
+                ). Offline-first and privacy-first. Optionally syncs to Dropbox
                 or GDrive. Made with love. Open source and free forever.
             </p>
 

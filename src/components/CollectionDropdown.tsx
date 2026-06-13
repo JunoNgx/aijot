@@ -12,6 +12,7 @@ import { useNavigateRoutes } from "@/hooks/useNavigateRoutes"
 import { useCurrentCollection } from "@/hooks/useCurrentCollection"
 import { openCollectionDialog } from "@/utils/openCollectionDialog"
 import {
+    COLLECTION_DROPDOWN_ALIGN_OFFSET,
     COLLECTION_HOTKEY_COUNT,
     DROPDOWN_OFFSET,
     ICON_PROPS_CURR_COLLECTION,
@@ -102,6 +103,7 @@ export default function CollectionDropdown() {
                         className="CollectionDropdown__Content"
                         align="start"
                         sideOffset={DROPDOWN_OFFSET}
+                        alignOffset={COLLECTION_DROPDOWN_ALIGN_OFFSET}
                         onCloseAutoFocus={contentCloseAutoFocus}
                     >
                         {menuItems}

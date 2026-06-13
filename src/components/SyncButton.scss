@@ -1,7 +1,7 @@
 @use "styles/global" as *;
 
 .SyncButton {
-    @extend .Btn, .Btn--Sec;
+    @extend .Btn, .Btn--Quart;
     display: flex;
     align-items: center;
     gap: 0.25rem;

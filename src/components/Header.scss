@@ -65,6 +65,7 @@
     @media (width <= $breakpointMobile) {
         top: auto;
         bottom: 0;
+        font-size: var(--fontSizeSm);
 
         @media (pointer: coarse) {
             &__Wrapper {
@@ -80,9 +81,8 @@
             }
         }
 
-        &__Logo,
         &__Separator {
-            display: none;
+            margin-left: 0;
         }
     }
 }

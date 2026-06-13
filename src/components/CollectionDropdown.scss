@@ -30,6 +30,12 @@
     &__Separator {
         @extend .Dropdown__Separator;
     }
+
+    @media (width <= $breakpointMobile) {
+        &__Trigger {
+            padding-left: 0;
+        }
+    }
 }
 
 .CollectionItem {

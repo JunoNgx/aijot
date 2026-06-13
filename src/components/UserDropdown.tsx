@@ -4,7 +4,6 @@ import {
     IconSettings,
     IconStack2,
     IconHelp,
-    IconWritingSign,
     IconKeyboard,
 } from "@tabler/icons-react"
 import { useDropdownFocusCleanup } from "@/hooks/useDropdownFocusCleanup"
@@ -15,17 +14,13 @@ import {
     DEFAULT_USERNAME,
     DROPDOWN_OFFSET,
     ICON_PROPS_ITEM_DROPDOWN,
-    ROUTE_COLLECTION,
-    ROUTE_JOT,
 } from "@/config/constants"
 import "./UserDropdown.scss"
-import { useMatch } from "react-router-dom"
 
 export default function UserDropdown() {
     const userDisplayName =
         useSyncedUserSettings((s) => s.userDisplayName) || DEFAULT_USERNAME
     const {
-        navigateToJot,
         navigateToSettings,
         navigateToCollections,
         navigateToHelp,
@@ -33,9 +28,6 @@ export default function UserDropdown() {
 
     const { triggerPointerDown, triggerKeyDown, contentCloseAutoFocus } =
         useDropdownFocusCleanup()
-    const isJotRoute = useMatch(ROUTE_JOT)
-    const isJotCollectionRoute = useMatch(ROUTE_COLLECTION)
-    const shouldShowJotNav = !isJotRoute && !isJotCollectionRoute
 
     return (
         <div className="UserDropdown">
@@ -60,20 +52,6 @@ export default function UserDropdown() {
                         sideOffset={DROPDOWN_OFFSET}
                         onCloseAutoFocus={contentCloseAutoFocus}
                     >
-                        {shouldShowJotNav && (
-                            <>
-                                <DropdownMenu.Item
-                                    className="UserDropdown__Item"
-                                    onSelect={navigateToJot}
-                                >
-                                    <IconWritingSign
-                                        {...ICON_PROPS_ITEM_DROPDOWN}
-                                    />
-                                    Jot
-                                </DropdownMenu.Item>
-                                <DropdownMenu.Separator className="UserDropdown__Separator" />
-                            </>
-                        )}
                         <DropdownMenu.Item
                             className="UserDropdown__Item"
                             onSelect={navigateToSettings}

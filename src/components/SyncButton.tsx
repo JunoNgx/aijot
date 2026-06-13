@@ -48,7 +48,6 @@ export default function SyncButton() {
                 sync()
             }}
             disabled={isSyncing}
-            title={syncLabel}
         >
             <IconRefresh
                 {...ICON_PROPS_NORMAL}

@@ -36,6 +36,12 @@ html body[data-scroll-locked] {
     outline-offset: 2px;
 }
 
+@media (hover: none) {
+    *:focus-visible {
+        outline: none;
+    }
+}
+
 input,
 textarea {
     font-family: var(--fontFamilyMono);

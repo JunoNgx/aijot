@@ -20,11 +20,8 @@ import "./UserDropdown.scss"
 export default function UserDropdown() {
     const userDisplayName =
         useSyncedUserSettings((s) => s.userDisplayName) || DEFAULT_USERNAME
-    const {
-        navigateToSettings,
-        navigateToCollections,
-        navigateToHelp,
-    } = useNavigateRoutes()
+    const { navigateToSettings, navigateToCollections, navigateToHelp } =
+        useNavigateRoutes()
 
     const { triggerPointerDown, triggerKeyDown, contentCloseAutoFocus } =
         useDropdownFocusCleanup()

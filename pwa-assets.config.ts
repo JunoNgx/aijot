@@ -25,9 +25,10 @@ export default defineConfig({
             // 128: Chrome Web Store
             // 192: Android
             // 512: High-res displays
-            sizes: [32, 128, 192, 512],
+            sizes: [128, 192, 512],
             resizeOptions: RESIZE_OPTIONS,
         },
+        transparent: { sizes: [] },
     },
     images: ["public/sourceLogo.svg"],
 })

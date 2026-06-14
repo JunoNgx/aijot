@@ -46,11 +46,6 @@ export default defineConfig({
                 theme_color: "#1a1a1a",
                 icons: [
                     {
-                        src: "maskable-icon-32x32.png",
-                        sizes: "32x32",
-                        type: "image/png",
-                    },
-                    {
                         src: "maskable-icon-128x128.png",
                         sizes: "128x128",
                         type: "image/png",

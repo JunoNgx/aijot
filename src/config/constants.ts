@@ -70,7 +70,7 @@ export const ICON_PROPS_ITEM_STATUS = {
 // ============================================================
 
 export const DROPDOWN_OFFSET = 10
-export const COLLECTION_DROPDOWN_ALIGN_OFFSET = -60
+export const COLLECTION_DROPDOWN_ALIGN_OFFSET = -50
 
 // ============================================================
 // Display limits

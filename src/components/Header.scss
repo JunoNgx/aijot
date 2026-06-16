@@ -73,12 +73,13 @@
             }
         }
 
+        &__Logo {
+            width: var(--logoSizeHeaderMobile);
+            height: var(--logoSizeHeaderMobile);
+        }
+
         &__Block {
             gap: 0.25rem;
-
-            &--Left {
-                gap: 0.5rem;
-            }
         }
 
         &__Separator {

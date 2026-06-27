@@ -116,6 +116,10 @@ googleAuth.post("/refresh", async (c) => {
 
     const data = (await res.json()) as Record<string, string>
 
+    if (data["error"] === "invalid_grant") {
+        deleteCookie(c, "google_refresh_token", { path: "/" })
+    }
+
     if (!res.ok || data["error"]) {
         return c.json(
             {
@@ -123,6 +127,19 @@ googleAuth.post("/refresh", async (c) => {
                 error_code: data["error"] ?? "refresh_error",
             },
             400,
+        )
+    }
+
+    if (data["refresh_token"]) {
+        await setSignedCookie(
+            c,
+            "google_refresh_token",
+            data["refresh_token"],
+            process.env.SESSION_SECRET!,
+            {
+                ...cookieOptions,
+                maxAge: REFRESH_TOKEN_MAX_AGE,
+            },
         )
     }
 

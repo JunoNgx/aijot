@@ -94,7 +94,7 @@ export function useSyncProvider() {
             } catch (err) {
                 const message =
                     err instanceof Error ? err.message : "Token refresh failed"
-                return { expired: message }
+                return { expiredMessage: message }
             }
         },
         [authToken, activeProvider, setAuthToken],

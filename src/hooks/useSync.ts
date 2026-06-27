@@ -13,7 +13,7 @@ let isSyncing = false
 
 function isExpiredResult(
     result: SyncTokenResult,
-): result is { expired: string } {
+): result is { expiredMessage: string } {
     return typeof result === "object" && result !== null
 }
 

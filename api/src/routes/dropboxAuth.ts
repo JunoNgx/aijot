@@ -119,6 +119,10 @@ dropboxAuth.post("/refresh", async (c) => {
 
     const data = (await res.json()) as Record<string, string>
 
+    if (data["error"] === "invalid_grant") {
+        deleteCookie(c, "dropbox_refresh_token", { path: "/" })
+    }
+
     if (!res.ok || data["error"]) {
         return c.json(
             {

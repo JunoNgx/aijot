@@ -3,7 +3,7 @@ import {
     minimal2023Preset,
 } from "@vite-pwa/assets-generator/config"
 
-const ICON_BACKGROUND_COLOR = "#8eada7"
+const ICON_BACKGROUND_COLOR = "#ffffff"
 const RESIZE_OPTIONS = {
     background: ICON_BACKGROUND_COLOR,
     fit: "contain",

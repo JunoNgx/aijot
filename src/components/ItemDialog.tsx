@@ -19,7 +19,7 @@ import { useDebounced } from "@/hooks/useDebounced"
 import { useDialogStore } from "@/store/dialogStore"
 import TagAutocompleteInput from "@/components/TagAutocompleteInput"
 import { SHORTCUT_SAVE_AND_CLOSE } from "@/config/constants"
-import { formatDatetime } from "@/utils/helpers"
+import { formatDatetime, isMobile } from "@/utils/helpers"
 import { openPreviousVersionDialog } from "@/utils/openPreviousVersionDialog"
 import { useLocalUserSettings } from "@/store/localUserSettings"
 import "./ItemDialog.scss"
@@ -423,11 +423,17 @@ export default function ItemDialog({ item, onClose }: Props) {
         ? DateTime.fromISO(jottedAtVal).toLocal().toFormat("yyyy-MM-dd'T'HH:mm")
         : ""
 
+    const calcContentEditorRowCount = () => {
+        if (!isTextItem) return 4
+        if (isMobile()) return 12
+        return 24;
+    }
+
     const contentEditor = (
         <textarea
             ref={contentTextareaRef}
             className="Dialog__Input ItemDialog__Textarea"
-            rows={isTextItem ? 24 : 4}
+            rows={calcContentEditorRowCount()}
             value={contentVal}
             onChange={handleContentChange}
         />

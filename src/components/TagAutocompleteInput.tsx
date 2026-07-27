@@ -10,6 +10,7 @@ interface TagAutocompleteInputProps {
     onChange: (value: string) => void
     onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
     id?: string
+    ref?: React.RefObject<HTMLInputElement | null>
 }
 
 export default function TagAutocompleteInput({
@@ -17,10 +18,17 @@ export default function TagAutocompleteInput({
     onChange,
     onBlur,
     id = "tag-autocomplete-input",
+    ref,
 }: TagAutocompleteInputProps) {
     const { allTagsQuery } = useAllTagsQuery()
     const allTags = allTagsQuery.data ?? []
     const inputRef = useRef<HTMLInputElement>(null)
+
+    const setInputRef = (node: HTMLInputElement | null) => {
+        inputRef.current = node
+        if (!ref) return
+        ref.current = node
+    }
 
     const lastSpaceIndex = value.lastIndexOf(" ")
     const currentToken = value.slice(lastSpaceIndex + 1)
@@ -80,7 +88,7 @@ export default function TagAutocompleteInput({
     return (
         <div className="TagAutocompleteInput">
             <input
-                ref={inputRef}
+                ref={setInputRef}
                 id={id}
                 value={value}
                 onChange={(e) =>

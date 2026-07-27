@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect, useMemo } from "react"
+import { useState, useRef, useMemo, useLayoutEffect } from "react"
 import { useHotkeys } from "react-hotkeys-hook"
 import { IconX } from "@tabler/icons-react"
 import { ICON_PROPS_ACTION } from "@/config/constants"
 import { SHORTCUT_SAVE_AND_CLOSE } from "@/config/constants"
+import TagAutocompleteInput from "@/components/TagAutocompleteInput"
 import { useDialogStore } from "@/store/dialogStore"
 import { pluralise } from "@/utils/helpers"
 import type { Item, MassTagEditMode } from "@/types"
@@ -41,8 +42,10 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
     const inputRef = useRef<HTMLInputElement>(null)
     const closeAllDialogs = useDialogStore((s) => s.closeAllDialogs)
 
-    useEffect(() => {
-        inputRef.current?.focus()
+    useLayoutEffect(() => {
+        setTimeout(() => {
+            inputRef.current?.focus()
+        })
     }, [])
 
     const tagSummaryData = useMemo(() => {
@@ -59,11 +62,6 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
     }, [items])
 
     const { topTagCounts, totalUniqueTags } = tagSummaryData
-
-    const handleTagStrChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const collapsed = e.target.value.replace(/  +/g, " ")
-        setTagStr(collapsed)
-    }
 
     const handleSave = () => {
         onSave(tagStr, mode)
@@ -151,14 +149,11 @@ export default function MassTagEditDialog({ items, onSave }: Props) {
                 <span className="MassTagEditDialog__Description">
                     Separated by spaces
                 </span>
-                <input
-                    className="Dialog__Input"
-                    ref={inputRef}
+                <TagAutocompleteInput
                     value={tagStr}
-                    onChange={handleTagStrChange}
-                    placeholder=""
-                    spellCheck={false}
-                    autoCapitalize="none"
+                    onChange={setTagStr}
+                    id="mass-tag-edit-input"
+                    ref={inputRef}
                 />
             </div>
             <div className="MassTagEditDialog__Footer">

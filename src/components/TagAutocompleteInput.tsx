@@ -3,7 +3,7 @@ import { useAllTagsQuery } from "@/hooks/useAllTagsQuery"
 import "./TagAutocompleteInput.scss"
 
 const MAX_SUGGESTIONS = 5
-const CHIP_STAGGER_MS = 30
+const CHIP_STAGGER_MS = 100
 
 interface TagAutocompleteInputProps {
     value: string

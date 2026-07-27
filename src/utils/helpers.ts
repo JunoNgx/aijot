@@ -171,3 +171,7 @@ export function truncateText(
     if (text.length <= maxLength) return text
     return text.slice(0, maxLength).trim() + "..."
 }
+
+export function isMobile(): boolean {
+    return !window.matchMedia("(pointer: fine)").matches
+}

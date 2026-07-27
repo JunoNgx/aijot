@@ -17,6 +17,7 @@ import { useItemsMutations } from "@/hooks/useItemsMutations"
 import { useItemActions } from "@/hooks/useItemActions"
 import { useDebounced } from "@/hooks/useDebounced"
 import { useDialogStore } from "@/store/dialogStore"
+import TagAutocompleteInput from "@/components/TagAutocompleteInput"
 import { SHORTCUT_SAVE_AND_CLOSE } from "@/config/constants"
 import { formatDatetime } from "@/utils/helpers"
 import { openPreviousVersionDialog } from "@/utils/openPreviousVersionDialog"
@@ -352,8 +353,8 @@ export default function ItemDialog({ item, onClose }: Props) {
     //     markChanged()
     // }
 
-    const handleTagStrChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTagStr(e.target.value)
+    const handleTagStrChange = (value: string) => {
+        setTagStr(value)
         markChanged()
     }
 
@@ -495,14 +496,11 @@ export default function ItemDialog({ item, onClose }: Props) {
                 <span className="ItemDialog__Description">
                     Separated by spaces
                 </span>
-                <input
-                    className="Dialog__Input"
+                <TagAutocompleteInput
                     value={tagStr}
                     onChange={handleTagStrChange}
                     onBlur={handleTagStrBlur}
-                    placeholder=""
-                    spellCheck={false}
-                    autoCapitalize="none"
+                    id="item-tag-input"
                 />
             </div>
             <Accordion.Root type="multiple" className="MoreOptionsAccordion">

@@ -83,7 +83,9 @@ export default function TagAutocompleteInput({
                 ref={inputRef}
                 id={id}
                 value={value}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) =>
+                    onChange(e.target.value.replace(/\s\s+/g, " "))
+                }
                 onBlur={onBlur}
                 placeholder=""
                 spellCheck={false}

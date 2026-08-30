@@ -8,6 +8,8 @@ import { useCollectionsQuery } from "@/hooks/useCollectionsQuery"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
 import { useTransientUiState } from "@/store/transientUiState"
 import { useItemsMutations } from "@/hooks/useItemsMutations"
+import { useSyncFn } from "@/hooks/useSync"
+import { useSyncProvider } from "@/hooks/useSyncProvider"
 import { openCollectionDialog } from "@/utils/openCollectionDialog"
 import { openMassTagEditDialog } from "@/utils/openMassTagEditDialog"
 import { themes } from "@/config/themes"
@@ -58,6 +60,9 @@ import {
     IconCheck,
     IconPlus,
     IconTags,
+    IconBrandGoogle,
+    IconBrandDropbox,
+    IconRefresh,
 } from "@tabler/icons-react"
 
 export type CommandPaletteMode = "main" | "theme"
@@ -101,6 +106,8 @@ export default function CommandPalette({
     const collections = collectionsQuery.data ?? []
 
     const { massTagEditMutation } = useItemsMutations()
+    const { isConnected, connect } = useSyncProvider()
+    const { sync } = useSyncFn()
     const mainListVisibleItems = useTransientUiState(
         (s) => s.mainListVisibleItems,
     )
@@ -322,6 +329,42 @@ export default function CommandPalette({
         />
     )
 
+    const connectGoogleItem = !isConnected && (
+        <CommandPaletteItem
+            value="connect to google"
+            onSelect={() => {
+                void connect("google")
+                onClose()
+            }}
+            icon={<IconBrandGoogle {...ICON_PROPS_NORMAL} />}
+            label="Connect to Google"
+        />
+    )
+
+    const connectDropboxItem = !isConnected && (
+        <CommandPaletteItem
+            value="connect to dropbox"
+            onSelect={() => {
+                void connect("dropbox")
+                onClose()
+            }}
+            icon={<IconBrandDropbox {...ICON_PROPS_NORMAL} />}
+            label="Connect to Dropbox"
+        />
+    )
+
+    const syncItem = isConnected && (
+        <CommandPaletteItem
+            value="sync"
+            onSelect={() => {
+                void sync()
+                onClose()
+            }}
+            icon={<IconRefresh {...ICON_PROPS_NORMAL} />}
+            label="Sync"
+        />
+    )
+
     const actionsGroup = (
         <Command.Group
             heading={
@@ -330,6 +373,9 @@ export default function CommandPalette({
             className="CommandPaletteGroup__Group"
         >
             {massTagEditItem}
+            {connectGoogleItem}
+            {connectDropboxItem}
+            {syncItem}
             {changeThemeItem}
         </Command.Group>
     )

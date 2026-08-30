@@ -426,7 +426,7 @@ export default function ItemDialog({ item, onClose }: Props) {
     const calcContentEditorRowCount = () => {
         if (!isTextItem) return 4
         if (isMobile()) return 12
-        return 24;
+        return 24
     }
 
     const contentEditor = (

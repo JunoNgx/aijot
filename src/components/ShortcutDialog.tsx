@@ -4,6 +4,7 @@ import { useDialogStore } from "@/store/dialogStore"
 import { parseShortcut } from "@/utils/helpers"
 import {
     SHORTCUT_FOCUS_MAIN_INPUT,
+    SHORTCUT_FOCUS_MAIN_INPUT_SEARCH_KEY,
     SHORTCUT_CMD_PAL,
     SHORTCUT_CMD_PAL_ALT,
     SHORTCUT_CMD_PAL_THEME,
@@ -178,6 +179,7 @@ export default function ShortcutDialog() {
                 <ShortcutSection title="App">
                     <ShortcutItem
                         shortcut={SHORTCUT_FOCUS_MAIN_INPUT}
+                        shortcutAlt={SHORTCUT_FOCUS_MAIN_INPUT_SEARCH_KEY}
                         description="Focus input"
                     />
                     <ShortcutItem

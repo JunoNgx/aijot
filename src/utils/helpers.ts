@@ -94,6 +94,7 @@ export function parseShortcut(shortcut: string): string[] {
         if (lower === "backspace") return "BkSp"
         if (lower === "enter") return "↵"
         if (lower === "escape") return "Esc"
+        if (lower === "browsersearch") return "Search key"
         if (lower === "home") return "Home"
         if (lower === "end") return "End"
         // Handle slash key

@@ -17,6 +17,7 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle"
 import { useSyncedUserSettings } from "@/store/syncedUserSettings"
 import {
     SHORTCUT_FOCUS_MAIN_INPUT,
+    SHORTCUT_FOCUS_MAIN_INPUT_SEARCH_KEY,
     SHORTCUT_TOGGLE_ITEM_EXPANDED_MODE,
     SHORTCUT_NAV_PREV_COLLECTION,
     SHORTCUT_NAV_NEXT_COLLECTION,
@@ -165,6 +166,11 @@ export default function Jot() {
         enableOnFormTags: true,
         preventDefault: true,
     })
+    useHotkeys(
+        SHORTCUT_FOCUS_MAIN_INPUT_SEARCH_KEY,
+        () => mainInputRef.current?.focus(),
+        { enableOnFormTags: true, preventDefault: true },
+    )
 
     useHotkeys(
         SHORTCUT_TOGGLE_ITEM_EXPANDED_MODE,
